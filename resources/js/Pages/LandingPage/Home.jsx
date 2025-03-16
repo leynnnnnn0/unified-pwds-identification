@@ -5,6 +5,17 @@ import LandingPageImage from "../../../images/landingPage.png";
 import AboutPageImage from "../../../images/aboutPage.png";
 import AboutPageImageLogo from "../../../images/aboutPageLogo.png";
 import MissionVisionPage from "../../../images/missionVisionPage.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import CEO from "../../../images/ceo.png";
+import FRONTEND from "../../../images/front.png";
+import BACKEND from "../../../images/back.png";
+import FULLSTACK from "../../../images/full.png";
+import UI from "../../../images/ui.png";
+
 const Home = () => {
     return (
         <>
@@ -103,10 +114,10 @@ const Home = () => {
                     </h1>
 
                     <div className="grid grid-cols-2 gap-10 h-fit">
-                        <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
-                        <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
-                        <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
-                        <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
+                        <section className="rounded-lg shadow-2xl bg-white h-52 w-96"></section>
+                        <section className="rounded-lg shadow-2xl bg-white h-52 w-96"></section>
+                        <section className="rounded-lg shadow-2xl bg-white h-52 w-96"></section>
+                        <section className="rounded-lg shadow-2xl bg-white h-52 w-96"></section>
                     </div>
                 </div>
             </div>
@@ -117,20 +128,88 @@ const Home = () => {
                 </h1>
 
                 <section className="flex items-center justify-center gap-5">
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[500px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
+                    <section className="rounded-lg shadow-xl bg-white w-60 h-[350px] p-5 flex flex-col gap-5">
+                        <img
+                            src={UI}
+                            className="
+                        w-52 h-[250px]"
+                        />
+                        <div className="flex flex-col gap-1 items-center">
+                            <h1 className="text-blue-900 font-bold">
+                                Collins Matela
+                            </h1>
+                            <p className="text-gray-700 text-xs">UI/UX</p>
+                        </div>
+                    </section>
+                    <section className="rounded-lg shadow-xl bg-white w-60 h-[450px] p-5 flex flex-col gap-5">
+                        <img
+                            src={FULLSTACK}
+                            className="
+                        w-52 h-[300px]"
+                        />
+                        <div className="flex flex-col gap-1 items-center">
+                            <h1 className="text-blue-900 font-bold">
+                                Nathaniel Alvarez
+                            </h1>
+                            <p className="text-gray-700 text-xs">Full Stack Developer</p>
+                        </div>
+                    </section>
+                    <section className="rounded-lg shadow-xl bg-white w-60 h-[500px] p-5 flex flex-col gap-5">
+                        <img
+                            src={CEO}
+                            className="
+                        w-52 h-[350px]"
+                        />
+                        <div className="flex flex-col gap-1 items-center">
+                            <h1 className="text-blue-900 font-bold">
+                                Mark Justin Sayson
+                            </h1>
+                            <p className="text-gray-700 text-xs">CEO</p>
+                        </div>
+                    </section>
+                    <section className="rounded-lg shadow-xl bg-white w-60 h-[450px] p-5 flex flex-col gap-5">
+                        <img
+                            src={BACKEND}
+                            className="
+                        w-52 h-[300px]"
+                        />
+                        <div className="flex flex-col gap-1 items-center">
+                            <h1 className="text-blue-900 font-bold">
+                                Cj Batingal
+                            </h1>
+                            <p className="text-gray-700 text-xs">Backend Developer</p>
+                        </div>
+                    </section>
+                    <section className="rounded-lg shadow-xl bg-white w-60 h-[350px] p-5 flex flex-col gap-5">
+                        <img
+                            src={FRONTEND}
+                            className="
+                        w-52 h-[250px]"
+                        />
+                        <div className="flex flex-col gap-1 items-center">
+                            <h1 className="text-blue-900 font-bold">
+                                Pious Hernandez
+                            </h1>
+                            <p className="text-gray-700 text-xs">Frontend Developer</p>
+                        </div>
+                    </section>
                 </section>
             </div>
 
             <div className="h-52 bg-indigo-900 flex items-center justify-center">
                 <div className="flex items-center gap-5">
-                <img src={AboutPageImageLogo} className="size-20"/>
-                <div>
-                    <h1 className="text-white font-bold text-lg">Contact Us</h1>
-                </div>
+                    <img src={AboutPageImageLogo} className="size-20" />
+                    <div>
+                        <h1 className="text-white font-bold text-lg mb-3">
+                            Contact Us
+                        </h1>
+                        <section className="flex text-white items-center gap-3">
+                            <FontAwesomeIcon icon={faFacebook} />
+                            <FontAwesomeIcon icon={faFacebookMessenger} />
+                            <FontAwesomeIcon icon={faInstagram} />
+                            <FontAwesomeIcon icon={faTwitter} />
+                        </section>
+                    </div>
                 </div>
             </div>
         </>
