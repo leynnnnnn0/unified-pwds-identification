@@ -128,7 +128,7 @@ const Home = () => {
                 </h1>
 
                 <section className="flex items-center justify-center gap-5">
-                    <section className="rounded-lg shadow-xl bg-white w-60 h-[350px] p-5 flex flex-col gap-5">
+                    <section className="rounded-lg shadow-xl bg-white w-52 h-[350px] p-5 flex flex-col gap-5">
                         <img
                             src={UI}
                             className="
@@ -141,7 +141,7 @@ const Home = () => {
                             <p className="text-gray-700 text-xs">UI/UX</p>
                         </div>
                     </section>
-                    <section className="rounded-lg shadow-xl bg-white w-60 h-[450px] p-5 flex flex-col gap-5">
+                    <section className="rounded-lg shadow-xl bg-white w-52 h-[450px] p-5 flex flex-col gap-5">
                         <img
                             src={FULLSTACK}
                             className="
@@ -154,7 +154,7 @@ const Home = () => {
                             <p className="text-gray-700 text-xs">Full Stack Developer</p>
                         </div>
                     </section>
-                    <section className="rounded-lg shadow-xl bg-white w-60 h-[500px] p-5 flex flex-col gap-5">
+                    <section className="rounded-lg shadow-xl bg-white w-52 h-[500px] p-5 flex flex-col gap-5">
                         <img
                             src={CEO}
                             className="
@@ -167,7 +167,7 @@ const Home = () => {
                             <p className="text-gray-700 text-xs">CEO</p>
                         </div>
                     </section>
-                    <section className="rounded-lg shadow-xl bg-white w-60 h-[450px] p-5 flex flex-col gap-5">
+                    <section className="rounded-lg shadow-xl bg-white w-52 h-[450px] p-5 flex flex-col gap-5">
                         <img
                             src={BACKEND}
                             className="
@@ -180,7 +180,7 @@ const Home = () => {
                             <p className="text-gray-700 text-xs">Backend Developer</p>
                         </div>
                     </section>
-                    <section className="rounded-lg shadow-xl bg-white w-60 h-[350px] p-5 flex flex-col gap-5">
+                    <section className="rounded-lg shadow-xl bg-white w-52 h-[350px] p-5 flex flex-col gap-5">
                         <img
                             src={FRONTEND}
                             className="
@@ -196,7 +196,7 @@ const Home = () => {
                 </section>
             </div>
 
-            <div className="h-52 bg-indigo-900 flex items-center justify-center">
+            <div className="h-32 bg-indigo-900 flex items-center justify-center">
                 <div className="flex items-center gap-5">
                     <img src={AboutPageImageLogo} className="size-20" />
                     <div>
