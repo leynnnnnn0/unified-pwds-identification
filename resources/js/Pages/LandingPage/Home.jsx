@@ -98,7 +98,9 @@ const Home = () => {
                 />
 
                 <div className="flex flex-col items-center gap-10 px-40 py-10 z-10">
-                    <h1 className="text-4xl font-bold text-blue-900 text-center">Mission & Vision</h1>
+                    <h1 className="text-4xl font-bold text-blue-900 text-center">
+                        Mission & Vision
+                    </h1>
 
                     <div className="grid grid-cols-2 gap-10 h-fit">
                         <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
@@ -106,6 +108,29 @@ const Home = () => {
                         <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
                         <section className="rounded-lg shadow-lg bg-green-500 h-52 w-96"></section>
                     </div>
+                </div>
+            </div>
+
+            <div className="min-h-screen flex items-center flex-col gap-10 py-10 z-10">
+                <h1 className="text-4xl font-bold text-blue-900 text-center">
+                    Meet Our Developers
+                </h1>
+
+                <section className="flex items-center justify-center gap-5">
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[500px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
+                </section>
+            </div>
+
+            <div className="h-52 bg-indigo-900 flex items-center justify-center">
+                <div className="flex items-center gap-5">
+                <img src={AboutPageImageLogo} className="size-20"/>
+                <div>
+                    <h1 className="text-white font-bold text-lg">Contact Us</h1>
+                </div>
                 </div>
             </div>
         </>
