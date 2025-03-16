@@ -117,15 +117,15 @@ const Home = () => {
                 </h1>
 
                 <section className="flex items-center justify-center gap-5">
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[500px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[450px]"></section>
-                    <section className="rounded-lg shadow-lg bg-blue-900 w-60 h-[350px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-52 h-[350px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-52 h-[450px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-52 h-[500px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-52 h-[450px]"></section>
+                    <section className="rounded-lg shadow-lg bg-blue-900 w-52 h-[350px]"></section>
                 </section>
             </div>
 
-            <div className="h-52 bg-indigo-900 flex items-center justify-center">
+            <div className="h-32 bg-indigo-900 flex items-center justify-center">
                 <div className="flex items-center gap-5">
                 <img src={AboutPageImageLogo} className="size-20"/>
                 <div>
