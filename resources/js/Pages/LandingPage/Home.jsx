@@ -156,28 +156,28 @@ const Home = () => {
                     </section>
                     <section className="rounded-lg shadow-xl bg-white w-52 h-[500px] p-5 flex flex-col gap-5">
                         <img
-                            src={CEO}
+                            src={BACKEND}
                             className="
                         w-52 h-[350px]"
                         />
                         <div className="flex flex-col gap-1 items-center">
                             <h1 className="text-blue-900 font-bold">
-                                Mark Justin Sayson
+                               CJ Batingal
                             </h1>
                             <p className="text-gray-700 text-xs">CEO</p>
                         </div>
                     </section>
                     <section className="rounded-lg shadow-xl bg-white w-52 h-[450px] p-5 flex flex-col gap-5">
                         <img
-                            src={BACKEND}
+                            src={CEO}
                             className="
                         w-52 h-[300px]"
                         />
                         <div className="flex flex-col gap-1 items-center">
                             <h1 className="text-blue-900 font-bold">
-                                Cj Batingal
+                            Mark Justin Sayson
                             </h1>
-                            <p className="text-gray-700 text-xs">Backend Developer</p>
+                            <p className="text-gray-700 text-xs">Full Stack Developer</p>
                         </div>
                     </section>
                     <section className="rounded-lg shadow-xl bg-white w-52 h-[350px] p-5 flex flex-col gap-5">
