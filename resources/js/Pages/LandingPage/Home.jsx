@@ -151,7 +151,9 @@ const Home = () => {
                             <h1 className="text-blue-900 font-bold">
                                 Nathaniel Alvarez
                             </h1>
-                            <p className="text-gray-700 text-xs">Full Stack Developer</p>
+                            <p className="text-gray-700 text-xs">
+                                Full Stack Developer
+                            </p>
                         </div>
                     </section>
                     <section className="rounded-lg shadow-xl bg-white w-52 h-[500px] p-5 flex flex-col gap-5">
@@ -162,7 +164,7 @@ const Home = () => {
                         />
                         <div className="flex flex-col gap-1 items-center">
                             <h1 className="text-blue-900 font-bold">
-                               CJ Batingal
+                                CJ Batingal
                             </h1>
                             <p className="text-gray-700 text-xs">CEO</p>
                         </div>
@@ -175,9 +177,11 @@ const Home = () => {
                         />
                         <div className="flex flex-col gap-1 items-center">
                             <h1 className="text-blue-900 font-bold">
-                            Mark Justin Sayson
+                                Mark Justin Sayson
                             </h1>
-                            <p className="text-gray-700 text-xs">Full Stack Developer</p>
+                            <p className="text-gray-700 text-xs">
+                                Full Stack Developer
+                            </p>
                         </div>
                     </section>
                     <section className="rounded-lg shadow-xl bg-white w-52 h-[350px] p-5 flex flex-col gap-5">
@@ -190,7 +194,9 @@ const Home = () => {
                             <h1 className="text-blue-900 font-bold">
                                 Pious Hernandez
                             </h1>
-                            <p className="text-gray-700 text-xs">Frontend Developer</p>
+                            <p className="text-gray-700 text-xs">
+                                Frontend Developer
+                            </p>
                         </div>
                     </section>
                 </section>
@@ -215,5 +221,7 @@ const Home = () => {
         </>
     );
 };
+
+Home.layout = null;
 
 export default Home;

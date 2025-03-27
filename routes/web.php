@@ -3,6 +3,9 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PWDAccountController;
+use App\Http\Controllers\PWDDashboardController;
+use App\Http\Controllers\PWDProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -10,10 +13,8 @@ use Inertia\Inertia;
 Route::resource('', LandingPageController::class);
 
 Route::resource('admin-dashboard', AdminDashboardController::class);
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
+Route::resource('my-profile', PWDProfileController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
