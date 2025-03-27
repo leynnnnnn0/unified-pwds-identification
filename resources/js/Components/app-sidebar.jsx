@@ -7,6 +7,7 @@ import {
     UserCircle,
 } from "lucide-react";
 import MainLago from "../../images/mainLogo.jpg";
+import { Link } from "@inertiajs/react";
 import {
     Sidebar,
     SidebarContent,
@@ -20,28 +21,18 @@ import {
     SidebarMenuItem,
     SidebarHeader,
 } from "@/components/ui/sidebar";
-import { ArrowUpCircleIcon } from "lucide-react";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { SidebarLink } from "./sidebar-link";
 
 // Menu items.
 const items = [
     {
-        title: "Home",
-        url: "#",
+        title: "Dashboard",
+        url: "/dashboard",
         icon: Home,
     },
     {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Account",
-        url: "#",
+        title: "My Profile",
+        url: "/my-profile",
         icon: UserCircle,
     },
 ];
@@ -79,13 +70,12 @@ export function AppSidebar() {
                                 {items.map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
-                                            <a
+                                            <SidebarLink
                                                 href={item.url}
-                                                className="flex items-center gap-2"
+                                                icon={item.icon}
                                             >
-                                                <item.icon className="w-4 h-4" />
-                                                <span>{item.title}</span>
-                                            </a>
+                                                {item.title}
+                                            </SidebarLink>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
