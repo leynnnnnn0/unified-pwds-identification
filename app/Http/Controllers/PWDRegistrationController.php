@@ -11,4 +11,9 @@ class PWDRegistrationController extends Controller
     {
         return Inertia::render('PWDRegistration/Index');
     }
+
+    public function create()
+    {
+        return Inertia::render('PWDRegistration/Create');
+    }
 }

@@ -5,13 +5,16 @@ import TDLabel from "@/Components/text/td-label";
 import { InfoIcon } from "lucide-react";
 import DivTable from "@/Components/div/div-table";
 import { Button } from "@/Components/ui/button";
+import { Link } from "@inertiajs/react";
 
 const Index = () => {
     return (
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Registrations" />
-                <Button>Create New</Button>
+                <Button>
+                    <Link href={route("registration.create")}>Create</Link>
+                </Button>
             </div>
             <div className="space-y-4">
                 <DivTable>
