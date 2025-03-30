@@ -35,6 +35,11 @@ const items = [
         url: "/my-profile",
         icon: UserCircle,
     },
+    {
+        title: "Registration",
+        url: "/registration",
+        icon: UserCircle,
+    },
 ];
 
 export function AppSidebar() {
