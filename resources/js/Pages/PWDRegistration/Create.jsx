@@ -4,10 +4,17 @@ import DOHLogo from "../../../images/doh.png";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Span from "@/Components/text/span";
 import RegistrationGrid from "@/Components/div/registration-grid";
-import FormLabel from "@/Components/text/form-label";
-import FlexCol from "@/Components/div/flex-col";
-import BorderBInput from "@/Components/input/border-b-input";
+import { Input } from "@/components/ui/Input";
+import BorderBInput from "@/Components/Input/border-b-Input";
 import { Checkbox } from "@/components/ui/checkbox";
+import FormField from "@/Components/form/form-field";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 const Create = () => {
     const civilStatus = [
@@ -76,28 +83,9 @@ const Create = () => {
     ];
     return (
         <>
-            <header className="flex w-full justify-center gap-10 relative">
-                <img
-                    src={DOHLogo}
-                    alt="DOH Logo"
-                    className="h-20 absolute mr-[500px]"
-                />
-                <section className="flex flex-col items-center justify-center">
-                    <h1 className="text-gray-700 font-bold text-xl">
-                        Department of Health
-                    </h1>
-                    <h1 className="text-gray-700 font-bold text-sm">
-                        Philippine Registry For Person with Disablities
-                    </h1>
-                    <h1 className="text-gray-700 font-bold text-xl">
-                        Application Form
-                    </h1>
-                </section>
-            </header>
-
-            <div className="grid grid-cols-5 auto-rows-auto h-fit">
-                <RegistrationGrid className="h-14 col-span-4 px-2 py-1 border-black border-2 flex">
-                    <FormLabel className="mr-12" label="1." />
+            <H1 title="Registration Form" />
+            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
+                <FormField className="col-span-3" label="Type of Registration">
                     <RadioGroup
                         defaultValue="option-one"
                         className="flex w-full"
@@ -127,485 +115,89 @@ const Create = () => {
                             </span>
                         </div>
                     </RadioGroup>
-                </RegistrationGrid>
+                </FormField>
 
-                <RegistrationGrid className="justify-center text-center">
-                    <FormLabel label='Place 1"x1" Photo here' />
-                </RegistrationGrid>
+                <FormField
+                    label='1"x1" Photo'
+                    className="row-span-3"
+                ></FormField>
 
-                <RegistrationGrid className="col-span-3 h-14">
-                    <FlexCol>
-                        <FormLabel label="2. PERSON WITH DISABILITY NUMBER(RR-PPMM-BBB-NNNNNNN)" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="3. DATE APPLIED:" />
-                        <BorderBInput type="date" />
-                    </FlexCol>
-                </RegistrationGrid>
-                <RegistrationGrid className="row-span-3"></RegistrationGrid>
+                <FormField
+                    className="col-span-3"
+                    label="Person with disability number"
+                >
+                    <Input />
+                </FormField>
 
-                <RegistrationGrid className="col-span-4">
-                    <FormLabel label="4. PERSONAL INFORMATION" />
-                </RegistrationGrid>
+                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
+                    Personal Information
+                </h1>
 
-                <RegistrationGrid className="h-14">
-                    <FlexCol>
-                        <FormLabel
-                            label="LAST NAME:"
-                            className="text-center w-full"
-                        />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
+                <FormField label="Last Name">
+                    <Input />
+                </FormField>
 
-                <RegistrationGrid className="h-14">
-                    <FlexCol>
-                        <FormLabel
-                            label="FIRST NAME:"
-                            className="text-center w-full"
-                        />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-                <RegistrationGrid className="h-14">
-                    <FlexCol>
-                        <FormLabel
-                            label="MIDDLE NAME:"
-                            isRequired={false}
-                            className="text-center w-full"
-                        />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-                <RegistrationGrid className="h-14">
-                    <FlexCol>
-                        <FormLabel
-                            label="SUFFIX:"
-                            isRequired={false}
-                            className="text-center w-full"
-                        />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
+                <FormField label="First Name">
+                    <Input />
+                </FormField>
 
-                <RegistrationGrid className="col-span-3">
-                    <FlexCol>
-                        <FormLabel label="5. DATE OF BIRTH:" />
-                        <BorderBInput type="date" />
-                    </FlexCol>
-                </RegistrationGrid>
+                <FormField label="Middle Name">
+                    <Input />
+                </FormField>
 
-                <RegistrationGrid className="col-span-2">
-                    <FlexCol>
-                        <FormLabel label="6. SEX:" />
+                <FormField label="Suffix">
+                    <Input />
+                </FormField>
 
-                        <RadioGroup
-                            defaultValue="option-one"
-                            className="flex w-full"
-                        >
-                            <div className="flex space-x-2 items-center h-fit flex-1">
-                                <RadioGroupItem
-                                    value="option-one"
-                                    id="option-one"
-                                />
-                                <span
-                                    className="text-xs font-bold"
-                                    htmlFor="option-one"
-                                >
-                                    Male
-                                </span>
-                            </div>
-                            <div className="flex space-x-2 items-center h-fit flex-1">
-                                <RadioGroupItem
-                                    value="option-two"
-                                    id="option-two"
-                                />
-                                <span
-                                    className="text-xs font-bold"
-                                    htmlFor="option-two"
-                                >
-                                    Female
-                                </span>
-                            </div>
-                        </RadioGroup>
-                    </FlexCol>
-                </RegistrationGrid>
+                <FormField label="Date of Birth">
+                    <Input type="date" />
+                </FormField>
 
-                <RegistrationGrid className="col-span-5">
-                    <FlexCol>
-                        <FormLabel label="7. CIVIL STATUS:" />
+                <FormField label="Sex">
+                    <Select>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="light">Male</SelectItem>
+                            <SelectItem value="dark">Female</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </FormField>
 
-                        <RadioGroup
-                            defaultValue="option-one"
-                            className="flex w-full"
-                        >
+                <FormField label="Civil Status">
+                    <Select>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
                             {civilStatus.map((item) => {
                                 return (
-                                    <div
-                                        className="flex space-x-2 items-center h-fit flex-1"
-                                        key={item.label}
-                                    >
-                                        <RadioGroupItem value={item.label} />
-                                        <span className="text-xs font-bold">
-                                            {item.label}
-                                        </span>
-                                    </div>
+                                    <SelectItem value="light">
+                                        {item.label}
+                                    </SelectItem>
                                 );
                             })}
-                        </RadioGroup>
-                    </FlexCol>
-                </RegistrationGrid>
-                <RegistrationGrid className="col-span-3">
-                    <FlexCol>
-                        <FormLabel label="8. TYPE OF DISABILITY:" />
-                        <div className="w-full grid grid-cols-2 gap-1">
+                        </SelectContent>
+                    </Select>
+                </FormField>
+
+                <FormField label="Type of Disability">
+                    <Select>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
                             {typeOfDisabilities.map((item) => {
                                 return (
-                                    <div
-                                        className="flex space-x-2 items-center h-fit flex-1"
-                                        key={item.label}
-                                    >
-                                        <Checkbox value={item.label} />
-                                        <span className="text-xs font-bold">
-                                            {item.label}
-                                        </span>
-                                    </div>
+                                    <SelectItem value="light">
+                                        {item.label}
+                                    </SelectItem>
                                 );
                             })}
-                        </div>
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid className="col-span-2">
-                    <FlexCol>
-                        <FormLabel label="9. CAUSE OF DISABILITY:" />
-                        <div className="grid grid-cols-2 gap">
-                            <div className="w-full grid grid-cols-1 gap-1">
-                                <div className="flex space-x-2 items-center h-fit flex-1">
-                                    <Checkbox value="none" />
-                                    <span className="text-xs font-bold">
-                                        Conginetal
-                                    </span>
-                                </div>
-                                {congenitalCause.map((item) => {
-                                    return (
-                                        <div
-                                            className="ml-4 flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                                <div className="ml-4 flex space-x-2 items-center h-fit flex-1">
-                                    <Checkbox value="none" />
-                                    <span className="text-xs flex items-center">
-                                        Others. Specify <BorderBInput />
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="w-full grid grid-cols-1 gap-1">
-                                <div className="flex space-x-2 items-center h-fit flex-1">
-                                    <Checkbox value="none" />
-                                    <span className="text-xs font-bold">
-                                        Acquired
-                                    </span>
-                                </div>
-                                {acquiredCause.map((item) => {
-                                    return (
-                                        <div
-                                            className="ml-4 flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                                <div className="ml-4 flex space-x-2 items-center h-fit flex-1">
-                                    <Checkbox value="none" />
-                                    <span className="text-xs flex items-center">
-                                        Others. Specify <BorderBInput />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid className="col-span-5">
-                    <FormLabel label="4. RESIDENCE ADDRESS" />
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="House No. and Street:" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="Barangay:" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="Municipality:" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="Provice:" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="Region:" />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid className="col-span-5">
-                    <FormLabel label="4. CONTACT DETAILS" isRequired={false} />
-                </RegistrationGrid>
-
-                <div className="grid grid-cols-3 col-span-5 w-full">
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel
-                                label="Landline No:"
-                                isRequired={false}
-                            />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel label="Mobile No:" isRequired={false} />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel
-                                label="E-mail Address:"
-                                isRequired={false}
-                            />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid className="col-span-2">
-                        <FlexCol>
-                            <FormLabel label="8. EDUCATIONAL ATTAINMENT:" />
-                            <div className="w-full grid grid-cols-2 gap-1">
-                                {educationalAttainments.map((item) => {
-                                    return (
-                                        <div
-                                            className="flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs font-bold">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid className="row-span-3">
-                        <FlexCol>
-                            <FormLabel label="14. OCCUPATION:" />
-                            <div className="w-full grid gap-1">
-                                {occupations.map((item) => {
-                                    return (
-                                        <div
-                                            className="flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs font-bold">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel label="12. STATUS OF EMPLOYMENT:" />
-                            <div className="w-full grid gap-1">
-                                {statusOfEmployment.map((item) => {
-                                    return (
-                                        <div
-                                            className="flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs font-bold">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid className="row-span-2">
-                        <FlexCol>
-                            <FormLabel label="13. TYPES OF EMPLOYMENT:" />
-                            <div className="w-full grid gap-1">
-                                {typesOfEmployment.map((item) => {
-                                    return (
-                                        <div
-                                            className="flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs font-bold">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel label="13. CATEGORY OF EMPLOYMENT:" />
-                            <div className="w-full grid gap-1">
-                                {categoryOfEmployment.map((item) => {
-                                    return (
-                                        <div
-                                            className="flex space-x-2 items-center h-fit flex-1"
-                                            key={item.label}
-                                        >
-                                            <Checkbox value={item.label} />
-                                            <span className="text-xs font-bold">
-                                                {item.label}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </FlexCol>
-                    </RegistrationGrid>
-                </div>
-
-                <RegistrationGrid className="col-span-5">
-                    <FormLabel
-                        label="15. ORGANIZATION INFORMATION"
-                        isRequired={false}
-                    />
-                </RegistrationGrid>
-
-                <div className="grid grid-cols-4 col-span-5 w-full">
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel
-                                label="Organization Affiliated:"
-                                isRequired={false}
-                            />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel
-                                label="Contact Person:"
-                                isRequired={false}
-                            />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel
-                                label="Office Address:"
-                                isRequired={false}
-                            />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-
-                    <RegistrationGrid>
-                        <FlexCol>
-                            <FormLabel label="Tel. Nos.:" isRequired={false} />
-                            <BorderBInput />
-                        </FlexCol>
-                    </RegistrationGrid>
-                </div>
-
-                <RegistrationGrid className="col-span-5">
-                    <FormLabel
-                        label="15. ID REFERENCE NO."
-                        isRequired={false}
-                    />
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="SSS NO.:" isRequired={false} />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="GSIS NO:" isRequired={false} />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="PAG-IBIG NO.:" isRequired={false} />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="PSN NO.:" isRequired={false} />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
-
-                <RegistrationGrid>
-                    <FlexCol>
-                        <FormLabel label="PhilHealth NO.:" isRequired={false} />
-                        <BorderBInput />
-                    </FlexCol>
-                </RegistrationGrid>
+                        </SelectContent>
+                    </Select>
+                </FormField>
             </div>
         </>
     );
