@@ -38,6 +38,42 @@ const Create = () => {
         { label: "Cerebral Palsy" },
         { label: "Down Syndrome" },
     ];
+
+    const educationalAttainments = [
+        { label: "None" },
+        { label: "Kindergarten" },
+        { label: "Elementary" },
+        { label: "Junior High School" },
+        { label: "Senior High School" },
+        { label: "College" },
+        { label: "Vocational" },
+        { label: "Post Graduate" },
+    ];
+
+    const statusOfEmployment = [
+        { label: "Employed" },
+        { label: "Unemployed" },
+        { label: "Self-employed" },
+    ];
+
+    const typesOfEmployment = [
+        { label: "Permanent / Regular" },
+        { label: "Seasonal" },
+        { label: "Casual" },
+        { label: "Emergency" },
+    ];
+
+    const occupations = [
+        { label: "Managers" },
+        { label: "Professional" },
+        { label: "Technicians and Associate Professional" },
+        { label: "Clerical Support Workers" },
+    ];
+
+    const categoryOfEmployment = [
+        { label: "Government" },
+        { label: "Private" },
+    ];
     return (
         <>
             <header className="flex w-full justify-center gap-10 relative">
@@ -59,7 +95,7 @@ const Create = () => {
                 </section>
             </header>
 
-            <div className="grid grid-cols-5 auto-rows-auto divide-black h-fit">
+            <div className="grid grid-cols-5 auto-rows-auto h-fit">
                 <RegistrationGrid className="h-14 col-span-4 px-2 py-1 border-black border-2 flex">
                     <FormLabel className="mr-12" label="1." />
                     <RadioGroup
@@ -349,38 +385,226 @@ const Create = () => {
                     <FormLabel label="4. CONTACT DETAILS" isRequired={false} />
                 </RegistrationGrid>
 
-                <RegistrationGrid className="px-0 py-0 col-span-5">
-                    <div className="grid grid-cols-3 col-span-5 w-full">
-                        <RegistrationGrid>
-                            <FlexCol>
-                                <FormLabel
-                                    label="Landline No:"
-                                    isRequired={false}
-                                />
-                                <BorderBInput />
-                            </FlexCol>
-                        </RegistrationGrid>
+                <div className="grid grid-cols-3 col-span-5 w-full">
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel
+                                label="Landline No:"
+                                isRequired={false}
+                            />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
 
-                        <RegistrationGrid>
-                            <FlexCol>
-                                <FormLabel
-                                    label="Mobile No:"
-                                    isRequired={false}
-                                />
-                                <BorderBInput />
-                            </FlexCol>
-                        </RegistrationGrid>
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel label="Mobile No:" isRequired={false} />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
 
-                        <RegistrationGrid>
-                            <FlexCol>
-                                <FormLabel
-                                    label="E-mail Address:"
-                                    isRequired={false}
-                                />
-                                <BorderBInput />
-                            </FlexCol>
-                        </RegistrationGrid>
-                    </div>
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel
+                                label="E-mail Address:"
+                                isRequired={false}
+                            />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid className="col-span-2">
+                        <FlexCol>
+                            <FormLabel label="8. EDUCATIONAL ATTAINMENT:" />
+                            <div className="w-full grid grid-cols-2 gap-1">
+                                {educationalAttainments.map((item) => {
+                                    return (
+                                        <div
+                                            className="flex space-x-2 items-center h-fit flex-1"
+                                            key={item.label}
+                                        >
+                                            <Checkbox value={item.label} />
+                                            <span className="text-xs font-bold">
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid className="row-span-3">
+                        <FlexCol>
+                            <FormLabel label="14. OCCUPATION:" />
+                            <div className="w-full grid gap-1">
+                                {occupations.map((item) => {
+                                    return (
+                                        <div
+                                            className="flex space-x-2 items-center h-fit flex-1"
+                                            key={item.label}
+                                        >
+                                            <Checkbox value={item.label} />
+                                            <span className="text-xs font-bold">
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel label="12. STATUS OF EMPLOYMENT:" />
+                            <div className="w-full grid gap-1">
+                                {statusOfEmployment.map((item) => {
+                                    return (
+                                        <div
+                                            className="flex space-x-2 items-center h-fit flex-1"
+                                            key={item.label}
+                                        >
+                                            <Checkbox value={item.label} />
+                                            <span className="text-xs font-bold">
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid className="row-span-2">
+                        <FlexCol>
+                            <FormLabel label="13. TYPES OF EMPLOYMENT:" />
+                            <div className="w-full grid gap-1">
+                                {typesOfEmployment.map((item) => {
+                                    return (
+                                        <div
+                                            className="flex space-x-2 items-center h-fit flex-1"
+                                            key={item.label}
+                                        >
+                                            <Checkbox value={item.label} />
+                                            <span className="text-xs font-bold">
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel label="13. CATEGORY OF EMPLOYMENT:" />
+                            <div className="w-full grid gap-1">
+                                {categoryOfEmployment.map((item) => {
+                                    return (
+                                        <div
+                                            className="flex space-x-2 items-center h-fit flex-1"
+                                            key={item.label}
+                                        >
+                                            <Checkbox value={item.label} />
+                                            <span className="text-xs font-bold">
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </FlexCol>
+                    </RegistrationGrid>
+                </div>
+
+                <RegistrationGrid className="col-span-5">
+                    <FormLabel
+                        label="15. ORGANIZATION INFORMATION"
+                        isRequired={false}
+                    />
+                </RegistrationGrid>
+
+                <div className="grid grid-cols-4 col-span-5 w-full">
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel
+                                label="Organization Affiliated:"
+                                isRequired={false}
+                            />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel
+                                label="Contact Person:"
+                                isRequired={false}
+                            />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel
+                                label="Office Address:"
+                                isRequired={false}
+                            />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
+
+                    <RegistrationGrid>
+                        <FlexCol>
+                            <FormLabel label="Tel. Nos.:" isRequired={false} />
+                            <BorderBInput />
+                        </FlexCol>
+                    </RegistrationGrid>
+                </div>
+
+                <RegistrationGrid className="col-span-5">
+                    <FormLabel
+                        label="15. ID REFERENCE NO."
+                        isRequired={false}
+                    />
+                </RegistrationGrid>
+
+                <RegistrationGrid>
+                    <FlexCol>
+                        <FormLabel label="SSS NO.:" isRequired={false} />
+                        <BorderBInput />
+                    </FlexCol>
+                </RegistrationGrid>
+
+                <RegistrationGrid>
+                    <FlexCol>
+                        <FormLabel label="GSIS NO:" isRequired={false} />
+                        <BorderBInput />
+                    </FlexCol>
+                </RegistrationGrid>
+
+                <RegistrationGrid>
+                    <FlexCol>
+                        <FormLabel label="PAG-IBIG NO.:" isRequired={false} />
+                        <BorderBInput />
+                    </FlexCol>
+                </RegistrationGrid>
+
+                <RegistrationGrid>
+                    <FlexCol>
+                        <FormLabel label="PSN NO.:" isRequired={false} />
+                        <BorderBInput />
+                    </FlexCol>
+                </RegistrationGrid>
+
+                <RegistrationGrid>
+                    <FlexCol>
+                        <FormLabel label="PhilHealth NO.:" isRequired={false} />
+                        <BorderBInput />
+                    </FlexCol>
                 </RegistrationGrid>
             </div>
         </>
