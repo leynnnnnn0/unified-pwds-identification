@@ -1,3 +1,3 @@
-export default function Span({ text = "Building" }) {
-    return <span className="text-xs">{text}</span>;
+export default function Span({ label }) {
+    return <span className="text-xs font-bold">{label}</span>;
 }
