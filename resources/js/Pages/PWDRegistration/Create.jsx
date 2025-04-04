@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/Input";
 import BorderBInput from "@/Components/Input/border-b-Input";
 import { Checkbox } from "@/components/ui/checkbox";
 import FormField from "@/Components/form/form-field";
+import FormH1 from "@/Components/text/form-h1";
+
 import {
     Select,
     SelectContent,
@@ -198,6 +200,32 @@ const Create = () => {
                         </SelectContent>
                     </Select>
                 </FormField>
+
+                <FormH1 label="Residence Address"/>
+                    
+
+
+            <FormField label="House No. and Street">
+                    <Input />
+                </FormField>
+                
+                <FormField label="Barangay">
+                    <Input />
+                </FormField>
+
+                <FormField label="Municipality">
+                    <Input />
+                </FormField>
+
+                <FormField label="Province">
+                    <Input />
+                </FormField>
+
+                <FormField label="Region">
+                    <Input />
+                </FormField>
+
+
             </div>
         </>
     );
