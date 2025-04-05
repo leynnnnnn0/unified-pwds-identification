@@ -11,14 +11,7 @@ import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
 import FormLabel from "@/Components/text/form-label";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useForm } from "@inertiajs/react";
 
 import {
     Select,
@@ -29,8 +22,62 @@ import {
 } from "@/components/ui/select";
 import { PanelBottom } from "lucide-react";
 
-
 const Create = () => {
+    const form = useForm({
+        personal_information: {
+            first_name: null,
+            middle_name: null,
+            last_name: null,
+            suffix: null,
+            date_of_birth: null,
+            sex: null,
+            civil_status: null,
+            type_of_disability: null,
+            causeOfDisability: null,
+        },
+        residence_address: {
+            house_no_and_street: null,
+            barangay: null,
+            municipality: null,
+            province: null,
+            region: null,
+        },
+        contact_details: {
+            landline_no: null,
+            mobile_no: null,
+            email_address: null,
+        },
+        education: {
+            educational_attainment: null,
+        },
+        employment_details: {
+            status_of_employment: null,
+            types_of_employment: null,
+            category_of_employment: null,
+        },
+        occupation: {
+            work_field: null,
+        },
+        organization_information: {
+            organization_affiliated: null,
+            contact_person: null,
+            office_address: null,
+            telephone_no: null,
+        },
+        id_reference_no: {
+            sss_no: null,
+            gsis_no: null,
+            pag_ibig_no: null,
+            psn_no: null,
+            philhealth_no: null,
+        },
+        family_information: {
+            fathers_name: null,
+            mothers_name: null,
+            guardians_name: null,
+        },
+    });
+
     const civilStatus = [
         { label: "Single" },
         { label: "Seperated" },
@@ -113,14 +160,14 @@ const Create = () => {
                                 value="option-one"
                                 id="option-one"
                             />
-                            <Span label="New Applicant" htmlFor="option-one"/>
+                            <Span label="New Applicant" htmlFor="option-one" />
                         </div>
                         <div className="flex space-x-2 items-center h-fit flex-1">
                             <RadioGroupItem
                                 value="option-two"
                                 id="option-two"
                             />
-                        <Span label="Renewal" htmlFor="option-two"/>
+                            <Span label="Renewal" htmlFor="option-two" />
                         </div>
                     </RadioGroup>
                 </FormField>
@@ -207,14 +254,13 @@ const Create = () => {
                     </Select>
                 </FormField>
 
-                
             <FormH1 label="Residence Address"/>
                     
 
-            <FormField label="House No. and Street">
+                <FormField label="House No. and Street">
                     <Input />
                 </FormField>
-                
+
                 <FormField label="Barangay">
                     <Input />
                 </FormField>
@@ -231,305 +277,328 @@ const Create = () => {
                     <Input />
                 </FormField>
 
-                <FormH1 label="Contact Details"/>
+                <FormH1 label="Contact Details" />
 
                 <div className="col-span-4 grid grid-cols-3 gap-3">
-                <FormField label="Landline No.">
-                    <Input />
-                </FormField>
+                    <FormField label="Landline No.">
+                        <Input />
+                    </FormField>
 
-                <FormField label="Mobile No.">
-                    <Input />
-                </FormField>
+                    <FormField label="Mobile No.">
+                        <Input />
+                    </FormField>
 
-                <FormField label="Email Address">
-                    <Input />
-                </FormField>
+                    <FormField label="Email Address">
+                        <Input />
+                    </FormField>
                 </div>
-                
-                <FormH1 label="Education"/>
 
-                <FormField label="Educational Attainment" className="col-span-4"/>
+                <FormH1 label="Education" />
 
-                <RadioGroup defaultValue="option-one" className="col-span-4 grid grid-cols-4">
+                <FormField
+                    label="Educational Attainment"
+                    className="col-span-4"
+                />
+
+                <RadioGroup
+                    defaultValue="option-one"
+                    className="col-span-4 grid grid-cols-4"
+                >
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-one" id="option-one" />
-                            <Span label="None" htmlFor="option-one"/>
+                        <Span label="None" htmlFor="option-one" />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-two" id="option-two" />
-                            <Span label="Kindergarten" htmlFor="option-two"/>
+                        <Span label="Kindergarten" htmlFor="option-two" />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-three" id="option-three" />
-                            <Span label="Elementary" htmlFor="option-three"/>
+                        <RadioGroupItem
+                            value="option-three"
+                            id="option-three"
+                        />
+                        <Span label="Elementary" htmlFor="option-three" />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-four" id="option-four" />
-                            <Span label="Junior High School" htmlFor="option-four"/>
+                        <Span
+                            label="Junior High School"
+                            htmlFor="option-four"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-five" id="option-five" />
-                            <Span label="Senior High School" htmlFor="option-five"/>
+                        <Span
+                            label="Senior High School"
+                            htmlFor="option-five"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-six" id="option-six" />
-                            <Span label="College" htmlFor="option-six"/>
+                        <Span label="College" htmlFor="option-six" />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-seven" id="option-seven" />
-                            <Span label="Vocational" htmlFor="option-seven"/>
+                        <RadioGroupItem
+                            value="option-seven"
+                            id="option-seven"
+                        />
+                        <Span label="Vocational" htmlFor="option-seven" />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-eight" id="option-eight" />
-                            <Span label="Post-Graduate" htmlFor="option-eight"/>
+                        <RadioGroupItem
+                            value="option-eight"
+                            id="option-eight"
+                        />
+                        <Span label="Post-Graduate" htmlFor="option-eight" />
                     </div>
                 </RadioGroup>
-                
-                <FormH1 label="Employment Details"/>
+
+                <FormH1 label="Employment Details" />
 
                 <div className="col-span-4 grid grid-cols-3">
                     <FormField label="Status of Employment">
-                <RadioGroup defaultValue="option-one">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Span label="Employed" htmlFor="option-one"/>
-                     </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Span label="Unemployed" htmlFor="option-two"/>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-three" id="option-three" />
-                        <Span label="Self-employed" htmlFor="option-ohree"/>
-                     </div>
-                </RadioGroup>
+                        <RadioGroup defaultValue="option-one">
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-one"
+                                    id="option-one"
+                                />
+                                <Span label="Employed" htmlFor="option-one" />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-two"
+                                    id="option-two"
+                                />
+                                <Span label="Unemployed" htmlFor="option-two" />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-three"
+                                    id="option-three"
+                                />
+                                <Span
+                                    label="Self-employed"
+                                    htmlFor="option-ohree"
+                                />
+                            </div>
+                        </RadioGroup>
                     </FormField>
 
                     <FormField label="Types Of Employment">
-                <RadioGroup defaultValue="option-one">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Span label="Permanent / Regular" htmlFor="option-one"/>
-                     </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Span label="Seasonal" htmlFor="option-two"/>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-three" id="option-three" />
-                        <Span label="Casual" htmlFor="option-three"/>
-                     </div>
-                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-four" id="option-four" />
-                        <Span label="Emergency" htmlFor="option-four"/>
-                     </div>
-                </RadioGroup>
+                        <RadioGroup defaultValue="option-one">
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-one"
+                                    id="option-one"
+                                />
+                                <Span
+                                    label="Permanent / Regular"
+                                    htmlFor="option-one"
+                                />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-two"
+                                    id="option-two"
+                                />
+                                <Span label="Seasonal" htmlFor="option-two" />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-three"
+                                    id="option-three"
+                                />
+                                <Span label="Casual" htmlFor="option-three" />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-four"
+                                    id="option-four"
+                                />
+                                <Span label="Emergency" htmlFor="option-four" />
+                            </div>
+                        </RadioGroup>
                     </FormField>
 
                     <FormField label="Category of Employment">
-                <RadioGroup defaultValue="option-one">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Span label="Government" htmlFor="option-one"/>
-                     </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Span label="Private" htmlFor="option-two"/>
-                    </div>
-                </RadioGroup>
+                        <RadioGroup defaultValue="option-one">
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-one"
+                                    id="option-one"
+                                />
+                                <Span label="Government" htmlFor="option-one" />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem
+                                    value="option-two"
+                                    id="option-two"
+                                />
+                                <Span label="Private" htmlFor="option-two" />
+                            </div>
+                        </RadioGroup>
                     </FormField>
                 </div>
 
-                <FormH1 label="Occupation"/>
+                <FormH1 label="Occupation" />
 
-                <FormField label="Work Field" className="col-span-4"/>
-        
-                <RadioGroup defaultValue="option-one" className="col-span-4 grid grid-cols-4">
+                <FormField label="Work Field" className="col-span-4" />
+
+                <RadioGroup
+                    defaultValue="option-one"
+                    className="col-span-4 grid grid-cols-4"
+                >
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-one" id="option-one" />
-                            <Span label="Managers" htmlFor="option-one"/>
+                        <Span label="Managers" htmlFor="option-one" />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-two" id="option-two" />
-                            <Span label="Professionals" htmlFor="option-two"/>
+                        <Span label="Professionals" htmlFor="option-two" />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-three" id="option-three" />
-                            <Span label="Technicians and Associate Professionals" htmlFor="option-three"/>
+                        <RadioGroupItem
+                            value="option-three"
+                            id="option-three"
+                        />
+                        <Span
+                            label="Technicians and Associate Professionals"
+                            htmlFor="option-three"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-four" id="option-four" />
-                            <Span label="Clerical Support Workers" htmlFor="option-four"/>
+                        <Span
+                            label="Clerical Support Workers"
+                            htmlFor="option-four"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-five" id="option-five" />
-                            <Span label="Service and Sales Workers" htmlFor="option-five"/>
+                        <Span
+                            label="Service and Sales Workers"
+                            htmlFor="option-five"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-six" id="option-six" />
-                            <Span label="Skilled Agricultural, Forestry and Fishery Workers" htmlFor="option-six"/>
+                        <Span
+                            label="Skilled Agricultural, Forestry and Fishery Workers"
+                            htmlFor="option-six"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-seven" id="option-seven" />
-                            <Span label="Craft and Related Trade Workers" htmlFor="option-seven"/>
+                        <RadioGroupItem
+                            value="option-seven"
+                            id="option-seven"
+                        />
+                        <Span
+                            label="Craft and Related Trade Workers"
+                            htmlFor="option-seven"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-eight" id="option-eight" />
-                            <Span label="Plant and Machine Operators and Assemblers" htmlFor="option-eight"/>
+                        <RadioGroupItem
+                            value="option-eight"
+                            id="option-eight"
+                        />
+                        <Span
+                            label="Plant and Machine Operators and Assemblers"
+                            htmlFor="option-eight"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-eight" id="option-eight" />
-                            <Span label="Elementary Occupations" htmlFor="option-nine"/>
+                        <RadioGroupItem
+                            value="option-eight"
+                            id="option-eight"
+                        />
+                        <Span
+                            label="Elementary Occupations"
+                            htmlFor="option-nine"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option-ten" id="option-ten" />
-                            <Span label="Armed Forces Occupations" htmlFor="option-ten"/>
+                        <Span
+                            label="Armed Forces Occupations"
+                            htmlFor="option-ten"
+                        />
                     </div>
                     <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-eleven" id="option-eleven" />
-                            <Span label="Others, specify:" htmlFor="option-eleven"/>
-                            <BorderBInput/>
+                        <RadioGroupItem
+                            value="option-eleven"
+                            id="option-eleven"
+                        />
+                        <Span
+                            label="Others, specify:"
+                            htmlFor="option-eleven"
+                        />
+                        <BorderBInput />
                     </div>
                 </RadioGroup>
 
-                <FormH1 label="Organization Information"/>
-                
+                <FormH1 label="Organization Information" />
+
                 <FormField label="Organization Affiliated">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="Contact Person">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="Office Address">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="Telephone No.">
-                    <Input/>
+                    <Input />
                 </FormField>
-                
- 
-                <FormH1 label="ID Reference No."/>
+
+                <FormH1 label="ID Reference No." />
 
                 <FormField label="SSS No.">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="GSIS No.">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="PAG-IBIG No.">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="PSN No.">
-                    <Input/>
+                    <Input />
                 </FormField>
 
                 <FormField label="PhilHealth No.">
-                    <Input/>
-                </FormField>      
+                    <Input />
+                </FormField>
 
-                <FormH1 label="Family Information"/>
-                
+                <FormH1 label="Family Information" />
+
                 <Span></Span>
-                <FormField label="Last Name"/>
-                <FormField label="First Name"/> 
-                <FormField label="Middle Name"/> 
+                <FormField label="Last Name" />
+                <FormField label="First Name" />
+                <FormField label="Middle Name" />
 
                 <Span label="Father's Name:"></Span>
-                <Input/>
-                <Input/>
-                <Input/>
+                <Input />
+                <Input />
+                <Input />
 
                 <Span label="Mother's Name:"></Span>
-                <Input/>
-                <Input/>
-                <Input/>
+                <Input />
+                <Input />
+                <Input />
 
                 <Span label="Guardian's Name:"></Span>
-                <Input/>
-                <Input/>
-                <Input/>
-
-                <FormH1 label="Form Accomplished By"/>
-                
-                <FormField label="Accomplished By:"/>
-
-                 <RadioGroup defaultValue="option-one" className="col-span-3 grid grid-cols-3">
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                            <Span label="Applicant" htmlFor="option-one"/>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                            <Span label="Guardian" htmlFor="option-two"/>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-three" id="option-three" />
-                            <Span label="Representative" htmlFor="option-three"/>
-                    </div>
-                </RadioGroup>
-
-                <Span label="Name of the one who accomplished:"></Span>
-
-                <FormField label="Last Name">
-                    <Input/>
-                </FormField>
-
-                <FormField label="First Name">
-                    <Input/>
-                </FormField>
-
-                <FormField label="Middle Name"> 
-                    <Input/>
-                </FormField>      
-
-                <FormH1 label="Certification and Processing Information"/>
-
-                <Span></Span>
-                <Span label="Last Name"/>  
-                <Span label="First Name"/>
-                <Span label="Middle Name"/>
-
-                <div className="col-span-1 grid grid-rows-1">
-                    <FormField label="License No. of Physician">
-                        <BorderBInput/>
-                    </FormField>
-                </div>
-                <Input/>
-                <Input/>
-                <Input/>
-
-                <FormField label="Processing Officer"/>
-                <Input/>
-                <Input/>
-                <Input/>
-
-                <FormField label="Approving Officer"/>
-                <Input/>
-                <Input/>
-                <Input/>
-
-                <FormField label="Encoder"/>
-                <Input/>
-                <Input/>
-                <Input/>
-                
-                <FormField label="Name of Reporting Unit: (Office/Section)"/>
-                <div className="col-span-3 grid grid-cols-1">
-                <Input/>
-                </div>
-                
-                
-                <FormField label="Control No."/>
-                <div className="col-span-3 grid grid-cols-1">
-                <Input/>
-                </div>
+                <Input />
+                <Input />
+                <Input />
             </div>
         </>
     );
