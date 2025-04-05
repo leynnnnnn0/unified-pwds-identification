@@ -11,6 +11,14 @@ import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
 import FormLabel from "@/Components/text/form-label";
 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import {
     Select,
@@ -38,6 +46,10 @@ const Create = () => {
         { label: "Mental Disability" },
         { label: "Physical Disability(Orthopedic)" },
         { label: "Psychosocial Disability" },
+        { label: "Speech and Language Impairment"},
+        { label: "Visual Disability"},
+        { label: "Cancer (RA11215)"},
+        { label: "Rare Disease (RA10747)"}
     ];
 
     const congenitalCause = [
@@ -195,6 +207,7 @@ const Create = () => {
                     </Select>
                 </FormField>
 
+                
             <FormH1 label="Residence Address"/>
                     
 
