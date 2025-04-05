@@ -111,41 +111,51 @@ const Create = () => {
         { label: "Down Syndrome" },
     ];
 
-    const educationalAttainments = [
-        { label: "None" },
-        { label: "Kindergarten" },
-        { label: "Elementary" },
-        { label: "Junior High School" },
-        { label: "Senior High School" },
-        { label: "College" },
-        { label: "Vocational" },
-        { label: "Post Graduate" },
+    const educationalAttainment = [
+        { label: "None", value: "option-one"},
+        { label: "Kindergarten", value: "option-two"},
+        { label: "Elementary", value: "option-three"},
+        { label: "Junior High School", value: "option-four"},
+        { label: "Senior High School", value: "option-five"},
+        { label: "College", value: "option-six"},
+        { label: "Vocational", value: "option-seven"},
+        { label: "Post-Graduate", value: "option-eight"},
     ];
 
     const statusOfEmployment = [
-        { label: "Employed" },
-        { label: "Unemployed" },
-        { label: "Self-employed" },
+        { label: "Employed", value: "option-one" },
+        { label: "Unemployed", value: "option-two" },
+        { label: "Self-employed", value: "option-three" },
     ];
 
     const typesOfEmployment = [
-        { label: "Permanent / Regular" },
-        { label: "Seasonal" },
-        { label: "Casual" },
-        { label: "Emergency" },
+        { label: "Permanent / Regular", value: "option-one" },
+        { label: "Seasonal", value: "option-two" },
+        { label: "Casual", value: "option-three" },
+        { label: "Emergency", value: "option-four" },
     ];
 
     const occupations = [
-        { label: "Managers" },
-        { label: "Professional" },
-        { label: "Technicians and Associate Professional" },
-        { label: "Clerical Support Workers" },
+        { label: "Managers", value: "option-one"},
+        { label: "Professionals", value: "option-two"},
+        { label: "Technicians and Associate Professionals", value: "option-three"},
+        { label: "Clerical Support Workers", value: "option-four"},
+        { label: "Service and Sales Workers", value: "option-five"},
+        { label: "Skilled Agricultural, Forestry and Fishery Workers", value: "option-six"},
+        { label: "Craft and Related Trade Workers", value: "option-seven"},
+        { label: "Plant and Machine Operators and Assemblers", value: "option-eight"},
+        { label: "Elementary Occupations", value: "option-nine"},
+        { label: "Armed Forces Occupations", value: "option-ten"},
+        { label: "Others, specify:", value: "option-eleven", hasInput: true},
     ];
 
     const categoryOfEmployment = [
-        { label: "Government" },
-        { label: "Private" },
+        { label: "Government", value: "option-one" },
+        { label: "Private", value: "option-two" },
     ];
+
+
+
     return (
         <>
             <H1 title="Registration Form" />
@@ -304,53 +314,14 @@ const Create = () => {
                     defaultValue="option-one"
                     className="col-span-4 grid grid-cols-4"
                 >
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Span label="None" htmlFor="option-one" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Span label="Kindergarten" htmlFor="option-two" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-three"
-                            id="option-three"
-                        />
-                        <Span label="Elementary" htmlFor="option-three" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-four" id="option-four" />
-                        <Span
-                            label="Junior High School"
-                            htmlFor="option-four"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-five" id="option-five" />
-                        <Span
-                            label="Senior High School"
-                            htmlFor="option-five"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-six" id="option-six" />
-                        <Span label="College" htmlFor="option-six" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-seven"
-                            id="option-seven"
-                        />
-                        <Span label="Vocational" htmlFor="option-seven" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-eight"
-                            id="option-eight"
-                        />
-                        <Span label="Post-Graduate" htmlFor="option-eight" />
-                    </div>
+                    {educationalAttainment.map((item) => {
+                        return(
+                            <div className="flex items-center space-x-2">
+                            <RadioGroupItem value={item.value} id={item.value} />
+                            <Span label={item.label} htmlFor={item.value} />
+                        </div>
+                        );
+                    })}
                 </RadioGroup>
 
                 <FormH1 label="Employment Details" />
@@ -358,85 +329,54 @@ const Create = () => {
                 <div className="col-span-4 grid grid-cols-3">
                     <FormField label="Status of Employment">
                         <RadioGroup defaultValue="option-one">
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-one"
-                                    id="option-one"
-                                />
-                                <Span label="Employed" htmlFor="option-one" />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-two"
-                                    id="option-two"
-                                />
-                                <Span label="Unemployed" htmlFor="option-two" />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-three"
-                                    id="option-three"
-                                />
-                                <Span
-                                    label="Self-employed"
-                                    htmlFor="option-ohree"
-                                />
-                            </div>
+
+                            {statusOfEmployment.map((item) => {
+                                return(
+                                    <div className="flex items-center space-x-2">
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span label={item.label} htmlFor={item.value}/>
+                                </div>
+                                );
+                            })}
                         </RadioGroup>
                     </FormField>
 
                     <FormField label="Types Of Employment">
                         <RadioGroup defaultValue="option-one">
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-one"
-                                    id="option-one"
-                                />
-                                <Span
-                                    label="Permanent / Regular"
-                                    htmlFor="option-one"
-                                />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-two"
-                                    id="option-two"
-                                />
-                                <Span label="Seasonal" htmlFor="option-two" />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-three"
-                                    id="option-three"
-                                />
-                                <Span label="Casual" htmlFor="option-three" />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-four"
-                                    id="option-four"
-                                />
-                                <Span label="Emergency" htmlFor="option-four" />
-                            </div>
+
+                            {typesOfEmployment.map((item) => {
+                                return (
+                                    <div className="flex items-center space-x-2">
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span
+                                        label={item.label}
+                                        htmlFor={item.value}
+                                    />
+                                </div>
+                                );
+                            })}
                         </RadioGroup>
                     </FormField>
 
                     <FormField label="Category of Employment">
                         <RadioGroup defaultValue="option-one">
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-one"
-                                    id="option-one"
-                                />
-                                <Span label="Government" htmlFor="option-one" />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem
-                                    value="option-two"
-                                    id="option-two"
-                                />
-                                <Span label="Private" htmlFor="option-two" />
-                            </div>
+                            {categoryOfEmployment.map((item) => {
+                                return(
+                                    <div className="flex items-center space-x-2">
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span label={item.label} htmlFor={item.value} />
+                                </div>
+                                );
+                            })}
                         </RadioGroup>
                     </FormField>
                 </div>
@@ -449,93 +389,15 @@ const Create = () => {
                     defaultValue="option-one"
                     className="col-span-4 grid grid-cols-4"
                 >
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Span label="Managers" htmlFor="option-one" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Span label="Professionals" htmlFor="option-two" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-three"
-                            id="option-three"
-                        />
-                        <Span
-                            label="Technicians and Associate Professionals"
-                            htmlFor="option-three"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-four" id="option-four" />
-                        <Span
-                            label="Clerical Support Workers"
-                            htmlFor="option-four"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-five" id="option-five" />
-                        <Span
-                            label="Service and Sales Workers"
-                            htmlFor="option-five"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-six" id="option-six" />
-                        <Span
-                            label="Skilled Agricultural, Forestry and Fishery Workers"
-                            htmlFor="option-six"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-seven"
-                            id="option-seven"
-                        />
-                        <Span
-                            label="Craft and Related Trade Workers"
-                            htmlFor="option-seven"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-eight"
-                            id="option-eight"
-                        />
-                        <Span
-                            label="Plant and Machine Operators and Assemblers"
-                            htmlFor="option-eight"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-eight"
-                            id="option-eight"
-                        />
-                        <Span
-                            label="Elementary Occupations"
-                            htmlFor="option-nine"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-ten" id="option-ten" />
-                        <Span
-                            label="Armed Forces Occupations"
-                            htmlFor="option-ten"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                            value="option-eleven"
-                            id="option-eleven"
-                        />
-                        <Span
-                            label="Others, specify:"
-                            htmlFor="option-eleven"
-                        />
-                        <BorderBInput />
-                    </div>
+                    {occupations.map((item) => {
+                        return(
+                            <div className="flex items-center space-x-2">
+                            <RadioGroupItem value={item.value} id={item.value} />
+                            <Span label={item.label} htmlFor={item.value} />
+                            {item.hasInput ? <BorderBInput/> : null}
+                        </div>
+                        );
+                    })}
                 </RadioGroup>
 
                 <FormH1 label="Organization Information" />
