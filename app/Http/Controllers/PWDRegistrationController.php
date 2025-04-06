@@ -16,4 +16,9 @@ class PWDRegistrationController extends Controller
     {
         return Inertia::render('PWDRegistration/Create');
     }
+
+    public function store(Request $request)
+    {
+        dd($request); 
+    }
 }

@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
 import FormLabel from "@/Components/text/form-label";
-
+import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
 
 import {
@@ -214,6 +214,16 @@ const Create = () => {
         { label: "Government", value: "government" },
         { label: "Private", value: "private" },
     ];
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        form.post(route("registration.store"), {
+            onSuccess: () => {
+                setPreviewImage(null);
+                form.reset();
+            },
+        });
+    };
 
     return (
         <>
@@ -939,6 +949,10 @@ const Create = () => {
                         )
                     }
                 />
+
+                <div className="flex items-center justify-end col-span-4">
+                    <Button onClick={submitForm}>Submit</Button>
+                </div>
             </div>
         </>
     );
