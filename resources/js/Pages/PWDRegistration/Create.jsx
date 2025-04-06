@@ -229,7 +229,11 @@ const Create = () => {
         <>
             <H1 title="Registration Form" />
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
-                <FormField className="col-span-3" label="Type of Registration">
+                <FormField
+                    className="col-span-3"
+                    label="Type of Registration"
+                    error={form.errors.type_of_registration}
+                >
                     <RadioGroup
                         value={form.data.type_of_registration}
                         onValueChange={(value) =>
@@ -254,7 +258,11 @@ const Create = () => {
                     </RadioGroup>
                 </FormField>
 
-                <FormField label='1"x1" Photo' className="row-span-3">
+                <FormField
+                    label='1"x1" Photo'
+                    className="row-span-3"
+                    error={form.errors.photo}
+                >
                     <div
                         className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
                         onClick={handleImageClick}
@@ -288,6 +296,7 @@ const Create = () => {
                 <FormField
                     className="col-span-3"
                     label="Person with disability number"
+                    error={form.errors.pwd_number}
                 >
                     <Input
                         value={form.data.pwd_number || ""}
@@ -301,7 +310,10 @@ const Create = () => {
                     Personal Information
                 </h1>
 
-                <FormField label="Last Name">
+                <FormField
+                    label="Last Name"
+                    error={form.errors["personal_information.last_name"]}
+                >
                     <Input
                         value={form.data.personal_information.last_name || ""}
                         onChange={(e) =>
@@ -313,7 +325,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="First Name">
+                <FormField
+                    label="First Name"
+                    error={form.errors["personal_information.first_name"]}
+                >
                     <Input
                         value={form.data.personal_information.first_name || ""}
                         onChange={(e) =>
@@ -325,7 +340,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Middle Name">
+                <FormField
+                    label="Middle Name"
+                    error={form.errors["personal_information.middle_name"]}
+                >
                     <Input
                         value={form.data.personal_information.middle_name || ""}
                         onChange={(e) =>
@@ -337,7 +355,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Suffix">
+                <FormField
+                    label="Suffix"
+                    error={form.errors["personal_information.suffix"]}
+                >
                     <Input
                         value={form.data.personal_information.suffix || ""}
                         onChange={(e) =>
@@ -349,7 +370,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Date of Birth">
+                <FormField
+                    label="Date of Birth"
+                    error={form.errors["personal_information.date_of_birth"]}
+                >
                     <Input
                         type="date"
                         value={
@@ -364,7 +388,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Sex">
+                <FormField
+                    label="Sex"
+                    error={form.errors["personal_information.sex"]}
+                >
                     <Select
                         value={form.data.personal_information.sex || ""}
                         onValueChange={(value) =>
@@ -381,7 +408,10 @@ const Create = () => {
                     </Select>
                 </FormField>
 
-                <FormField label="Civil Status">
+                <FormField
+                    label="Civil Status"
+                    error={form.errors["personal_information.civil_status"]}
+                >
                     <Select
                         value={
                             form.data.personal_information.civil_status || ""
@@ -406,7 +436,12 @@ const Create = () => {
                     </Select>
                 </FormField>
 
-                <FormField label="Type of Disability">
+                <FormField
+                    label="Type of Disability"
+                    error={
+                        form.errors["personal_information.type_of_disability"]
+                    }
+                >
                     <Select
                         value={
                             form.data.personal_information.type_of_disability ||
@@ -434,7 +469,10 @@ const Create = () => {
 
                 <FormH1 label="Residence Address" />
 
-                <FormField label="House No. and Street">
+                <FormField
+                    label="House No. and Street"
+                    error={form.errors["residence_address.house_no_and_street"]}
+                >
                     <Input
                         value={
                             form.data.residence_address.house_no_and_street ||
@@ -449,7 +487,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Barangay">
+                <FormField
+                    label="Barangay"
+                    error={form.errors["residence_address.barangay"]}
+                >
                     <Input
                         value={form.data.residence_address.barangay || ""}
                         onChange={(e) =>
@@ -461,7 +502,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Municipality">
+                <FormField
+                    label="Municipality"
+                    error={form.errors["residence_address.municipality"]}
+                >
                     <Input
                         value={form.data.residence_address.municipality || ""}
                         onChange={(e) =>
@@ -473,7 +517,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Province">
+                <FormField
+                    label="Province"
+                    error={form.errors["residence_address.province"]}
+                >
                     <Input
                         value={form.data.residence_address.province || ""}
                         onChange={(e) =>
@@ -485,7 +532,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Region">
+                <FormField
+                    label="Region"
+                    error={form.errors["residence_address.region"]}
+                >
                     <Input
                         value={form.data.residence_address.region || ""}
                         onChange={(e) =>
@@ -500,7 +550,10 @@ const Create = () => {
                 <FormH1 label="Contact Details" />
 
                 <div className="col-span-4 grid grid-cols-3 gap-3">
-                    <FormField label="Landline No.">
+                    <FormField
+                        label="Landline No."
+                        error={form.errors["contact_details.landline_no"]}
+                    >
                         <Input
                             value={form.data.contact_details.landline_no || ""}
                             onChange={(e) =>
@@ -512,7 +565,10 @@ const Create = () => {
                         />
                     </FormField>
 
-                    <FormField label="Mobile No.">
+                    <FormField
+                        label="Mobile No."
+                        error={form.errors["contact_details.mobile_no"]}
+                    >
                         <Input
                             value={form.data.contact_details.mobile_no || ""}
                             onChange={(e) =>
@@ -524,7 +580,10 @@ const Create = () => {
                         />
                     </FormField>
 
-                    <FormField label="Email Address">
+                    <FormField
+                        label="Email Address"
+                        error={form.errors["contact_details.email_address"]}
+                    >
                         <Input
                             value={
                                 form.data.contact_details.email_address || ""
@@ -544,6 +603,7 @@ const Create = () => {
                 <FormField
                     label="Educational Attainment"
                     className="col-span-4"
+                    error={form.errors["education.educational_attainment"]}
                 />
 
                 <RadioGroup
@@ -570,7 +630,14 @@ const Create = () => {
                 <FormH1 label="Employment Details" />
 
                 <div className="col-span-4 grid grid-cols-3">
-                    <FormField label="Status of Employment">
+                    <FormField
+                        label="Status of Employment"
+                        error={
+                            form.errors[
+                                "employment_details.status_of_employment"
+                            ]
+                        }
+                    >
                         <RadioGroup
                             value={
                                 form.data.employment_details
@@ -601,7 +668,14 @@ const Create = () => {
                         </RadioGroup>
                     </FormField>
 
-                    <FormField label="Types Of Employment">
+                    <FormField
+                        label="Types Of Employment"
+                        error={
+                            form.errors[
+                                "employment_details.types_of_employment"
+                            ]
+                        }
+                    >
                         <RadioGroup
                             value={
                                 form.data.employment_details
@@ -632,7 +706,14 @@ const Create = () => {
                         </RadioGroup>
                     </FormField>
 
-                    <FormField label="Category of Employment">
+                    <FormField
+                        label="Category of Employment"
+                        error={
+                            form.errors[
+                                "employment_details.category_of_employment"
+                            ]
+                        }
+                    >
                         <RadioGroup
                             value={
                                 form.data.employment_details
@@ -666,7 +747,11 @@ const Create = () => {
 
                 <FormH1 label="Occupation" />
 
-                <FormField label="Work Field" className="col-span-4" />
+                <FormField
+                    label="Work Field"
+                    className="col-span-4"
+                    error={form.errors["occupation.work_field"]}
+                />
 
                 <RadioGroup
                     value={form.data.occupation.work_field || ""}
@@ -699,6 +784,9 @@ const Create = () => {
                                             e.target.value
                                         )
                                     }
+                                    error={
+                                        form.errors["occupation.other_field"]
+                                    }
                                 />
                             ) : null}
                         </div>
@@ -707,7 +795,14 @@ const Create = () => {
 
                 <FormH1 label="Organization Information" />
 
-                <FormField label="Organization Affiliated">
+                <FormField
+                    label="Organization Affiliated"
+                    error={
+                        form.errors[
+                            "organization_information.organization_affiliated"
+                        ]
+                    }
+                >
                     <Input
                         value={
                             form.data.organization_information
@@ -722,7 +817,12 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Contact Person">
+                <FormField
+                    label="Contact Person"
+                    error={
+                        form.errors["organization_information.contact_person"]
+                    }
+                >
                     <Input
                         value={
                             form.data.organization_information.contact_person ||
@@ -737,7 +837,12 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Office Address">
+                <FormField
+                    label="Office Address"
+                    error={
+                        form.errors["organization_information.office_address"]
+                    }
+                >
                     <Input
                         value={
                             form.data.organization_information.office_address ||
@@ -752,7 +857,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Telephone No.">
+                <FormField
+                    label="Telephone No."
+                    error={form.errors["organization_information.telephone_no"]}
+                >
                     <Input
                         value={
                             form.data.organization_information.telephone_no ||
@@ -769,7 +877,10 @@ const Create = () => {
 
                 <FormH1 label="ID Reference No." />
 
-                <FormField label="SSS No.">
+                <FormField
+                    label="SSS No."
+                    error={form.errors["id_reference_no.sss_no"]}
+                >
                     <Input
                         value={form.data.id_reference_no.sss_no || ""}
                         onChange={(e) =>
@@ -781,7 +892,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="GSIS No.">
+                <FormField
+                    label="GSIS No."
+                    error={form.errors["id_reference_no.gsis_no"]}
+                >
                     <Input
                         value={form.data.id_reference_no.gsis_no || ""}
                         onChange={(e) =>
@@ -793,7 +907,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="PAG-IBIG No.">
+                <FormField
+                    label="PAG-IBIG No."
+                    error={form.errors["id_reference_no.pag_ibig_no"]}
+                >
                     <Input
                         value={form.data.id_reference_no.pag_ibig_no || ""}
                         onChange={(e) =>
@@ -805,7 +922,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="PSN No.">
+                <FormField
+                    label="PSN No."
+                    error={form.errors["id_reference_no.psn_no"]}
+                >
                     <Input
                         value={form.data.id_reference_no.psn_no || ""}
                         onChange={(e) =>
@@ -817,7 +937,10 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="PhilHealth No.">
+                <FormField
+                    label="PhilHealth No."
+                    error={form.errors["id_reference_no.philhealth_no"]}
+                >
                     <Input
                         value={form.data.id_reference_no.philhealth_no || ""}
                         onChange={(e) =>

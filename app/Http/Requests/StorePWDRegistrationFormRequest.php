@@ -12,7 +12,7 @@ class StorePWDRegistrationFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class StorePWDRegistrationFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type_of_registration' => 'required|string|in:option-one,option-two',
+            'type_of_registration' => 'required|string|in:new_applicant,renewal',
             'pwd_number' => 'nullable|string|max:50',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
 
@@ -76,9 +76,9 @@ class StorePWDRegistrationFormRequest extends FormRequest
             'id_reference_no.philhealth_no' => 'nullable|string|max:20',
 
             // Family Information
-            'family_information.fathers_name.last_name' => 'nullable|string|max:100',
-            'family_information.fathers_name.first_name' => 'nullable|string|max:100',
-            'family_information.fathers_name.middle_name' => 'nullable|string|max:100',
+            'family_information.fathers_name.last_name' => 'required|string|max:100',
+            'family_information.fathers_name.first_name' => 'required|string|max:100',
+            'family_information.fathers_name.middle_name' => 'required|string|max:100',
 
             'family_information.mothers_name.last_name' => 'nullable|string|max:100',
             'family_information.mothers_name.first_name' => 'nullable|string|max:100',

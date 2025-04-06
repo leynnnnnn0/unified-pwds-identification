@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePWDRegistrationFormRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,8 +18,8 @@ class PWDRegistrationController extends Controller
         return Inertia::render('PWDRegistration/Create');
     }
 
-    public function store(Request $request)
+    public function store(StorePWDRegistrationFormRequest $request)
     {
-        dd($request); 
+        $request->validated();
     }
 }
