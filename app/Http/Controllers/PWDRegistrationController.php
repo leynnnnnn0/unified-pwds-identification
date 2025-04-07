@@ -11,7 +11,11 @@ class PWDRegistrationController extends Controller
 {
     public function index()
     {
-        return Inertia::render('PWDRegistration/Index');
+        $applications = PWDApplicationForm::with('user')->select(['id', 'application_number', 'application_date', 'status'])->paginate(10);
+
+        return Inertia::render('PWDRegistration/Index', [
+            'applications' => $applications,
+        ]);
     }
 
     public function create()
@@ -26,9 +30,10 @@ class PWDRegistrationController extends Controller
         $validated['photo'] = null;
         $validated['user_id'] = 1;
         $validated['encoder_id'] = 1;
-        PWDApplicationForm::create(
-            $validated
-        );
+        $validated['application_number'] = 'PWD-0001';
+        $validated['application_date'] = now();
+
+        PWDApplicationForm::create($validated);
 
         return to_route('registration.index');
     }

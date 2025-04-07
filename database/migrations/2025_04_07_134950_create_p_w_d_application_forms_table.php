@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('pwd_application_forms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('processing_officer_id')->nullable()->constrained('users');
             $table->foreignId('encoder_id')->constrained('users');
             $table->foreignId('approver_id')->nullable()->constrained('users');
-            $table->string('application_form_type');
+            $table->date('application_date');
+            $table->string('application_number')->unique();
             $table->string('type_of_registration');
             $table->string('pwd_number')->nullable();
             $table->string('photo')->nullable();

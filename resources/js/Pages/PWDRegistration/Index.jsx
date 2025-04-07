@@ -7,28 +7,34 @@ import DivTable from "@/Components/div/div-table";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
 
-const Index = () => {
+const Index = ({ applications }) => {
     return (
         <>
             <div className="flex items-center justify-between">
-                <H1 title="Registrations" />
+                <H1 title="Applications" />
                 <Button>
                     <Link href={route("registration.create")}>Create</Link>
                 </Button>
             </div>
             <div className="space-y-4">
-                <DivTable>
-                    <section className="flex-1">
-                        <TDLabel>Request Number: RN-0000001</TDLabel>
-                        <TDLabel>Request Date: August 11, 2025</TDLabel>
-                        <TDLabel>
-                            Status: <Badge>PENDING</Badge>
-                        </TDLabel>
-                    </section>
-                    <section>
-                        <InfoIcon />
-                    </section>
-                </DivTable>
+                {applications.data.map((application) => (
+                    <DivTable key={application.id}>
+                        <section className="flex-1">
+                            <TDLabel>
+                                Request Number: {application.application_number}
+                            </TDLabel>
+                            <TDLabel>
+                                Request Date: {application.application_date}
+                            </TDLabel>
+                            <TDLabel>
+                                Status: <Badge>{application.status}</Badge>
+                            </TDLabel>
+                        </section>
+                        <section>
+                            <InfoIcon />
+                        </section>
+                    </DivTable>
+                ))}
             </div>
         </>
     );

@@ -13,6 +13,14 @@ class PWDApplicationForm extends Model
     protected $table = 'pwd_application_forms';
 
     protected $fillable = [
+        'user_id',
+        'encoder_id',
+        'application_number',
+        'approver_id',
+        'processing_officer_id',
+        'application_date',
+        'status',
+
         'type_of_registration',
         'pwd_number',
         'photo',
@@ -67,4 +75,9 @@ class PWDApplicationForm extends Model
         'guardian_first_name',
         'guardian_middle_name',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

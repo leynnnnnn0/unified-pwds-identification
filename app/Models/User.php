@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function application_form()
+    {
+        return $this->hasMany(PWDApplicationForm::class);
+    }
 }
