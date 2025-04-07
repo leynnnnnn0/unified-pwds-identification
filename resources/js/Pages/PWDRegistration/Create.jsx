@@ -314,7 +314,11 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Middle Name" error={form.errors.middle_name}>
+                <FormField
+                    label="Middle Name"
+                    error={form.errors.middle_name}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.middle_name || ""}
                         onChange={(e) =>
@@ -323,7 +327,11 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Suffix" error={form.errors.suffix}>
+                <FormField
+                    label="Suffix"
+                    error={form.errors.suffix}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.suffix || ""}
                         onChange={(e) => form.setData("suffix", e.target.value)}
@@ -461,6 +469,7 @@ const Create = () => {
                     <FormField
                         label="Landline No."
                         error={form.errors.landline_no}
+                        isRequired={false}
                     >
                         <Input
                             value={form.data.landline_no || ""}
@@ -482,6 +491,7 @@ const Create = () => {
                     <FormField
                         label="Email Address"
                         error={form.errors.email_address}
+                        isRequired={false}
                     >
                         <Input
                             value={form.data.email_address || ""}
@@ -555,6 +565,7 @@ const Create = () => {
                     <FormField
                         label="Types Of Employment"
                         error={form.errors.types_of_employment}
+                        isRequired={false}
                     >
                         <RadioGroup
                             value={form.data.types_of_employment || ""}
@@ -583,6 +594,7 @@ const Create = () => {
                     <FormField
                         label="Category of Employment"
                         error={form.errors.category_of_employment}
+                        isRequired={false}
                     >
                         <RadioGroup
                             value={form.data.category_of_employment || ""}
@@ -615,6 +627,7 @@ const Create = () => {
                     label="Work Field"
                     className="col-span-4"
                     error={form.errors.work_field}
+                    isRequired={false}
                 />
 
                 <RadioGroup
@@ -657,6 +670,7 @@ const Create = () => {
                 <FormField
                     label="Organization Affiliated"
                     error={form.errors.organization_affiliated}
+                    isRequired={false}
                 >
                     <Input
                         value={form.data.organization_affiliated || ""}
@@ -672,6 +686,7 @@ const Create = () => {
                 <FormField
                     label="Contact Person"
                     error={form.errors.contact_person}
+                    isRequired={false}
                 >
                     <Input
                         value={form.data.contact_person || ""}
@@ -684,6 +699,7 @@ const Create = () => {
                 <FormField
                     label="Office Address"
                     error={form.errors.office_address}
+                    isRequired={false}
                 >
                     <Input
                         value={form.data.office_address || ""}
@@ -696,6 +712,7 @@ const Create = () => {
                 <FormField
                     label="Telephone No."
                     error={form.errors.telephone_no}
+                    isRequired={false}
                 >
                     <Input
                         value={form.data.telephone_no || ""}
@@ -707,14 +724,22 @@ const Create = () => {
 
                 <FormH1 label="ID Reference No." />
 
-                <FormField label="SSS No." error={form.errors.sss_no}>
+                <FormField
+                    label="SSS No."
+                    error={form.errors.sss_no}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.sss_no || ""}
                         onChange={(e) => form.setData("sss_no", e.target.value)}
                     />
                 </FormField>
 
-                <FormField label="GSIS No." error={form.errors.gsis_no}>
+                <FormField
+                    label="GSIS No."
+                    error={form.errors.gsis_no}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.gsis_no || ""}
                         onChange={(e) =>
@@ -723,7 +748,11 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="PAG-IBIG No." error={form.errors.pag_ibig_no}>
+                <FormField
+                    label="PAG-IBIG No."
+                    error={form.errors.pag_ibig_no}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.pag_ibig_no || ""}
                         onChange={(e) =>
@@ -732,7 +761,11 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="PSN No." error={form.errors.psn_no}>
+                <FormField
+                    label="PSN No."
+                    error={form.errors.psn_no}
+                    isRequired={false}
+                >
                     <Input
                         value={form.data.psn_no || ""}
                         onChange={(e) => form.setData("psn_no", e.target.value)}
@@ -742,6 +775,7 @@ const Create = () => {
                 <FormField
                     label="PhilHealth No."
                     error={form.errors.philhealth_no}
+                    isRequired={false}
                 >
                     <Input
                         value={form.data.philhealth_no || ""}
