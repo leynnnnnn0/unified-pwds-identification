@@ -31,7 +31,6 @@ const Create = () => {
         pwd_number: null,
         photo: null,
 
-        // Personal Information - flattened
         first_name: "",
         middle_name: null,
         last_name: null,
@@ -42,44 +41,36 @@ const Create = () => {
         type_of_disability: null,
         cause_of_disability: null,
 
-        // Residence Address - flattened
         house_no_and_street: null,
         barangay: null,
         municipality: null,
         province: null,
         region: null,
 
-        // Contact Details - flattened
         landline_no: null,
         mobile_no: null,
         email_address: null,
 
-        // Education - flattened
         educational_attainment: null,
 
-        // Employment Details - flattened
         status_of_employment: null,
         types_of_employment: null,
         category_of_employment: null,
 
-        // Occupation - flattened
         work_field: null,
         other_field: null,
 
-        // Organization Information - flattened
         organization_affiliated: null,
         contact_person: null,
         office_address: null,
         telephone_no: null,
 
-        // ID Reference No. - flattened
         sss_no: null,
         gsis_no: null,
         pag_ibig_no: null,
         psn_no: null,
         philhealth_no: null,
 
-        // Family Information - flattened
         father_last_name: null,
         father_first_name: null,
         father_middle_name: null,
