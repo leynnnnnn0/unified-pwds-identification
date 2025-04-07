@@ -30,70 +30,65 @@ const Create = () => {
         type_of_registration: "new_applicant",
         pwd_number: null,
         photo: null,
-        personal_information: {
-            first_name: null,
-            middle_name: null,
-            last_name: null,
-            suffix: null,
-            date_of_birth: null,
-            sex: null,
-            civil_status: null,
-            type_of_disability: null,
-            causeOfDisability: null,
-        },
-        residence_address: {
-            house_no_and_street: null,
-            barangay: null,
-            municipality: null,
-            province: null,
-            region: null,
-        },
-        contact_details: {
-            landline_no: null,
-            mobile_no: null,
-            email_address: null,
-        },
-        education: {
-            educational_attainment: null,
-        },
-        employment_details: {
-            status_of_employment: null,
-            types_of_employment: null,
-            category_of_employment: null,
-        },
-        occupation: {
-            work_field: null,
-        },
-        organization_information: {
-            organization_affiliated: null,
-            contact_person: null,
-            office_address: null,
-            telephone_no: null,
-        },
-        id_reference_no: {
-            sss_no: null,
-            gsis_no: null,
-            pag_ibig_no: null,
-            psn_no: null,
-            philhealth_no: null,
-        },
-        family_information: {
-            fathers_name: {
-                last_name: null,
-                first_name: null,
-                middle_name: null,
-            },
-            mothers_name: {
-                last_name: null,
-                first_name: null,
-                middle_name: null,
-            },
-            guardians_name: {
-                last_name: null,
-                first_name: null,
-                middle_name: null,
-            },
-        },
+
+        // Personal Information - flattened
+        first_name: "",
+        middle_name: null,
+        last_name: null,
+        suffix: null,
+        date_of_birth: null,
+        sex: null,
+        civil_status: null,
+        type_of_disability: null,
+        cause_of_disability: null,
+
+        // Residence Address - flattened
+        house_no_and_street: null,
+        barangay: null,
+        municipality: null,
+        province: null,
+        region: null,
+
+        // Contact Details - flattened
+        landline_no: null,
+        mobile_no: null,
+        email_address: null,
+
+        // Education - flattened
+        educational_attainment: null,
+
+        // Employment Details - flattened
+        status_of_employment: null,
+        types_of_employment: null,
+        category_of_employment: null,
+
+        // Occupation - flattened
+        work_field: null,
+        other_field: null,
+
+        // Organization Information - flattened
+        organization_affiliated: null,
+        contact_person: null,
+        office_address: null,
+        telephone_no: null,
+
+        // ID Reference No. - flattened
+        sss_no: null,
+        gsis_no: null,
+        pag_ibig_no: null,
+        psn_no: null,
+        philhealth_no: null,
+
+        // Family Information - flattened
+        father_last_name: null,
+        father_first_name: null,
+        father_middle_name: null,
+        mother_last_name: null,
+        mother_first_name: null,
+        mother_middle_name: null,
+        guardian_last_name: null,
+        guardian_first_name: null,
+        guardian_middle_name: null,
     });
 
     const handlePhotoChange = (e) => {
@@ -310,93 +305,57 @@ const Create = () => {
                     Personal Information
                 </h1>
 
-                <FormField
-                    label="Last Name"
-                    error={form.errors["personal_information.last_name"]}
-                >
+                <FormField label="Last Name" error={form.errors.last_name}>
                     <Input
-                        value={form.data.personal_information.last_name || ""}
+                        value={form.data.last_name || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "personal_information.last_name",
-                                e.target.value
-                            )
+                            form.setData("last_name", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="First Name"
-                    error={form.errors["personal_information.first_name"]}
-                >
+                <FormField label="First Name" error={form.errors.first_name}>
                     <Input
-                        value={form.data.personal_information.first_name || ""}
+                        value={form.data.first_name || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "personal_information.first_name",
-                                e.target.value
-                            )
+                            form.setData("first_name", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Middle Name"
-                    error={form.errors["personal_information.middle_name"]}
-                >
+                <FormField label="Middle Name" error={form.errors.middle_name}>
                     <Input
-                        value={form.data.personal_information.middle_name || ""}
+                        value={form.data.middle_name || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "personal_information.middle_name",
-                                e.target.value
-                            )
+                            form.setData("middle_name", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Suffix"
-                    error={form.errors["personal_information.suffix"]}
-                >
+                <FormField label="Suffix" error={form.errors.suffix}>
                     <Input
-                        value={form.data.personal_information.suffix || ""}
-                        onChange={(e) =>
-                            form.setData(
-                                "personal_information.suffix",
-                                e.target.value
-                            )
-                        }
+                        value={form.data.suffix || ""}
+                        onChange={(e) => form.setData("suffix", e.target.value)}
                     />
                 </FormField>
 
                 <FormField
                     label="Date of Birth"
-                    error={form.errors["personal_information.date_of_birth"]}
+                    error={form.errors.date_of_birth}
                 >
                     <Input
                         type="date"
-                        value={
-                            form.data.personal_information.date_of_birth || ""
-                        }
+                        value={form.data.date_of_birth || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "personal_information.date_of_birth",
-                                e.target.value
-                            )
+                            form.setData("date_of_birth", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Sex"
-                    error={form.errors["personal_information.sex"]}
-                >
+                <FormField label="Sex" error={form.errors.sex}>
                     <Select
-                        value={form.data.personal_information.sex || ""}
-                        onValueChange={(value) =>
-                            form.setData("personal_information.sex", value)
-                        }
+                        value={form.data.sex || ""}
+                        onValueChange={(value) => form.setData("sex", value)}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder="Options" />
@@ -410,17 +369,12 @@ const Create = () => {
 
                 <FormField
                     label="Civil Status"
-                    error={form.errors["personal_information.civil_status"]}
+                    error={form.errors.civil_status}
                 >
                     <Select
-                        value={
-                            form.data.personal_information.civil_status || ""
-                        }
+                        value={form.data.civil_status || ""}
                         onValueChange={(value) =>
-                            form.setData(
-                                "personal_information.civil_status",
-                                value
-                            )
+                            form.setData("civil_status", value)
                         }
                     >
                         <SelectTrigger>
@@ -438,20 +392,12 @@ const Create = () => {
 
                 <FormField
                     label="Type of Disability"
-                    error={
-                        form.errors["personal_information.type_of_disability"]
-                    }
+                    error={form.errors.type_of_disability}
                 >
                     <Select
-                        value={
-                            form.data.personal_information.type_of_disability ||
-                            ""
-                        }
+                        value={form.data.type_of_disability || ""}
                         onValueChange={(value) =>
-                            form.setData(
-                                "personal_information.type_of_disability",
-                                value
-                            )
+                            form.setData("type_of_disability", value)
                         }
                     >
                         <SelectTrigger>
@@ -471,79 +417,50 @@ const Create = () => {
 
                 <FormField
                     label="House No. and Street"
-                    error={form.errors["residence_address.house_no_and_street"]}
+                    error={form.errors.house_no_and_street}
                 >
                     <Input
-                        value={
-                            form.data.residence_address.house_no_and_street ||
-                            ""
-                        }
+                        value={form.data.house_no_and_street || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "residence_address.house_no_and_street",
-                                e.target.value
-                            )
+                            form.setData("house_no_and_street", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Barangay"
-                    error={form.errors["residence_address.barangay"]}
-                >
+                <FormField label="Barangay" error={form.errors.barangay}>
                     <Input
-                        value={form.data.residence_address.barangay || ""}
+                        value={form.data.barangay || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "residence_address.barangay",
-                                e.target.value
-                            )
+                            form.setData("barangay", e.target.value)
                         }
                     />
                 </FormField>
 
                 <FormField
                     label="Municipality"
-                    error={form.errors["residence_address.municipality"]}
+                    error={form.errors.municipality}
                 >
                     <Input
-                        value={form.data.residence_address.municipality || ""}
+                        value={form.data.municipality || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "residence_address.municipality",
-                                e.target.value
-                            )
+                            form.setData("municipality", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Province"
-                    error={form.errors["residence_address.province"]}
-                >
+                <FormField label="Province" error={form.errors.province}>
                     <Input
-                        value={form.data.residence_address.province || ""}
+                        value={form.data.province || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "residence_address.province",
-                                e.target.value
-                            )
+                            form.setData("province", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="Region"
-                    error={form.errors["residence_address.region"]}
-                >
+                <FormField label="Region" error={form.errors.region}>
                     <Input
-                        value={form.data.residence_address.region || ""}
-                        onChange={(e) =>
-                            form.setData(
-                                "residence_address.region",
-                                e.target.value
-                            )
-                        }
+                        value={form.data.region || ""}
+                        onChange={(e) => form.setData("region", e.target.value)}
                     />
                 </FormField>
 
@@ -552,47 +469,33 @@ const Create = () => {
                 <div className="col-span-4 grid grid-cols-3 gap-3">
                     <FormField
                         label="Landline No."
-                        error={form.errors["contact_details.landline_no"]}
+                        error={form.errors.landline_no}
                     >
                         <Input
-                            value={form.data.contact_details.landline_no || ""}
+                            value={form.data.landline_no || ""}
                             onChange={(e) =>
-                                form.setData(
-                                    "contact_details.landline_no",
-                                    e.target.value
-                                )
+                                form.setData("landline_no", e.target.value)
                             }
                         />
                     </FormField>
 
-                    <FormField
-                        label="Mobile No."
-                        error={form.errors["contact_details.mobile_no"]}
-                    >
+                    <FormField label="Mobile No." error={form.errors.mobile_no}>
                         <Input
-                            value={form.data.contact_details.mobile_no || ""}
+                            value={form.data.mobile_no || ""}
                             onChange={(e) =>
-                                form.setData(
-                                    "contact_details.mobile_no",
-                                    e.target.value
-                                )
+                                form.setData("mobile_no", e.target.value)
                             }
                         />
                     </FormField>
 
                     <FormField
                         label="Email Address"
-                        error={form.errors["contact_details.email_address"]}
+                        error={form.errors.email_address}
                     >
                         <Input
-                            value={
-                                form.data.contact_details.email_address || ""
-                            }
+                            value={form.data.email_address || ""}
                             onChange={(e) =>
-                                form.setData(
-                                    "contact_details.email_address",
-                                    e.target.value
-                                )
+                                form.setData("email_address", e.target.value)
                             }
                         />
                     </FormField>
@@ -603,13 +506,13 @@ const Create = () => {
                 <FormField
                     label="Educational Attainment"
                     className="col-span-4"
-                    error={form.errors["education.educational_attainment"]}
+                    error={form.errors.educational_attainment}
                 />
 
                 <RadioGroup
-                    value={form.data.education.educational_attainment || ""}
+                    value={form.data.educational_attainment || ""}
                     onValueChange={(value) =>
-                        form.setData("education.educational_attainment", value)
+                        form.setData("educational_attainment", value)
                     }
                     className="col-span-4 grid grid-cols-4"
                 >
@@ -632,22 +535,12 @@ const Create = () => {
                 <div className="col-span-4 grid grid-cols-3">
                     <FormField
                         label="Status of Employment"
-                        error={
-                            form.errors[
-                                "employment_details.status_of_employment"
-                            ]
-                        }
+                        error={form.errors.status_of_employment}
                     >
                         <RadioGroup
-                            value={
-                                form.data.employment_details
-                                    .status_of_employment || ""
-                            }
+                            value={form.data.status_of_employment || ""}
                             onValueChange={(value) =>
-                                form.setData(
-                                    "employment_details.status_of_employment",
-                                    value
-                                )
+                                form.setData("status_of_employment", value)
                             }
                         >
                             {statusOfEmployment.map((item) => (
@@ -670,22 +563,12 @@ const Create = () => {
 
                     <FormField
                         label="Types Of Employment"
-                        error={
-                            form.errors[
-                                "employment_details.types_of_employment"
-                            ]
-                        }
+                        error={form.errors.types_of_employment}
                     >
                         <RadioGroup
-                            value={
-                                form.data.employment_details
-                                    .types_of_employment || ""
-                            }
+                            value={form.data.types_of_employment || ""}
                             onValueChange={(value) =>
-                                form.setData(
-                                    "employment_details.types_of_employment",
-                                    value
-                                )
+                                form.setData("types_of_employment", value)
                             }
                         >
                             {typesOfEmployment.map((item) => (
@@ -708,22 +591,12 @@ const Create = () => {
 
                     <FormField
                         label="Category of Employment"
-                        error={
-                            form.errors[
-                                "employment_details.category_of_employment"
-                            ]
-                        }
+                        error={form.errors.category_of_employment}
                     >
                         <RadioGroup
-                            value={
-                                form.data.employment_details
-                                    .category_of_employment || ""
-                            }
+                            value={form.data.category_of_employment || ""}
                             onValueChange={(value) =>
-                                form.setData(
-                                    "employment_details.category_of_employment",
-                                    value
-                                )
+                                form.setData("category_of_employment", value)
                             }
                         >
                             {categoryOfEmployment.map((item) => (
@@ -750,14 +623,12 @@ const Create = () => {
                 <FormField
                     label="Work Field"
                     className="col-span-4"
-                    error={form.errors["occupation.work_field"]}
+                    error={form.errors.work_field}
                 />
 
                 <RadioGroup
-                    value={form.data.occupation.work_field || ""}
-                    onValueChange={(value) =>
-                        form.setData("occupation.work_field", value)
-                    }
+                    value={form.data.work_field || ""}
+                    onValueChange={(value) => form.setData("work_field", value)}
                     className="col-span-4 grid grid-cols-4"
                 >
                     {occupations.map((item) => (
@@ -773,20 +644,17 @@ const Create = () => {
                             {item.hasInput ? (
                                 <BorderBInput
                                     value={
-                                        (item.value ===
-                                            form.data.occupation.work_field &&
-                                            form.data.occupation.other_field) ||
+                                        (item.value === form.data.work_field &&
+                                            form.data.other_field) ||
                                         ""
                                     }
                                     onChange={(e) =>
                                         form.setData(
-                                            "occupation.other_field",
+                                            "other_field",
                                             e.target.value
                                         )
                                     }
-                                    error={
-                                        form.errors["occupation.other_field"]
-                                    }
+                                    error={form.errors.other_field}
                                 />
                             ) : null}
                         </div>
@@ -797,20 +665,13 @@ const Create = () => {
 
                 <FormField
                     label="Organization Affiliated"
-                    error={
-                        form.errors[
-                            "organization_information.organization_affiliated"
-                        ]
-                    }
+                    error={form.errors.organization_affiliated}
                 >
                     <Input
-                        value={
-                            form.data.organization_information
-                                .organization_affiliated || ""
-                        }
+                        value={form.data.organization_affiliated || ""}
                         onChange={(e) =>
                             form.setData(
-                                "organization_information.organization_affiliated",
+                                "organization_affiliated",
                                 e.target.value
                             )
                         }
@@ -819,135 +680,82 @@ const Create = () => {
 
                 <FormField
                     label="Contact Person"
-                    error={
-                        form.errors["organization_information.contact_person"]
-                    }
+                    error={form.errors.contact_person}
                 >
                     <Input
-                        value={
-                            form.data.organization_information.contact_person ||
-                            ""
-                        }
+                        value={form.data.contact_person || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "organization_information.contact_person",
-                                e.target.value
-                            )
+                            form.setData("contact_person", e.target.value)
                         }
                     />
                 </FormField>
 
                 <FormField
                     label="Office Address"
-                    error={
-                        form.errors["organization_information.office_address"]
-                    }
+                    error={form.errors.office_address}
                 >
                     <Input
-                        value={
-                            form.data.organization_information.office_address ||
-                            ""
-                        }
+                        value={form.data.office_address || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "organization_information.office_address",
-                                e.target.value
-                            )
+                            form.setData("office_address", e.target.value)
                         }
                     />
                 </FormField>
 
                 <FormField
                     label="Telephone No."
-                    error={form.errors["organization_information.telephone_no"]}
+                    error={form.errors.telephone_no}
                 >
                     <Input
-                        value={
-                            form.data.organization_information.telephone_no ||
-                            ""
-                        }
+                        value={form.data.telephone_no || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "organization_information.telephone_no",
-                                e.target.value
-                            )
+                            form.setData("telephone_no", e.target.value)
                         }
                     />
                 </FormField>
 
                 <FormH1 label="ID Reference No." />
 
-                <FormField
-                    label="SSS No."
-                    error={form.errors["id_reference_no.sss_no"]}
-                >
+                <FormField label="SSS No." error={form.errors.sss_no}>
                     <Input
-                        value={form.data.id_reference_no.sss_no || ""}
+                        value={form.data.sss_no || ""}
+                        onChange={(e) => form.setData("sss_no", e.target.value)}
+                    />
+                </FormField>
+
+                <FormField label="GSIS No." error={form.errors.gsis_no}>
+                    <Input
+                        value={form.data.gsis_no || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "id_reference_no.sss_no",
-                                e.target.value
-                            )
+                            form.setData("gsis_no", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="GSIS No."
-                    error={form.errors["id_reference_no.gsis_no"]}
-                >
+                <FormField label="PAG-IBIG No." error={form.errors.pag_ibig_no}>
                     <Input
-                        value={form.data.id_reference_no.gsis_no || ""}
+                        value={form.data.pag_ibig_no || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "id_reference_no.gsis_no",
-                                e.target.value
-                            )
+                            form.setData("pag_ibig_no", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField
-                    label="PAG-IBIG No."
-                    error={form.errors["id_reference_no.pag_ibig_no"]}
-                >
+                <FormField label="PSN No." error={form.errors.psn_no}>
                     <Input
-                        value={form.data.id_reference_no.pag_ibig_no || ""}
-                        onChange={(e) =>
-                            form.setData(
-                                "id_reference_no.pag_ibig_no",
-                                e.target.value
-                            )
-                        }
-                    />
-                </FormField>
-
-                <FormField
-                    label="PSN No."
-                    error={form.errors["id_reference_no.psn_no"]}
-                >
-                    <Input
-                        value={form.data.id_reference_no.psn_no || ""}
-                        onChange={(e) =>
-                            form.setData(
-                                "id_reference_no.psn_no",
-                                e.target.value
-                            )
-                        }
+                        value={form.data.psn_no || ""}
+                        onChange={(e) => form.setData("psn_no", e.target.value)}
                     />
                 </FormField>
 
                 <FormField
                     label="PhilHealth No."
-                    error={form.errors["id_reference_no.philhealth_no"]}
+                    error={form.errors.philhealth_no}
                 >
                     <Input
-                        value={form.data.id_reference_no.philhealth_no || ""}
+                        value={form.data.philhealth_no || ""}
                         onChange={(e) =>
-                            form.setData(
-                                "id_reference_no.philhealth_no",
-                                e.target.value
-                            )
+                            form.setData("philhealth_no", e.target.value)
                         }
                     />
                 </FormField>
@@ -961,115 +769,61 @@ const Create = () => {
 
                 <Span label="Father's Name:"></Span>
                 <Input
-                    value={
-                        form.data.family_information.fathers_name.last_name ||
-                        ""
-                    }
+                    value={form.data.father_last_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.fathers_name.last_name",
-                            e.target.value
-                        )
+                        form.setData("father_last_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.fathers_name.first_name ||
-                        ""
-                    }
+                    value={form.data.father_first_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.fathers_name.first_name",
-                            e.target.value
-                        )
+                        form.setData("father_first_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.fathers_name.middle_name ||
-                        ""
-                    }
+                    value={form.data.father_middle_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.fathers_name.middle_name",
-                            e.target.value
-                        )
+                        form.setData("father_middle_name", e.target.value)
                     }
                 />
 
                 <Span label="Mother's Name:"></Span>
                 <Input
-                    value={
-                        form.data.family_information.mothers_name.last_name ||
-                        ""
-                    }
+                    value={form.data.mother_last_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.mothers_name.last_name",
-                            e.target.value
-                        )
+                        form.setData("mother_last_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.mothers_name.first_name ||
-                        ""
-                    }
+                    value={form.data.mother_first_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.mothers_name.first_name",
-                            e.target.value
-                        )
+                        form.setData("mother_first_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.mothers_name.middle_name ||
-                        ""
-                    }
+                    value={form.data.mother_middle_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.mothers_name.middle_name",
-                            e.target.value
-                        )
+                        form.setData("mother_middle_name", e.target.value)
                     }
                 />
 
                 <Span label="Guardian's Name:"></Span>
                 <Input
-                    value={
-                        form.data.family_information.guardians_name.last_name ||
-                        ""
-                    }
+                    value={form.data.guardian_last_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.guardians_name.last_name",
-                            e.target.value
-                        )
+                        form.setData("guardian_last_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.guardians_name
-                            .first_name || ""
-                    }
+                    value={form.data.guardian_first_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.guardians_name.first_name",
-                            e.target.value
-                        )
+                        form.setData("guardian_first_name", e.target.value)
                     }
                 />
                 <Input
-                    value={
-                        form.data.family_information.guardians_name
-                            .middle_name || ""
-                    }
+                    value={form.data.guardian_middle_name || ""}
                     onChange={(e) =>
-                        form.setData(
-                            "family_information.guardians_name.middle_name",
-                            e.target.value
-                        )
+                        form.setData("guardian_middle_name", e.target.value)
                     }
                 />
 
