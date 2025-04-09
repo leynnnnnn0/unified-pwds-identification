@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\IDVerification;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PWDAccountController;
@@ -17,6 +18,7 @@ Route::resource('', LandingPageController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard', AdminDashboardController::class);
     Route::resource('applications', AdminApplicationController::class);
+    Route::resource('verification', IDVerification::class);
 
     Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
         Route::get('applications/{id}/process', 'process')->name('process');

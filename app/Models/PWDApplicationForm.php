@@ -82,6 +82,11 @@ class PWDApplicationForm extends Model
         'formatted_type_of_application',
     ];
 
+    public function pwd_identification_card()
+    {
+        return $this->hasOne(PWDIdentificationCard::class, 'application_form_id');
+    }
+
     public function encoder()
     {
         return $this->belongsTo(User::class, 'encoder_id');

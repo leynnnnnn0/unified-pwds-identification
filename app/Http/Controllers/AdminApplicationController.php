@@ -56,7 +56,7 @@ class AdminApplicationController extends Controller
     {
         $validated = $request->validate([
             'application_form_id' => 'required|exists:pwd_application_forms,id',
-            'rfid_number' => 'required|unique:pwd_identification_cards,rfid_number',
+            'rfid_card_number' => 'required|unique:pwd_identification_cards,rfid_card_number',
             'pwd_card_number' => 'required|unique:pwd_identification_cards,pwd_card_number',
             'effective_date' => 'required|date',
             'expiry_date' => 'required|date|after:effective_date',

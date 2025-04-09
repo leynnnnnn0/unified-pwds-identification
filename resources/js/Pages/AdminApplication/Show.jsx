@@ -5,6 +5,7 @@ import FormField from "@/Components/form/form-field";
 import Span from "@/Components/text/span";
 import { Input } from "@/components/ui/Input";
 import FormH1 from "@/Components/text/form-h1";
+import { Badge } from "@/Components/ui/badge";
 import {
     civilStatus,
     typeOfDisabilities,
@@ -27,22 +28,30 @@ import { Link } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 
 const Show = ({ application }) => {
+    console.log(application.status);
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     return (
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Application Details" />
-                <Button>
-                    <Link
-                        href={route(
-                            "admin.applications.process",
-                            application.id
-                        )}
-                    >
-                        Process Application
-                    </Link>
-                </Button>
+                {application.status == "PENDING" && (
+                    <Button>
+                        <Link
+                            href={route(
+                                "admin.applications.process",
+                                application.id
+                            )}
+                        >
+                            Process Application
+                        </Link>
+                    </Button>
+                )}
+                {application.status == "APPROVED" && (
+                    <Badge className="px-3 py-1 bg-green-500 text-lg">
+                        Approved
+                    </Badge>
+                )}
             </div>
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
                 <FormField className="col-span-3" label="Type of Registration">

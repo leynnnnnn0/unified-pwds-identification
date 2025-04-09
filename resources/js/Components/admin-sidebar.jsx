@@ -34,6 +34,11 @@ const items = [
         url: "/admin/applications",
         icon: UserCircle,
     },
+    {
+        title: "Verification",
+        url: "/admin/verification",
+        icon: UserCircle,
+    },
 ];
 
 export function AdminSidebar() {
