@@ -30,12 +30,9 @@ const Show = ({ application }) => {
         <>
             <H1 title="Application Details" />
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
-                <FormField
-                    disabled
-                    className="col-span-3"
-                    label="Type of Registration"
-                >
+                <FormField className="col-span-3" label="Type of Registration">
                     <RadioGroup
+                        disabled
                         value={application.type_of_registration}
                         className="flex w-full"
                     >
@@ -166,6 +163,194 @@ const Show = ({ application }) => {
                         </SelectContent>
                     </Select>
                 </FormField>
+
+                <FormH1 label="Residence Address" />
+
+                <FormField label="House No. and Street">
+                    <Input
+                        disabled
+                        value={application.house_no_and_street || ""}
+                    />
+                </FormField>
+
+                <FormField label="Barangay">
+                    <Input disabled value={application.barangay || ""} />
+                </FormField>
+
+                <FormField label="Municipality">
+                    <Input disabled value={application.municipality || ""} />
+                </FormField>
+
+                <FormField label="Province">
+                    <Input disabled value={application.province || ""} />
+                </FormField>
+
+                <FormField label="Region">
+                    <Input disabled value={application.region || ""} />
+                </FormField>
+
+                <FormH1 label="Contact Details" />
+
+                <div className="col-span-4 grid grid-cols-3 gap-3">
+                    <FormField label="Landline No." isRequired={false}>
+                        <Input value={application.landline_no || ""} disabled />
+                    </FormField>
+
+                    <FormField label="Mobile No.">
+                        <Input value={application.mobile_no || ""} disabled />
+                    </FormField>
+
+                    <FormField label="Email Address" isRequired={false}>
+                        <Input
+                            value={application.email_address || ""}
+                            disabled
+                        />
+                    </FormField>
+                </div>
+
+                <FormH1 label="Employment Details" />
+
+                <div className="col-span-4 grid grid-cols-3">
+                    <FormField label="Status of Employment">
+                        <RadioGroup
+                            disabled
+                            value={application.status_of_employment || ""}
+                        >
+                            {statusOfEmployment.map((item) => (
+                                <div
+                                    key={item.value}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span
+                                        label={item.label}
+                                        htmlFor={item.value}
+                                    />
+                                </div>
+                            ))}
+                        </RadioGroup>
+                    </FormField>
+
+                    <FormField label="Types Of Employment" isRequired={false}>
+                        <RadioGroup
+                            disabled
+                            value={application.types_of_employment || ""}
+                        >
+                            {typesOfEmployment.map((item) => (
+                                <div
+                                    key={item.value}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span
+                                        label={item.label}
+                                        htmlFor={item.value}
+                                    />
+                                </div>
+                            ))}
+                        </RadioGroup>
+                    </FormField>
+
+                    <FormField
+                        label="Category of Employment"
+                        isRequired={false}
+                    >
+                        <RadioGroup
+                            disabled
+                            value={application.category_of_employment || ""}
+                        >
+                            {categoryOfEmployment.map((item) => (
+                                <div
+                                    key={item.value}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <RadioGroupItem
+                                        value={item.value}
+                                        id={item.value}
+                                    />
+                                    <Span
+                                        label={item.label}
+                                        htmlFor={item.value}
+                                    />
+                                </div>
+                            ))}
+                        </RadioGroup>
+                    </FormField>
+                </div>
+
+                <FormH1 label="Organization Information" />
+
+                <FormField label="Organization Affiliated" isRequired={false}>
+                    <Input
+                        disabled
+                        value={application.organization_affiliated || ""}
+                    />
+                </FormField>
+
+                <FormField label="Contact Person" isRequired={false}>
+                    <Input disabled value={application.contact_person || ""} />
+                </FormField>
+
+                <FormField label="Office Address" isRequired={false}>
+                    <Input disabled value={application.office_address || ""} />
+                </FormField>
+
+                <FormField label="Telephone No." isRequired={false}>
+                    <Input disabled value={application.telephone_no || ""} />
+                </FormField>
+
+                <FormH1 label="ID Reference No." />
+
+                <FormField label="SSS No." isRequired={false}>
+                    <Input disabled value={application.sss_no || ""} />
+                </FormField>
+
+                <FormField label="GSIS No." isRequired={false}>
+                    <Input disabled value={application.gsis_no || ""} />
+                </FormField>
+
+                <FormField label="PAG-IBIG No." isRequired={false}>
+                    <Input disabled value={application.pag_ibig_no || ""} />
+                </FormField>
+
+                <FormField label="PSN No." isRequired={false}>
+                    <Input disabled value={application.psn_no || ""} />
+                </FormField>
+
+                <FormField label="PhilHealth No." isRequired={false}>
+                    <Input disabled value={application.philhealth_no || ""} />
+                </FormField>
+
+                <FormH1 label="Family Information" />
+
+                <Span></Span>
+                <FormField label="Last Name" />
+                <FormField label="First Name" />
+                <FormField label="Middle Name" />
+
+                <Span label="Father's Name:"></Span>
+                <Input value={application.father_last_name || ""} disabled />
+                <Input value={application.father_first_name || ""} disabled />
+                <Input value={application.father_middle_name || ""} disabled />
+
+                <Span label="Mother's Name:"></Span>
+                <Input value={application.mother_last_name || ""} disabled />
+                <Input value={application.mother_first_name || ""} disabled />
+                <Input value={application.mother_middle_name || ""} disabled />
+
+                <Span label="Guardian's Name:"></Span>
+                <Input value={application.guardian_last_name || ""} disabled />
+                <Input value={application.guardian_first_name || ""} disabled />
+                <Input
+                    value={application.guardian_middle_name || ""}
+                    disabled
+                />
             </div>
         </>
     );
