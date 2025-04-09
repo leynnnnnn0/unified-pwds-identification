@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Layout({ children }) {
     return (
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
                         <SidebarTrigger />
                     </div>
                     <div className="flex-1 overflow-auto p-5 flex flex-col gap-5 w-full">
+                        <Toaster />
                         {children}
                     </div>
                 </main>
