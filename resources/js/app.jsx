@@ -5,7 +5,7 @@ import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import Layout from "./Layouts/Layout";
-
+import AdminLayout from "./Layouts/AdminLayout";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -17,10 +17,16 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.jsx")
         );
 
-        page.default.layout =
-            page.default.layout ?? ((page) => <Layout>{page}</Layout>);
+        if (name.startsWith("admin")) {
+            page.default.layout =
+                page.default.layout ?? ((page) => <Layout>{page}</Layout>);
+        } else {
+            page.default.layout =
+                page.default.layout ??
+                ((page) => <AdminLayout>{page}</AdminLayout>);
+        }
 
-        return page;  
+        return page;
     },
     setup({ el, App, props }) {
         const root = createRoot(el);

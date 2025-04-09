@@ -23,26 +23,20 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
 
-
 const items = [
     {
         title: "Dashboard",
-        url: "/dashboard",
+        url: "/admin/dashboard",
         icon: Home,
     },
     {
-        title: "My Profile",
-        url: "/my-profile",
-        icon: UserCircle,
-    },
-    {
         title: "Registration",
-        url: "/registration",
+        url: "/admin/applications",
         icon: UserCircle,
     },
 ];
 
-export function AppSidebar() {
+export function AdminSidebar() {
     return (
         <div className="min-h-screen">
             <Sidebar>

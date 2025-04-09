@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
@@ -13,7 +14,10 @@ use Inertia\Inertia;
 
 Route::resource('', LandingPageController::class);
 
-Route::resource('admin-dashboard', AdminDashboardController::class);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('dashboard', AdminDashboardController::class);
+    Route::resource('applications', AdminApplicationController::class);
+});
 Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
 Route::resource('my-profile', PWDProfileController::class);
 Route::resource('registration', PWDRegistrationController::class);
