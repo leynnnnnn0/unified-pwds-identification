@@ -23,12 +23,27 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Link } from "@inertiajs/react";
+import { Button } from "@/Components/ui/button";
+
 const Show = ({ application }) => {
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     return (
         <>
-            <H1 title="Application Details" />
+            <div className="flex items-center justify-between">
+                <H1 title="Application Details" />
+                <Button>
+                    <Link
+                        href={route(
+                            "admin.applications.process",
+                            application.id
+                        )}
+                    >
+                        Process Application
+                    </Link>
+                </Button>
+            </div>
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
                 <FormField className="col-span-3" label="Type of Registration">
                     <RadioGroup

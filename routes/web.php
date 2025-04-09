@@ -17,6 +17,12 @@ Route::resource('', LandingPageController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard', AdminDashboardController::class);
     Route::resource('applications', AdminApplicationController::class);
+
+    Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
+        Route::get('applications/{id}/process', 'process')->name('process');
+        Route::get('applications/{id}', 'show')->name('applications.show');
+        Route::post('applications/{id}/store-identification-card', 'storeIdentificationCard')->name('store-identification-card');
+    });
 });
 Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
 Route::resource('my-profile', PWDProfileController::class);

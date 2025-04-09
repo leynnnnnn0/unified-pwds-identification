@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\PWDApplicationForm;
+use App\Models\PWDIdentificationCard;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
 
 class AdminApplicationController extends Controller
 {
@@ -33,5 +35,37 @@ class AdminApplicationController extends Controller
         return Inertia::render('AdminApplication/Show', [
             'application' => PWDApplicationForm::with('encoder')->find($id),
         ]);
+    }
+
+    public function process($id)
+    {
+        $cardDetails = [
+            'application_form_id' => $id,
+            'pwd_card_number' => Uuid::uuid4()->toString(),
+            'effective_date' => now()->format('Y-m-d'),
+            'expiry_date' => now()->addYears(5)->format('Y-m-d'),
+
+        ];
+        return Inertia::render('AdminApplication/Process', [
+            'application' => PWDApplicationForm::with('encoder')->find($id),
+            'cardDetails' => $cardDetails,
+        ]);
+    }
+
+    public function storeIdentificationCard(Request $request)
+    {
+        $validated = $request->validate([
+            'application_form_id' => 'required|exists:pwd_application_forms,id',
+            'rfid_number' => 'required|unique:pwd_identification_cards,rfid_number',
+            'pwd_card_number' => 'required|unique:pwd_identification_cards,pwd_card_number',
+            'effective_date' => 'required|date',
+            'expiry_date' => 'required|date|after:effective_date',
+        ]);
+
+        PWDIdentificationCard::create($validated);
+        PWDApplicationForm::where('id', $validated['application_form_id'])
+            ->update(['status' => 'APPROVED']);
+
+        return redirect()->route('admin.applications.index');
     }
 }
