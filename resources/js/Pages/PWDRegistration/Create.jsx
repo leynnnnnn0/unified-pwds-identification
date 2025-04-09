@@ -131,13 +131,17 @@ const Create = () => {
             onSuccess: () => {
                 setPreviewImage(null);
                 form.reset();
+                toast({
+                    className:
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                    description: "Your message has been sent.",
+                });
             },
             onError: (errors) => {
                 console.error(errors);
                 toast({
                     className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-                    ,
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
                     variant: "destructive",
                     title: "Uh oh! Something went wrong.",
                     description: "There was a problem with your request.",
