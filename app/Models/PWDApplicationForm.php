@@ -76,8 +76,29 @@ class PWDApplicationForm extends Model
         'guardian_middle_name',
     ];
 
-    public function user()
+    protected $appends = [
+        'formatted_application_date',
+        'formatted_status',
+        'formatted_type_of_application',
+    ];
+
+    public function encoder()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'encoder_id');
+    }
+
+    public function getFormattedApplicationDateAttribute()
+    {
+        return $this->application_date ? date('F d, Y', strtotime($this->application_date)) : null;
+    }
+
+    public function getFormattedStatusAttribute()
+    {
+        return strtoupper(str_replace('_', ' ', $this->status));
+    }
+
+    public function getFormattedTypeOfApplicationAttribute()
+    {
+        return strtoupper(str_replace('_', ' ', $this->type_of_registration));
     }
 }
