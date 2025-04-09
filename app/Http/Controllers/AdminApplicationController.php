@@ -27,4 +27,11 @@ class AdminApplicationController extends Controller
             'applications' => $applications,
         ]);
     }
+
+    public function show($id)
+    {
+        return Inertia::render('AdminApplication/Show', [
+            'application' => PWDApplicationForm::with('encoder')->find($id),
+        ]);
+    }
 }

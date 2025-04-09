@@ -6,6 +6,9 @@ import TableHead from "@/Components/table/table-head";
 import TD from "@/Components/table/td";
 import TableContainer from "@/Components/table/table-container";
 import TH from "@/Components/table/th";
+import { EyeIcon } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import { Link } from "@inertiajs/react";
 const Index = ({ applications }) => {
     return (
         <>
@@ -29,7 +32,16 @@ const Index = ({ applications }) => {
                                     <TD>{item.encoder}</TD>
                                     <TD>{item.type_of_registration}</TD>
                                     <TD>{item.status}</TD>
-                                    <TD></TD>
+                                    <TD>
+                                        <Link
+                                            href={route(
+                                                "admin.applications.show",
+                                                item.id
+                                            )}
+                                        >
+                                            <EyeIcon />
+                                        </Link>
+                                    </TD>
                                 </tr>
                             );
                         })}

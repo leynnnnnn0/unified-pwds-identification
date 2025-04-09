@@ -1,15 +1,11 @@
 import H1 from "@/Components/text/h1";
 import React, { useState, useRef } from "react";
-import DOHLogo from "../../../images/doh.png";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Span from "@/Components/text/span";
-import RegistrationGrid from "@/Components/div/registration-grid";
 import { Input } from "@/components/ui/Input";
 import BorderBInput from "@/Components/Input/border-b-Input";
-import { Checkbox } from "@/components/ui/checkbox";
 import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
-import FormLabel from "@/Components/text/form-label";
 import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
 
