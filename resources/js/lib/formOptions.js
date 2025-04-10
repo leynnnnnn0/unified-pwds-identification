@@ -63,6 +63,7 @@ export const typesOfEmployment = [
     { label: "Emergency", value: "emergency" },
 ];
 
+
 export const occupations = [
     { label: "Managers", value: "managers" },
     { label: "Professionals", value: "professionals" },
@@ -102,3 +103,4 @@ export const categoryOfEmployment = [
     { label: "Government", value: "government" },
     { label: "Private", value: "private" },
 ];
+

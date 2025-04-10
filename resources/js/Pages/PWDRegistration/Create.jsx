@@ -351,6 +351,71 @@ const Create = () => {
                     </Select>
                 </FormField>
 
+                <FormH1 label="Disabilities"/>
+                
+                <FormField label="Types of Disability" className="col-span-4 grid grid-cols-4">                 
+                   <div className="col-span-4 grid grid-cols-3 gap-2">
+                   {typeOfDisabilities.map((item) => (
+                       <div className="flex space-x-2">
+                       <Checkbox value={item.value} id={item.value}/>
+                           <Span label={item.label}/>
+                       </div>
+                   ))}
+                   </div>
+               </FormField>
+
+               <FormH1 label="Cause of Disability"/>
+               <FormField
+                    className="col-span-4"
+                    label="Cause of Disability"
+                    error={form.errors.type_of_disability}
+                >
+                    <RadioGroup
+                        value={form.data.type_of_disability}
+                        onValueChange={(value) =>
+                            form.setData("type_of_disability", value)
+                        }
+                        className="flex w-full"
+                    >
+                        <div className="flex space-x-2 items-center h-fit flex-1">
+                            <RadioGroupItem
+                                value="congenital_inborn"
+                                id="congenital_inborn"
+                            />
+                            <Span
+                                label="Congenital / Inborn"
+                                htmlFor="Congenital / Inborn"
+                            />
+                        </div>
+                        <div className="flex space-x-2 items-center h-fit flex-1">
+                            <RadioGroupItem value="acquired" id="acquired"/>
+                            <Span label="Acquired" htmlFor="acquired" />
+                        </div>
+                    </RadioGroup>
+                </FormField>
+                
+                <div className="col-span-4 grid grid-cols-2">
+                    <div className="col-span-4 grid grid-cols-1 gap-2">
+                   {congenitalCause.map((item) => (
+                       <div className="flex space-x-2">
+                       <Checkbox value={item.value} id={item.value}/>
+                           <Span label={item.label}/>
+                       </div>
+                   ))}
+                   </div>
+
+                   <div className="col-span-4 grid grid-cols-1 gap-2">
+                   {congenitalCause.map((item) => (
+                       <div className="flex space-x-2">
+                       <Checkbox value={item.value} id={item.value}/>
+                           <Span label={item.label}/>
+                       </div>
+                   ))}
+                   </div>
+                   
+                </div>
+                
+
                 <FormH1 label="Residence Address" />
 
                 <FormField
