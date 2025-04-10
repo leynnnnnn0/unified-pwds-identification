@@ -28,15 +28,16 @@ export const typeOfDisabilities = [
 ];
 
 export const congenitalCause = [
+    { label: "Autism", value: "autism"},
     { label: "ADHD", value: "adhd" },
     { label: "Cerebral Palsy", value: "cerebral_palsy" },
     { label: "Down Syndrome", value: "down_syndrome" },
 ];
 
 export const acquiredCause = [
-    { label: "ADHD", value: "adhd" },
+    { label: "Chronic Illness", value: "chronic_illness" },
     { label: "Cerebral Palsy", value: "cerebral_palsy" },
-    { label: "Down Syndrome", value: "down_syndrome" },
+    { label: "Injury", value: "injury" },
 ];
 
 export const educationalAttainment = [

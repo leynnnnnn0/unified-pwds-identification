@@ -395,7 +395,7 @@ const Create = () => {
                 </FormField>
                 
                 <div className="col-span-4 grid grid-cols-2">
-                    <div className="col-span-4 grid grid-cols-1 gap-2">
+                    <div className=" grid grid-cols-1 gap-2">
                    {congenitalCause.map((item) => (
                        <div className="flex space-x-2">
                        <Checkbox value={item.value} id={item.value}/>
@@ -404,15 +404,14 @@ const Create = () => {
                    ))}
                    </div>
 
-                   <div className="col-span-4 grid grid-cols-1 gap-2">
-                   {congenitalCause.map((item) => (
+                   <div className=" grid grid-cols-1 gap-2">
+                   {acquiredCause.map((item) => (
                        <div className="flex space-x-2">
                        <Checkbox value={item.value} id={item.value}/>
                            <Span label={item.label}/>
                        </div>
                    ))}
                    </div>
-                   
                 </div>
                 
 
