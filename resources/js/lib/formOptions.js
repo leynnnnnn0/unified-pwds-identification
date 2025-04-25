@@ -1,5 +1,3 @@
-
-
 export const civilStatus = [
     { label: "Single", value: "single" },
     { label: "Seperated", value: "seperated" },
@@ -28,9 +26,9 @@ export const typeOfDisabilities = [
 ];
 
 export const congenitalCause = [
-    { label: "Autism", value: "autism"},
+    { label: "Autism", value: "autism" },
     { label: "ADHD", value: "adhd" },
-    { label: "Cerebral Palsy", value: "cerebral_palsy" },
+    // { label: "Cerebral Palsy", value: "cerebral_palsy" },
     { label: "Down Syndrome", value: "down_syndrome" },
 ];
 
@@ -63,7 +61,6 @@ export const typesOfEmployment = [
     { label: "Casual", value: "casual" },
     { label: "Emergency", value: "emergency" },
 ];
-
 
 export const occupations = [
     { label: "Managers", value: "managers" },
@@ -104,4 +101,3 @@ export const categoryOfEmployment = [
     { label: "Government", value: "government" },
     { label: "Private", value: "private" },
 ];
-
