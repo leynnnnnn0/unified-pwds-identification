@@ -120,6 +120,15 @@ const Create = () => {
         form.setData("cause_of_disabilities", []);
     }, [form.data.cause_of_disability]);
 
+    useEffect(() => {
+        if (form.data.status_of_employment == "unemployed") {
+            form.setData("types_of_employment", null);
+            form.setData("category_of_employment", null);
+            form.setData("work_field", null);
+            console.log(form.data);
+        }
+    }, [form.data.status_of_employment]);
+
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -632,14 +641,19 @@ const Create = () => {
                     </FormField>
 
                     <FormField
-                        label="Types Of Employment"
+                        label="Type Of Employment"
                         error={form.errors.types_of_employment}
-                        isRequired={false}
+                        isRequired={
+                            form.data.status_of_employment != "unemployed"
+                        }
                     >
                         <RadioGroup
                             value={form.data.types_of_employment || ""}
                             onValueChange={(value) =>
                                 form.setData("types_of_employment", value)
+                            }
+                            disabled={
+                                form.data.status_of_employment == "unemployed"
                             }
                         >
                             {typesOfEmployment.map((item) => (
@@ -663,10 +677,15 @@ const Create = () => {
                     <FormField
                         label="Category of Employment"
                         error={form.errors.category_of_employment}
-                        isRequired={false}
+                        isRequired={
+                            form.data.status_of_employment != "unemployed"
+                        }
                     >
                         <RadioGroup
                             value={form.data.category_of_employment || ""}
+                            disabled={
+                                form.data.status_of_employment == "unemployed"
+                            }
                             onValueChange={(value) =>
                                 form.setData("category_of_employment", value)
                             }
@@ -696,12 +715,13 @@ const Create = () => {
                     label="Work Field"
                     className="col-span-4"
                     error={form.errors.work_field}
-                    isRequired={false}
+                    isRequired={form.data.status_of_employment != "unemployed"}
                 />
 
                 <RadioGroup
                     value={form.data.work_field || ""}
                     onValueChange={(value) => form.setData("work_field", value)}
+                    disabled={form.data.status_of_employment == "unemployed"}
                     className="col-span-4 grid grid-cols-4"
                 >
                     {occupations.map((item) => (
