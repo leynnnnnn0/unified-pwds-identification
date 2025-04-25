@@ -28,7 +28,6 @@ import { Link } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 
 const Show = ({ application }) => {
-    console.log(application.status);
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     return (

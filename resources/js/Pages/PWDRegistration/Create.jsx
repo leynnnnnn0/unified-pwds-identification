@@ -1,5 +1,5 @@
 import H1 from "@/Components/text/h1";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Span from "@/Components/text/span";
 import { Input } from "@/components/ui/Input";
@@ -8,6 +8,7 @@ import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
 import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
+import Checkbox from "@/Components/Checkbox";
 
 import {
     AlertDialog,
@@ -48,7 +49,8 @@ const Create = () => {
     const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
-
+    const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
+        useState(true);
     const form = useForm({
         type_of_registration: "new_applicant",
         pwd_number: null,
@@ -104,6 +106,13 @@ const Create = () => {
         guardian_first_name: null,
         guardian_middle_name: null,
     });
+    useEffect(() => {
+        if (form.data.type_of_registration == "renewal") {
+            setIsPWDNumberInputDisabled(false);
+        } else {
+            setIsPWDNumberInputDisabled(true);
+        }
+    }, [form.data.type_of_registration]);
 
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
@@ -220,6 +229,7 @@ const Create = () => {
                     error={form.errors.pwd_number}
                 >
                     <Input
+                        disabled={isPWDNumberInputDisabled}
                         value={form.data.pwd_number || ""}
                         onChange={(e) =>
                             form.setData("pwd_number", e.target.value)
@@ -347,21 +357,24 @@ const Create = () => {
                     </Select>
                 </FormField>
 
-                <FormH1 label="Disabilities"/>
-                
-                <FormField label="Types of Disability" className="col-span-4 grid grid-cols-4">                 
-                   <div className="col-span-4 grid grid-cols-3 gap-2">
-                   {typeOfDisabilities.map((item) => (
-                       <div className="flex space-x-2">
-                       <Checkbox value={item.value} id={item.value}/>
-                           <Span label={item.label}/>
-                       </div>
-                   ))}
-                   </div>
-               </FormField>
+                <FormH1 label="Disabilities" />
 
-               <FormH1 label="Cause of Disability"/>
-               <FormField
+                <FormField
+                    label="Types of Disability"
+                    className="col-span-4 grid grid-cols-4"
+                >
+                    <div className="col-span-4 grid grid-cols-3 gap-2">
+                        {typeOfDisabilities.map((item) => (
+                            <div className="flex space-x-2">
+                                <Checkbox value={item.value} id={item.value} />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
+                </FormField>
+
+                <FormH1 label="Cause of Disability" />
+                <FormField
                     className="col-span-4"
                     label="Cause of Disability"
                     error={form.errors.type_of_disability}
@@ -384,32 +397,31 @@ const Create = () => {
                             />
                         </div>
                         <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem value="acquired" id="acquired"/>
+                            <RadioGroupItem value="acquired" id="acquired" />
                             <Span label="Acquired" htmlFor="acquired" />
                         </div>
                     </RadioGroup>
                 </FormField>
-                
+
                 <div className="col-span-4 grid grid-cols-2">
                     <div className=" grid grid-cols-1 gap-2">
-                   {congenitalCause.map((item) => (
-                       <div className="flex space-x-2">
-                       <Checkbox value={item.value} id={item.value}/>
-                           <Span label={item.label}/>
-                       </div>
-                   ))}
-                   </div>
+                        {congenitalCause.map((item) => (
+                            <div className="flex space-x-2">
+                                <Checkbox value={item.value} id={item.value} />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
 
-                   <div className=" grid grid-cols-1 gap-2">
-                   {acquiredCause.map((item) => (
-                       <div className="flex space-x-2">
-                       <Checkbox value={item.value} id={item.value}/>
-                           <Span label={item.label}/>
-                       </div>
-                   ))}
-                   </div>
+                    <div className=" grid grid-cols-1 gap-2">
+                        {acquiredCause.map((item) => (
+                            <div className="flex space-x-2">
+                                <Checkbox value={item.value} id={item.value} />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                
 
                 <FormH1 label="Residence Address" />
 
