@@ -51,6 +51,7 @@ const Create = () => {
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
         useState(true);
+    const [isAcquiredCauseChecked, setIsAcquiredCauseChecked] = useState(false);
     const form = useForm({
         type_of_registration: "new_applicant",
         pwd_number: null,
@@ -63,7 +64,7 @@ const Create = () => {
         date_of_birth: null,
         sex: null,
         civil_status: null,
-        type_of_disability: null,
+        type_of_disability: [],
         cause_of_disability: null,
 
         house_no_and_street: null,
@@ -113,6 +114,10 @@ const Create = () => {
             setIsPWDNumberInputDisabled(true);
         }
     }, [form.data.type_of_registration]);
+
+    useEffect(() => {
+        console.log(form.data.type_of_disability);
+    }, [form.data.type_of_disability]);
 
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
@@ -334,29 +339,6 @@ const Create = () => {
                     </Select>
                 </FormField>
 
-                <FormField
-                    label="Type of Disability"
-                    error={form.errors.type_of_disability}
-                >
-                    <Select
-                        value={form.data.type_of_disability || ""}
-                        onValueChange={(value) =>
-                            form.setData("type_of_disability", value)
-                        }
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Options" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {typeOfDisabilities.map((item) => (
-                                <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </FormField>
-
                 <FormH1 label="Disabilities" />
 
                 <FormField
@@ -365,8 +347,32 @@ const Create = () => {
                 >
                     <div className="col-span-4 grid grid-cols-3 gap-2">
                         {typeOfDisabilities.map((item) => (
-                            <div className="flex space-x-2">
-                                <Checkbox value={item.value} id={item.value} />
+                            <div
+                                key={item.value}
+                                className="flex items-center space-x-2"
+                            >
+                                <Checkbox
+                                    id={item.value}
+                                    value={item.value}
+                                    onChange={(e) => {
+                                        const checked = e.target.checked;
+                                        form.setData(
+                                            "type_of_disability",
+                                            checked
+                                                ? [
+                                                      ...form.data
+                                                          .type_of_disability,
+                                                      item.value,
+                                                  ]
+                                                : form.data.type_of_disability.filter(
+                                                      (v) => v !== item.value
+                                                  )
+                                        );
+                                    }}
+                                    checked={form.data.type_of_disability.includes(
+                                        item.value
+                                    )}
+                                />
                                 <Span label={item.label} />
                             </div>
                         ))}
@@ -380,15 +386,15 @@ const Create = () => {
                     error={form.errors.type_of_disability}
                 >
                     <RadioGroup
-                        value={form.data.type_of_disability}
+                        value={isAcquiredCauseChecked}
                         onValueChange={(value) =>
-                            form.setData("type_of_disability", value)
+                            setIsAcquiredCauseChecked(value)
                         }
                         className="flex w-full"
                     >
                         <div className="flex space-x-2 items-center h-fit flex-1">
                             <RadioGroupItem
-                                value="congenital_inborn"
+                                value={false}
                                 id="congenital_inborn"
                             />
                             <Span
@@ -397,7 +403,7 @@ const Create = () => {
                             />
                         </div>
                         <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem value="acquired" id="acquired" />
+                            <RadioGroupItem value={true} id="acquired" />
                             <Span label="Acquired" htmlFor="acquired" />
                         </div>
                     </RadioGroup>
@@ -406,8 +412,16 @@ const Create = () => {
                 <div className="col-span-4 grid grid-cols-2">
                     <div className=" grid grid-cols-1 gap-2">
                         {congenitalCause.map((item) => (
-                            <div className="flex space-x-2">
-                                <Checkbox value={item.value} id={item.value} />
+                            <div className="flex space-x-2" key={item.value}>
+                                <Checkbox
+                                    value={item.value}
+                                    id={item.value}
+                                    disabled={
+                                        isAcquiredCauseChecked == true
+                                            ? true
+                                            : false
+                                    }
+                                />
                                 <Span label={item.label} />
                             </div>
                         ))}
@@ -415,8 +429,16 @@ const Create = () => {
 
                     <div className=" grid grid-cols-1 gap-2">
                         {acquiredCause.map((item) => (
-                            <div className="flex space-x-2">
-                                <Checkbox value={item.value} id={item.value} />
+                            <div className="flex space-x-2" key={item.value}>
+                                <Checkbox
+                                    value={item.value}
+                                    id={item.value}
+                                    disabled={
+                                        isAcquiredCauseChecked == true
+                                            ? false
+                                            : true
+                                    }
+                                />
                                 <Span label={item.label} />
                             </div>
                         ))}
