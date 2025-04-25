@@ -716,6 +716,7 @@ const Create = () => {
                             <Span label={item.label} htmlFor={item.value} />
                             {item.hasInput ? (
                                 <BorderBInput
+                                    disabled={form.data.work_field != "others"}
                                     value={
                                         (item.value === form.data.work_field &&
                                             form.data.other_field) ||
@@ -723,7 +724,7 @@ const Create = () => {
                                     }
                                     onChange={(e) =>
                                         form.setData(
-                                            "other_field",
+                                            "work_field ",
                                             e.target.value
                                         )
                                     }
