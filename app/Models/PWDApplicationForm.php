@@ -82,6 +82,16 @@ class PWDApplicationForm extends Model
         'formatted_type_of_application',
     ];
 
+    public function disabilities()
+    {
+        return $this->hasMany(Disability::class, 'application_form_id');
+    }
+
+    public function causes_of_disabilities()
+    {
+        return $this->hasMany(CauseOfDisability::class, 'application_form_id');
+    }
+
     public function pwd_identification_card()
     {
         return $this->hasOne(PWDIdentificationCard::class, 'application_form_id');

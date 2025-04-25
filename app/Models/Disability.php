@@ -14,4 +14,9 @@ class Disability extends Model
         'application_form_id',
         'name',
     ];
+
+    public function application_form()
+    {
+        return $this->belongsTo(PWDApplicationForm::class, 'application_form_id');
+    }
 }
