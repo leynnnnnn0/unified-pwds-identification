@@ -715,7 +715,7 @@ const Create = () => {
                     label="Work Field"
                     className="col-span-4"
                     error={form.errors.work_field}
-                    isRequired={form.data.status_of_employment != "unemployed"}
+                    isRequired={form.data.status_of_employment != "unemployed"} 
                 />
 
                 <RadioGroup

@@ -9,6 +9,7 @@ use App\Http\Controllers\PWDAccountController;
 use App\Http\Controllers\PWDDashboardController;
 use App\Http\Controllers\PWDProfileController;
 use App\Http\Controllers\PWDRegistrationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard', AdminDashboardController::class);
     Route::resource('applications', AdminApplicationController::class);
     Route::resource('verification', IDVerification::class);
+    Route::resource('users', UserController::class);
 
     Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
         Route::get('applications/{id}/process', 'process')->name('process');
