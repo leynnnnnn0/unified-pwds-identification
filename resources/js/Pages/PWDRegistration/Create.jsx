@@ -50,7 +50,7 @@ const Create = () => {
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
-        useState(true);
+        useState(true); 
 
     const form = useForm({
         type_of_registration: "new_applicant",
@@ -238,20 +238,20 @@ const Create = () => {
                     )}
                 </FormField>
 
-                <FormField
-                    className="col-span-3"
-                    label="Person with disability number"
-                    isRequired={!isPWDNumberInputDisabled}
-                    error={form.errors.pwd_number}
-                >
-                    <Input
-                        disabled={isPWDNumberInputDisabled}
-                        value={form.data.pwd_number || ""}
-                        onChange={(e) =>
-                            form.setData("pwd_number", e.target.value)
-                        }
-                    />
-                </FormField>
+                    <FormField
+                        className="col-span-3"
+                        label="Person with disability number"
+                        isRequired={!isPWDNumberInputDisabled}
+                        error={form.errors.pwd_number}
+                    >
+                        <Input
+                            disabled={isPWDNumberInputDisabled}
+                            value={form.data.pwd_number || ""}
+                            onChange={(e) =>
+                                form.setData("pwd_number", e.target.value)
+                            }
+                        />
+                    </FormField>
 
                 <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
                     Personal Information
