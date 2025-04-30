@@ -19,11 +19,8 @@ const Index = () => {
       <Button>
       <Link href={route("admin.users.create")}>Create New User</Link>
       </Button>
-      
-      </div>
 
-      
-      
+      </div>
       <TableContainer>
                 <Table>
                     <TableHead>
@@ -42,7 +39,6 @@ const Index = () => {
                                     <TD></TD>
                                     <TD></TD>
                                 </tr>
-
                     </TableBody>
                 </Table>
             </TableContainer>
