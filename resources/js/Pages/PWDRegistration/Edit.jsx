@@ -52,10 +52,11 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
 
-const Edit = ({ application }) => {
+const Edit = ({ application, image }) => {
     const isInitialMount = useRef(true);
     const { toast } = useToast();
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(image);
+
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
         useState(true);

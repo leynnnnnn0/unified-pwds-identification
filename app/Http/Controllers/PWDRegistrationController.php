@@ -7,6 +7,7 @@ use App\Models\PWDApplicationForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class PWDRegistrationController extends Controller
@@ -35,8 +36,11 @@ class PWDRegistrationController extends Controller
             'supporting_documents',
         ])->findOrFail($id);
 
+        $image = Storage::url($application->photo);
+
         return Inertia::render('PWDRegistration/Edit', [
             'application' => $application,
+            'image' => $image,
         ]);
     }
 
