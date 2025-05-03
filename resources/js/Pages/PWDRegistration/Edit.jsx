@@ -185,7 +185,7 @@ const Edit = ({ application, image }) => {
 
         form.setData("supporting_documents", fileObjects);
 
-        form.post(route("registration.store"), {
+        form.post(route("registration.update-form", application.id), {
             onSuccess: () => {
                 setPreviewImage(null);
                 form.reset();
@@ -1021,7 +1021,6 @@ const Edit = ({ application, image }) => {
                     />
                 </FormField>
             </div>
-
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
                 <FormH1 label="Uploaded Documents" />
                 <TableContainer>
@@ -1062,7 +1061,7 @@ const Edit = ({ application, image }) => {
                         <Button
                             onClick={() => setIsConfirmationModalOpen(true)}
                         >
-                            Submit
+                            Update
                         </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePWDRegistrationFormRequest;
+use App\Http\Requests\UpdatePWDRegistrationFormRequest;
 use App\Models\PWDApplicationForm;
+use App\Models\SupportingDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +46,69 @@ class PWDRegistrationController extends Controller
         ]);
     }
 
+    public function update(UpdatePWDRegistrationFormRequest $request, $id)
+    {
+        $validated = $request->validated();
+
+        $application = PWDApplicationForm::findOrFail($id);
+
+        DB::beginTransaction();
+        if ($request->file('photo')) {
+            $photo = $request->file('photo');
+            $photoName = time() . '.' . $photo->getClientOriginalExtension();
+            $photoPath = $photo->storeAs('1x1_pictures', $photoName, 'public');
+            $validated['photo'] = $photoPath;
+
+            if ($application->photo) {
+                Storage::disk('public')->delete($application->photo);
+            }
+        }
+
+        $application->update(Arr::except(
+            $validated,
+            ['disabilities', 'causes_of_disabilities', 'supporting_documents']
+        ));
+
+        $application->disabilities()->delete();
+        $application->causes_of_disabilities()->delete();
+
+        if (isset($validated['supporting_documents'])) {
+            foreach ($validated['supporting_documents'] as $document) {
+                $documentName = $document->getClientOriginalName() . time() .  '-' . '.' . $document->getClientOriginalExtension();
+                $documentPath = $document->storeAs('supporting_documents', $documentName, 'public');
+                $application->supporting_documents()->create([
+                    'path' => $documentPath,
+                    'name' => $documentName,
+                ]);
+            }
+        }
+
+        if (isset($validated['removed_documents'])) {
+            foreach ($validated['removed_documents'] as $document) {
+                $document = SupportingDocument::findOrFail($document);
+                $document->delete();
+                Storage::disk('public')->delete($document->path);
+            }
+        }
+
+        foreach ($validated['type_of_disabilities'] as $disability) {
+            $application->disabilities()->create([
+                'name' => $disability,
+            ]);
+        }
+
+        foreach ($validated['cause_of_disabilities'] as $cause) {
+            $application->causes_of_disabilities()->create([
+                'name' => $cause,
+            ]);
+        }
+
+        DB::commit();
+
+
+        return to_route('registration.index');
+    }
+
     public function store(StorePWDRegistrationFormRequest $request)
     {
         $validated = $request->validated();
@@ -62,7 +127,7 @@ class PWDRegistrationController extends Controller
 
         $application = PWDApplicationForm::create(Arr::except(
             $validated,
-            ['disabilities', 'causes_of_disabilities', 'supporting_documents']
+            ['disabilities', 'causes_of_disabilities', 'supporting_documents', 'removed_documents']
         ));
 
         foreach ($validated['supporting_documents'] as $document) {

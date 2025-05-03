@@ -30,6 +30,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
 Route::resource('my-profile', PWDProfileController::class);
+
+Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form'); 
 Route::resource('registration', PWDRegistrationController::class);
 
 Route::middleware('auth')->group(function () {
