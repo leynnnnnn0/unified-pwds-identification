@@ -66,7 +66,7 @@ class PWDRegistrationController extends Controller
         ));
 
         foreach ($validated['supporting_documents'] as $document) {
-            $documentName = time() . '-' . $document->getClientOriginalExtension();
+            $documentName = $document->getClientOriginalName() . time() .  '-' . '.' . $document->getClientOriginalExtension();
             $documentPath = $document->storeAs('supporting_documents', $documentName, 'public');
             $application->supporting_documents()->create([
                 'path' => $documentPath,

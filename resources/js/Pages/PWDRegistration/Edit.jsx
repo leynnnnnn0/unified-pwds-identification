@@ -9,6 +9,12 @@ import FormH1 from "@/Components/text/form-h1";
 import { Button } from "@/Components/ui/button";
 import { useForm } from "@inertiajs/react";
 import Checkbox from "@/Components/Checkbox";
+import Table from "@/Components/table/table";
+import TableBody from "@/Components/table/table-body";
+import TableHead from "@/Components/table/table-head";
+import TD from "@/Components/table/td";
+import TableContainer from "@/Components/table/table-container";
+import TH from "@/Components/table/th";
 
 import {
     AlertDialog,
@@ -60,6 +66,10 @@ const Edit = ({ application, image }) => {
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
         useState(true);
+
+    const [visibleDocuments, setVisibleDocuments] = useState([
+        ...application.supporting_documents,
+    ]);
 
     console.log(application.causes_of_disabilities.map((item) => item.name));
 
@@ -122,6 +132,8 @@ const Edit = ({ application, image }) => {
         guardian_last_name: application.guardian_last_name,
         guardian_first_name: application.guardian_first_name,
         guardian_middle_name: application.guardian_middle_name,
+
+        removed_documents: [],
     });
 
     useEffect(() => {
@@ -207,6 +219,17 @@ const Edit = ({ application, image }) => {
     useEffect(() => {
         console.log(files);
     }, [files]);
+
+    const getFileUrl = (path) => {
+        return `/storage/${path}`;
+    };
+
+    const removeFile = (id) => {
+        form.setData("removed_documents", [...form.data.removed_documents, id]);
+        setVisibleDocuments(() =>
+            visibleDocuments.filter((document) => document.id !== id)
+        );
+    };
 
     return (
         <>
@@ -997,6 +1020,37 @@ const Edit = ({ application, image }) => {
                         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                     />
                 </FormField>
+            </div>
+
+            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                <FormH1 label="Uploaded Documents" />
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TH>File Name</TH>
+                            <TH>Status</TH>
+                            <TH>Remarks</TH>
+                            <TH>Actions</TH>
+                        </TableHead>
+                        <TableBody>
+                            {visibleDocuments.map((item) => (
+                                <tr key={item.id}>
+                                    <TD>{item.name}</TD>
+                                    <TD>{item.status.toUpperCase()}</TD>
+                                    <TD>{item.remarks ?? "None"}</TD>
+                                    <TD className="flex items-center space-x-2">
+                                        <Button
+                                            onClick={() => removeFile(item.id)}
+                                            variant="destructive"
+                                        >
+                                            Remove
+                                        </Button>
+                                    </TD>
+                                </tr>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
 
             <div className="flex items-center justify-end col-span-4">
