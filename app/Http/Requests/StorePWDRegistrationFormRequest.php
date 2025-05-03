@@ -36,7 +36,8 @@ class StorePWDRegistrationFormRequest extends FormRequest
             'sex' => 'required|string|in:male,female',
             'civil_status' => 'required|string|in:single,separated,cohabitation,married,widowed',
             'type_of_disabilities' => 'required|array|in:deaf_or_hard_of_hearing,intellectual_disability,learning_disability,mental_disability,physical_disability,psychosocial_disability,speech_and_language_impairment,visual_disability,cancer,rare_disease',
-            'cause_of_disability' => 'nullable|string|max:255',
+            'cause_of_disability' => 'required|string|max:255',
+            'cause_of_disabilities' => 'required|array',
 
             // Residence Address
             'house_no_and_street' => 'required|string|max:255',

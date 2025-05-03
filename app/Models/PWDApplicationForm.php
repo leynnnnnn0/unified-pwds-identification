@@ -32,7 +32,6 @@ class PWDApplicationForm extends Model
         'date_of_birth',
         'sex',
         'civil_status',
-        'type_of_disability',
         'cause_of_disability',
 
         'house_no_and_street',
@@ -81,6 +80,16 @@ class PWDApplicationForm extends Model
         'formatted_status',
         'formatted_type_of_application',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function supporting_documents()
+    {
+        return $this->hasMany(SupportingDocument::class, 'application_form_id');
+    }
 
     public function disabilities()
     {

@@ -29,7 +29,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('sex');
             $table->string('civil_status');
-            $table->string('type_of_disability');
+
             $table->string('cause_of_disability')->nullable();
             $table->string('house_no_and_street');
             $table->string('barangay');
