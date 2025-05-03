@@ -22,6 +22,7 @@ class StorePWDRegistrationFormRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'files' => ['required', 'array'],
             'type_of_registration' => 'required|string|in:new_applicant,renewal',
             'pwd_number' => 'nullable|required_if:type_of_registration,renewal|string|max:50',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',

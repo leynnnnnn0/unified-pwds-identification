@@ -43,6 +43,19 @@ import {
     categoryOfEmployment,
 } from "@/lib/formOptions";
 
+import { FilePond, registerPlugin } from "react-filepond";
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+// `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
 import { useToast } from "@/hooks/use-toast";
 
 const Create = () => {
@@ -53,6 +66,7 @@ const Create = () => {
         useState(true);
 
     const form = useForm({
+        files: [],
         type_of_registration: "new_applicant",
         pwd_number: null,
         photo: null,
@@ -108,6 +122,7 @@ const Create = () => {
         guardian_first_name: null,
         guardian_middle_name: null,
     });
+
     useEffect(() => {
         if (form.data.type_of_registration == "renewal") {
             setIsPWDNumberInputDisabled(false);
@@ -147,6 +162,10 @@ const Create = () => {
 
     const submitForm = (e) => {
         e.preventDefault();
+        setIsConfirmationModalOpen(true);
+
+        form.setData("files", files);
+
         form.post(route("registration.store"), {
             onSuccess: () => {
                 setPreviewImage(null);
@@ -167,9 +186,20 @@ const Create = () => {
                     description: "There was a problem with your request.",
                 });
             },
+            onFinish: () => {
+                setIsConfirmationModalOpen(false);
+            },
         });
     };
 
+    const [files, setFiles] = useState([]);
+
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+        useState(false);
+
+    useEffect(() => {
+        console.log(files);
+    }, [files]);
     return (
         <>
             <H1 title="Registration Form" />
@@ -715,7 +745,7 @@ const Create = () => {
                     label="Work Field"
                     className="col-span-4"
                     error={form.errors.work_field}
-                    isRequired={form.data.status_of_employment != "unemployed"} 
+                    isRequired={form.data.status_of_employment != "unemployed"}
                 />
 
                 <RadioGroup
@@ -941,32 +971,57 @@ const Create = () => {
                         form.setData("guardian_middle_name", e.target.value)
                     }
                 />
+            </div>
 
-                <div className="flex items-center justify-end col-span-4">
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button>Submit</Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                    Are you absolutely sure?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    Please make sure all the information you
-                                    have entered is accurate and complete before
-                                    proceeding.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={submitForm}>
-                                    Continue
-                                </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                </div>
+            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                <FormH1 label="Supporting Documents" />
+                <FormField
+                    label="Upload Files"
+                    error={form.errors.files}
+                    isRequired={true}
+                >
+                    <FilePond
+                        files={files}
+                        onupdatefiles={setFiles}
+                        allowMultiple={true}
+                        // maxFiles={3}
+                        // name="files" /* sets the file input name, it's filepond by default */
+                        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                    />
+                </FormField>
+            </div>
+
+            <div className="flex items-center justify-end col-span-4">
+                <AlertDialog
+                    open={isConfirmationModalOpen}
+                    onOpenChange={setIsConfirmationModalOpen}
+                >
+                    <AlertDialogTrigger asChild>
+                        <Button
+                            onClick={() => setIsConfirmationModalOpen(true)}
+                        >
+                            Submit
+                        </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Please make sure all the information you have
+                                entered is accurate and complete before
+                                proceeding.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={submitForm}>
+                                Continue
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </>
     );
