@@ -26,7 +26,7 @@ class PWDRegistrationController extends Controller
     public function store(StorePWDRegistrationFormRequest $request)
     {
         $validated = $request->validated();
-
+        dd($validated);
         $validated['photo'] = null;
         $validated['user_id'] = 1;
         $validated['encoder_id'] = 1;

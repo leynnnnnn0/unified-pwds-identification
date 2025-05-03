@@ -63,7 +63,7 @@ const Create = () => {
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
-        useState(true); 
+        useState(true);
 
     const form = useForm({
         files: [],
@@ -71,30 +71,30 @@ const Create = () => {
         pwd_number: null,
         photo: null,
 
-        first_name: "",
-        middle_name: null,
-        last_name: null,
+        first_name: "Nathaniel",
+        middle_name: "Lavilla",
+        last_name: "Alvarez",
         suffix: null,
-        date_of_birth: null,
-        sex: null,
-        civil_status: null,
-        type_of_disabilities: [],
-        cause_of_disability: null,
-        cause_of_disabilities: [],
+        date_of_birth: "2004-01-01",
+        sex: "male",
+        civil_status: "single",
+        type_of_disabilities: ["mental_disability"],
+        cause_of_disability: "acquired",
+        cause_of_disabilities: ["injury"],
 
-        house_no_and_street: null,
-        barangay: null,
-        municipality: null,
-        province: null,
-        region: null,
+        house_no_and_street: "Block 0 Lot - Phase 1 Lavanya Subdivision",
+        barangay: "Bacao 2",
+        municipality: "General Trias",
+        province: "Cavite",
+        region: "4-a",
 
         landline_no: null,
-        mobile_no: null,
+        mobile_no: "09266887267",
         email_address: null,
 
-        educational_attainment: null,
+        educational_attainment: "none",
 
-        status_of_employment: null,
+        status_of_employment: "unemployed",
         types_of_employment: null,
         category_of_employment: null,
 
@@ -112,15 +112,15 @@ const Create = () => {
         psn_no: null,
         philhealth_no: null,
 
-        father_last_name: null,
-        father_first_name: null,
-        father_middle_name: null,
-        mother_last_name: null,
-        mother_first_name: null,
-        mother_middle_name: null,
-        guardian_last_name: null,
-        guardian_first_name: null,
-        guardian_middle_name: null,
+        father_last_name: "secret",
+        father_first_name: "secret",
+        father_middle_name: "secret",
+        mother_last_name: "secret",
+        mother_first_name: "secret",
+        mother_middle_name: "secret",
+        guardian_last_name: "secret",
+        guardian_first_name: "secret",
+        guardian_middle_name: "secret",
     });
 
     useEffect(() => {
@@ -268,20 +268,20 @@ const Create = () => {
                     )}
                 </FormField>
 
-                    <FormField
-                        className="col-span-3"
-                        label="Person with disability number"
-                        isRequired={!isPWDNumberInputDisabled}
-                        error={form.errors.pwd_number}
-                    >
-                        <Input
-                            disabled={isPWDNumberInputDisabled}
-                            value={form.data.pwd_number || ""}
-                            onChange={(e) =>
-                                form.setData("pwd_number", e.target.value)
-                            }
-                        />
-                    </FormField>
+                <FormField
+                    className="col-span-3"
+                    label="Person with disability number"
+                    isRequired={!isPWDNumberInputDisabled}
+                    error={form.errors.pwd_number}
+                >
+                    <Input
+                        disabled={isPWDNumberInputDisabled}
+                        value={form.data.pwd_number || ""}
+                        onChange={(e) =>
+                            form.setData("pwd_number", e.target.value)
+                        }
+                    />
+                </FormField>
 
                 <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
                     Personal Information
