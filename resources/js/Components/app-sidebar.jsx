@@ -22,6 +22,7 @@ import {
     SidebarHeader,
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 
 const items = [
