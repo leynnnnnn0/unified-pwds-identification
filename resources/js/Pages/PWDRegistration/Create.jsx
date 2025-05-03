@@ -66,7 +66,7 @@ const Create = () => {
         useState(true);
 
     const form = useForm({
-        files: [],
+        supporting_documents: [],
         type_of_registration: "new_applicant",
         pwd_number: null,
         photo: null,
@@ -164,7 +164,9 @@ const Create = () => {
         e.preventDefault();
         setIsConfirmationModalOpen(true);
 
-        form.setData("files", files);
+        const fileObjects = files.map((fileItem) => fileItem.file);
+
+        form.setData("supporting_documents", fileObjects);
 
         form.post(route("registration.store"), {
             onSuccess: () => {
@@ -977,7 +979,7 @@ const Create = () => {
                 <FormH1 label="Supporting Documents" />
                 <FormField
                     label="Upload Files"
-                    error={form.errors.files}
+                    error={form.errors.supporting_documents}
                     isRequired={true}
                 >
                     <FilePond

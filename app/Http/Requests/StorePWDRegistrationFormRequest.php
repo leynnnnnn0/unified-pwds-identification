@@ -22,10 +22,10 @@ class StorePWDRegistrationFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => ['required', 'array'],
+            'supporting_documents' => ['required', 'array'],
             'type_of_registration' => 'required|string|in:new_applicant,renewal',
             'pwd_number' => 'nullable|required_if:type_of_registration,renewal|string|max:50',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
 
             // Personal Information
             'first_name' => 'required|string|max:100',
@@ -35,7 +35,7 @@ class StorePWDRegistrationFormRequest extends FormRequest
             'date_of_birth' => 'required|date|before_or_equal:today',
             'sex' => 'required|string|in:male,female',
             'civil_status' => 'required|string|in:single,separated,cohabitation,married,widowed',
-            'type_of_disability' => 'required|string|in:deaf_or_hard_of_hearing,intellectual_disability,learning_disability,mental_disability,physical_disability,psychosocial_disability,speech_and_language_impairment,visual_disability,cancer,rare_disease',
+            'type_of_disabilities' => 'required|array|in:deaf_or_hard_of_hearing,intellectual_disability,learning_disability,mental_disability,physical_disability,psychosocial_disability,speech_and_language_impairment,visual_disability,cancer,rare_disease',
             'cause_of_disability' => 'nullable|string|max:255',
 
             // Residence Address
