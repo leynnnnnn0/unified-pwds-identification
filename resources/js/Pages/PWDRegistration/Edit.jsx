@@ -236,7 +236,18 @@ const Edit = ({ application, image }) => {
 
     return (
         <>
-            <H1 title="Registration Form" />
+            <div className="flex items-center justify-between">
+                <H1 title="Application Form Details" />
+                <Button
+                    onClick={
+                        isShowMode
+                            ? () => setIsShowMode(false)
+                            : () => setIsShowMode(true)
+                    }
+                >
+                    {isShowMode ? "Edit Details" : "Cancel Edit"}
+                </Button>
+            </div>
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
                 <FormField
                     className="col-span-3"
@@ -1049,23 +1060,25 @@ const Edit = ({ application, image }) => {
                 />
             </div>
 
-            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
-                <FormH1 label="Supporting Documents" />
-                <FormField
-                    label="Upload Files"
-                    error={form.errors.supporting_documents}
-                    isRequired={true}
-                >
-                    <FilePond
-                        files={files}
-                        onupdatefiles={setFiles}
-                        allowMultiple={true}
-                        // maxFiles={3}
-                        // name="files" /* sets the file input name, it's filepond by default */
-                        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-                    />
-                </FormField>
-            </div>
+            {isShowMode ? null : (
+                <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                    <FormH1 label="Supporting Documents" />
+                    <FormField
+                        label="Upload Files"
+                        error={form.errors.supporting_documents}
+                        isRequired={true}
+                    >
+                        <FilePond
+                            files={files}
+                            onupdatefiles={setFiles}
+                            allowMultiple={true}
+                            // maxFiles={3}
+                            // name="files" /* sets the file input name, it's filepond by default */
+                            labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                        />
+                    </FormField>
+                </div>
+            )}
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
                 <FormH1 label="Uploaded Documents" />
                 <TableContainer>
@@ -1098,38 +1111,40 @@ const Edit = ({ application, image }) => {
                 </TableContainer>
             </div>
 
-            <div className="flex items-center justify-end col-span-4">
-                <AlertDialog
-                    open={isConfirmationModalOpen}
-                    onOpenChange={setIsConfirmationModalOpen}
-                >
-                    <AlertDialogTrigger asChild>
-                        <Button
-                            onClick={() => setIsConfirmationModalOpen(true)}
-                        >
-                            Update
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>
-                                Are you absolutely sure?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Please make sure all the information you have
-                                entered is accurate and complete before
-                                proceeding.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={submitForm}>
-                                Continue
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-            </div>
+            {isShowMode ? null : (
+                <div className="flex items-center justify-end col-span-4">
+                    <AlertDialog
+                        open={isConfirmationModalOpen}
+                        onOpenChange={setIsConfirmationModalOpen}
+                    >
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                onClick={() => setIsConfirmationModalOpen(true)}
+                            >
+                                Update
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Please make sure all the information you
+                                    have entered is accurate and complete before
+                                    proceeding.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={submitForm}>
+                                    Continue
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
+            )}
         </>
     );
 };
