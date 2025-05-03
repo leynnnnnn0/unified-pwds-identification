@@ -31,7 +31,15 @@ const Index = ({ applications }) => {
                             </TDLabel>
                         </section>
                         <section>
-                            <InfoIcon />
+                            <Link
+                                href={route(
+                                    "registration.edit",
+                                    application.id
+                                )}
+                                className="text-blue-500 hover:text-blue-700"
+                            >
+                                <InfoIcon />
+                            </Link>
                         </section>
                     </DivTable>
                 ))}

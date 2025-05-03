@@ -30,7 +30,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-
 import {
     civilStatus,
     typeOfDisabilities,
@@ -45,7 +44,6 @@ import {
 
 import { FilePond, registerPlugin } from "react-filepond";
 
-
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -54,69 +52,75 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
 
-const Create = () => {
+const Edit = ({ application }) => {
+    const isInitialMount = useRef(true);
     const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
         useState(true);
 
+    console.log(application.causes_of_disabilities.map((item) => item.name));
+
     const form = useForm({
         supporting_documents: [],
-        type_of_registration: "new_applicant",
-        pwd_number: null,
+        type_of_registration: application.type_of_registration,
+        pwd_number: application.pwd_number,
         photo: null,
 
-        first_name: "Nathaniel",
-        middle_name: "Lavilla",
-        last_name: "Alvarez",
-        suffix: null,
-        date_of_birth: "2004-01-01",
-        sex: "male",
-        civil_status: "single",
-        type_of_disabilities: ["mental_disability"],
-        cause_of_disability: "acquired",
-        cause_of_disabilities: ["injury"],
+        first_name: application.first_name,
+        middle_name: application.middle_name,
+        last_name: application.last_name,
+        suffix: application.suffix,
+        date_of_birth: application.date_of_birth,
+        sex: application.sex,
+        civil_status: application.civil_status,
+        type_of_disabilities: application.disabilities.map((item) => item.name),
+        cause_of_disability: application.cause_of_disability,
+        cause_of_disabilities: application.causes_of_disabilities.map(
+            (item) => item.name
+        ),
 
-        house_no_and_street: "Block 0 Lot - Phase 1 Lavanya Subdivision",
-        barangay: "Bacao 2",
-        municipality: "General Trias",
-        province: "Cavite",
-        region: "4-a",
+        house_no_and_street: application.house_no_and_street,
+        barangay: application.barangay,
+        municipality: application.municipality,
+        province: application.province,
+        region: application.region,
 
-        landline_no: null,
-        mobile_no: "09266887267",
-        email_address: null,
+        landline_no: application.landline_no,
+        mobile_no: application.mobile_no,
+        email_address: application.email_address,
 
-        educational_attainment: "none",
+        educational_attainment: application.educational_attainment,
 
-        status_of_employment: "unemployed",
-        types_of_employment: null,
-        category_of_employment: null,
+        status_of_employment: application.status_of_employment,
+        types_of_employment: application.types_of_employment,
+        category_of_employment: application.category_of_employment,
 
-        work_field: null,
-        other_field: null,
+        work_field: application.work_field,
+        other_field: application.other_field,
 
-        organization_affiliated: null,
-        contact_person: null,
-        office_address: null,
-        telephone_no: null,
+        organization_affiliated: application.organization_affiliated,
+        contact_person: application.contact_person,
+        office_address: application.office_address,
+        telephone_no: application.telephone_no,
 
-        sss_no: null,
-        gsis_no: null,
-        pag_ibig_no: null,
-        psn_no: null,
-        philhealth_no: null,
+        sss_no: application.sss_no,
+        gsis_no: application.gsis_no,
+        pag_ibig_no: application.pag_ibig_no,
+        psn_no: application.psn_no,
+        philhealth_no: application.philhealth_no,
 
-        father_last_name: "secret",
-        father_first_name: "secret",
-        father_middle_name: "secret",
-        mother_last_name: "secret",
-        mother_first_name: "secret",
-        mother_middle_name: "secret",
-        guardian_last_name: "secret",
-        guardian_first_name: "secret",
-        guardian_middle_name: "secret",
+        father_last_name: application.father_last_name,
+        father_first_name: application.father_first_name,
+        father_middle_name: application.father_middle_name,
+        father_first_name: application.father_first_name,
+        mother_last_name: application.mother_last_name,
+        mother_first_name: application.mother_first_name,
+        mother_middle_name: application.mother_middle_name,
+        guardian_last_name: application.guardian_last_name,
+        guardian_first_name: application.guardian_first_name,
+        guardian_middle_name: application.guardian_middle_name,
     });
 
     useEffect(() => {
@@ -128,7 +132,11 @@ const Create = () => {
     }, [form.data.type_of_registration]);
 
     useEffect(() => {
-        form.setData("cause_of_disabilities", []);
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            form.setData("cause_of_disabilities", []);
+        }
     }, [form.data.cause_of_disability]);
 
     useEffect(() => {
@@ -198,6 +206,7 @@ const Create = () => {
     useEffect(() => {
         console.log(files);
     }, [files]);
+
     return (
         <>
             <H1 title="Registration Form" />
@@ -1025,4 +1034,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default Edit;
