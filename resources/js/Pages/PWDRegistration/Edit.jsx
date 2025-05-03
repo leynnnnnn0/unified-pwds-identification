@@ -60,6 +60,9 @@ import { useToast } from "@/hooks/use-toast";
 
 const Edit = ({ application, image }) => {
     const isInitialMount = useRef(true);
+
+    const [isShowMode, setIsShowMode] = useState(true);
+
     const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(image);
 
@@ -241,6 +244,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.type_of_registration}
                 >
                     <RadioGroup
+                        disabled={isShowMode}
                         value={form.data.type_of_registration}
                         onValueChange={(value) =>
                             form.setData("type_of_registration", value)
@@ -286,6 +290,7 @@ const Edit = ({ application, image }) => {
                         )}
                     </div>
                     <input
+                        disabled={isShowMode}
                         type="file"
                         ref={fileInputRef}
                         onChange={handlePhotoChange}
@@ -306,7 +311,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.pwd_number}
                 >
                     <Input
-                        disabled={isPWDNumberInputDisabled}
+                        disabled={isPWDNumberInputDisabled || isShowMode}
                         value={form.data.pwd_number || ""}
                         onChange={(e) =>
                             form.setData("pwd_number", e.target.value)
@@ -320,6 +325,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="Last Name" error={form.errors.last_name}>
                     <Input
+                        disabled={isShowMode}
                         value={form.data.last_name || ""}
                         onChange={(e) =>
                             form.setData("last_name", e.target.value)
@@ -329,6 +335,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="First Name" error={form.errors.first_name}>
                     <Input
+                        disabled={isShowMode}
                         value={form.data.first_name || ""}
                         onChange={(e) =>
                             form.setData("first_name", e.target.value)
@@ -342,6 +349,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.middle_name || ""}
                         onChange={(e) =>
                             form.setData("middle_name", e.target.value)
@@ -355,6 +363,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.suffix || ""}
                         onChange={(e) => form.setData("suffix", e.target.value)}
                     />
@@ -365,6 +374,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.date_of_birth}
                 >
                     <Input
+                        disabled={isShowMode}
                         type="date"
                         value={form.data.date_of_birth || ""}
                         onChange={(e) =>
@@ -375,6 +385,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="Sex" error={form.errors.sex}>
                     <Select
+                        disabled={isShowMode}
                         value={form.data.sex || ""}
                         onValueChange={(value) => form.setData("sex", value)}
                     >
@@ -393,6 +404,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.civil_status}
                 >
                     <Select
+                        disabled={isShowMode}
                         value={form.data.civil_status || ""}
                         onValueChange={(value) =>
                             form.setData("civil_status", value)
@@ -424,6 +436,7 @@ const Edit = ({ application, image }) => {
                                 className="flex items-center space-x-2"
                             >
                                 <Checkbox
+                                    disabled={isShowMode}
                                     id={item.value}
                                     value={item.value}
                                     onChange={(e) => {
@@ -458,6 +471,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.cause_of_disability}
                 >
                     <RadioGroup
+                        disabled={isShowMode}
                         value={form.data.cause_of_disability}
                         onValueChange={(value) => {
                             form.setData("cause_of_disability", value);
@@ -490,7 +504,7 @@ const Edit = ({ application, image }) => {
                                     id={item.value}
                                     disabled={
                                         form.data.cause_of_disability ==
-                                        "acquired"
+                                            "acquired" || isShowMode
                                     }
                                     onChange={(e) => {
                                         const checked = e.target.checked;
@@ -524,7 +538,7 @@ const Edit = ({ application, image }) => {
                                     id={item.value}
                                     disabled={
                                         form.data.cause_of_disability !=
-                                        "acquired"
+                                            "acquired" || isShowMode
                                     }
                                     onChange={(e) => {
                                         const checked = e.target.checked;
@@ -558,6 +572,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.house_no_and_street}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.house_no_and_street || ""}
                         onChange={(e) =>
                             form.setData("house_no_and_street", e.target.value)
@@ -567,6 +582,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="Barangay" error={form.errors.barangay}>
                     <Input
+                        disabled={isShowMode}
                         value={form.data.barangay || ""}
                         onChange={(e) =>
                             form.setData("barangay", e.target.value)
@@ -579,6 +595,7 @@ const Edit = ({ application, image }) => {
                     error={form.errors.municipality}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.municipality || ""}
                         onChange={(e) =>
                             form.setData("municipality", e.target.value)
@@ -588,6 +605,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="Province" error={form.errors.province}>
                     <Input
+                        disabled={isShowMode}
                         value={form.data.province || ""}
                         onChange={(e) =>
                             form.setData("province", e.target.value)
@@ -597,6 +615,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField label="Region" error={form.errors.region}>
                     <Input
+                        disabled={isShowMode}
                         value={form.data.region || ""}
                         onChange={(e) => form.setData("region", e.target.value)}
                     />
@@ -611,6 +630,7 @@ const Edit = ({ application, image }) => {
                         isRequired={false}
                     >
                         <Input
+                            disabled={isShowMode}
                             value={form.data.landline_no || ""}
                             onChange={(e) =>
                                 form.setData("landline_no", e.target.value)
@@ -620,6 +640,7 @@ const Edit = ({ application, image }) => {
 
                     <FormField label="Mobile No." error={form.errors.mobile_no}>
                         <Input
+                            disabled={isShowMode}
                             value={form.data.mobile_no || ""}
                             onChange={(e) =>
                                 form.setData("mobile_no", e.target.value)
@@ -633,6 +654,7 @@ const Edit = ({ application, image }) => {
                         isRequired={false}
                     >
                         <Input
+                            disabled={isShowMode}
                             value={form.data.email_address || ""}
                             onChange={(e) =>
                                 form.setData("email_address", e.target.value)
@@ -650,6 +672,7 @@ const Edit = ({ application, image }) => {
                 />
 
                 <RadioGroup
+                    disabled={isShowMode}
                     value={form.data.educational_attainment || ""}
                     onValueChange={(value) =>
                         form.setData("educational_attainment", value)
@@ -678,6 +701,7 @@ const Edit = ({ application, image }) => {
                         error={form.errors.status_of_employment}
                     >
                         <RadioGroup
+                            disabled={isShowMode}
                             value={form.data.status_of_employment || ""}
                             onValueChange={(value) =>
                                 form.setData("status_of_employment", value)
@@ -709,6 +733,7 @@ const Edit = ({ application, image }) => {
                         }
                     >
                         <RadioGroup
+                            disabled={isShowMode}
                             value={form.data.types_of_employment || ""}
                             onValueChange={(value) =>
                                 form.setData("types_of_employment", value)
@@ -743,6 +768,7 @@ const Edit = ({ application, image }) => {
                         }
                     >
                         <RadioGroup
+                            disabled={isShowMode}
                             value={form.data.category_of_employment || ""}
                             disabled={
                                 form.data.status_of_employment == "unemployed"
@@ -780,6 +806,7 @@ const Edit = ({ application, image }) => {
                 />
 
                 <RadioGroup
+                    disabled={isShowMode}
                     value={form.data.work_field || ""}
                     onValueChange={(value) => form.setData("work_field", value)}
                     disabled={form.data.status_of_employment == "unemployed"}
@@ -824,6 +851,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.organization_affiliated || ""}
                         onChange={(e) =>
                             form.setData(
@@ -840,6 +868,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.contact_person || ""}
                         onChange={(e) =>
                             form.setData("contact_person", e.target.value)
@@ -853,6 +882,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.office_address || ""}
                         onChange={(e) =>
                             form.setData("office_address", e.target.value)
@@ -866,6 +896,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.telephone_no || ""}
                         onChange={(e) =>
                             form.setData("telephone_no", e.target.value)
@@ -881,6 +912,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.sss_no || ""}
                         onChange={(e) => form.setData("sss_no", e.target.value)}
                     />
@@ -892,6 +924,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.gsis_no || ""}
                         onChange={(e) =>
                             form.setData("gsis_no", e.target.value)
@@ -905,6 +938,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.pag_ibig_no || ""}
                         onChange={(e) =>
                             form.setData("pag_ibig_no", e.target.value)
@@ -918,6 +952,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.psn_no || ""}
                         onChange={(e) => form.setData("psn_no", e.target.value)}
                     />
@@ -929,6 +964,7 @@ const Edit = ({ application, image }) => {
                     isRequired={false}
                 >
                     <Input
+                        disabled={isShowMode}
                         value={form.data.philhealth_no || ""}
                         onChange={(e) =>
                             form.setData("philhealth_no", e.target.value)
@@ -945,18 +981,21 @@ const Edit = ({ application, image }) => {
 
                 <Span label="Father's Name:"></Span>
                 <Input
+                    disabled={isShowMode}
                     value={form.data.father_last_name || ""}
                     onChange={(e) =>
                         form.setData("father_last_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.father_first_name || ""}
                     onChange={(e) =>
                         form.setData("father_first_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.father_middle_name || ""}
                     onChange={(e) =>
                         form.setData("father_middle_name", e.target.value)
@@ -965,18 +1004,21 @@ const Edit = ({ application, image }) => {
 
                 <Span label="Mother's Name:"></Span>
                 <Input
+                    disabled={isShowMode}
                     value={form.data.mother_last_name || ""}
                     onChange={(e) =>
                         form.setData("mother_last_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.mother_first_name || ""}
                     onChange={(e) =>
                         form.setData("mother_first_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.mother_middle_name || ""}
                     onChange={(e) =>
                         form.setData("mother_middle_name", e.target.value)
@@ -985,18 +1027,21 @@ const Edit = ({ application, image }) => {
 
                 <Span label="Guardian's Name:"></Span>
                 <Input
+                    disabled={isShowMode}
                     value={form.data.guardian_last_name || ""}
                     onChange={(e) =>
                         form.setData("guardian_last_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.guardian_first_name || ""}
                     onChange={(e) =>
                         form.setData("guardian_first_name", e.target.value)
                     }
                 />
                 <Input
+                    disabled={isShowMode}
                     value={form.data.guardian_middle_name || ""}
                     onChange={(e) =>
                         form.setData("guardian_middle_name", e.target.value)
@@ -1039,6 +1084,7 @@ const Edit = ({ application, image }) => {
                                     <TD>{item.remarks ?? "None"}</TD>
                                     <TD className="flex items-center space-x-2">
                                         <Button
+                                            disabled={isShowMode}
                                             onClick={() => removeFile(item.id)}
                                             variant="destructive"
                                         >
