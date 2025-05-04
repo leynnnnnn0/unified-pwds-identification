@@ -1,51 +1,42 @@
-import {
-    Calendar,
-    CircleAlertIcon,
-    Home,
-    Inbox,
-    Search,
-    Settings,
-    UserCircle,
-} from "lucide-react";
+import { CircleAlertIcon, Home, UserCircle } from "lucide-react";
 import MainLago from "../../images/mainLogo.jpg";
-import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel,
     SidebarMenu,
-    SidebarMenuSub,
-    SidebarMenuSubItem,
-    SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuButton,
     SidebarHeader,
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
-import { icon } from "@fortawesome/fontawesome-svg-core";
-import { router } from "@inertiajs/react";
 
 const items = [
     {
         title: "Dashboard",
         url: "/dashboard",
         icon: Home,
+        isLocked: false,
     },
     {
         title: "My Profile",
         url: "/my-profile",
         icon: UserCircle,
+        isLocked: true,
+        requiredStep:
+            "Your Account is not yet fully verified, please create an application first.",
     },
     {
-        title: "Registration",
+        title: "My Applications",
         url: "/registration",
         icon: UserCircle,
+        isLocked: false,
     },
 ];
 
 const logout = () => {
-    console.log("test");
     router.post("/logout", {
         onFinish: () => {
             console.log("Logged out");
@@ -80,26 +71,25 @@ export function AppSidebar() {
 
                 <SidebarContent>
                     <SidebarGroup>
-                        {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 {items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
-                                            <SidebarLink
-                                                href={item.url}
-                                                icon={item.icon}
-                                            >
-                                                {item.title}
-                                            </SidebarLink>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
+                                    <SidebarLink
+                                        key={item.title}
+                                        href={item.url}
+                                        icon={item.icon}
+                                        isLocked={item.isLocked}
+                                        requiredStep={item.requiredStep}
+                                    >
+                                        <span>{item.title}</span>
+                                    </SidebarLink>
                                 ))}
                                 <SidebarMenuItem>
                                     <SidebarMenuButton onClick={logout}>
-                                        <SidebarLink icon={CircleAlertIcon}>
-                                            Logout
-                                        </SidebarLink>
+                                        <div className="flex items-center gap-2">
+                                            <CircleAlertIcon className="w-4 h-4" />
+                                            <span>Logout</span>
+                                        </div>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             </SidebarMenu>
@@ -109,25 +99,4 @@ export function AppSidebar() {
             </Sidebar>
         </div>
     );
-}
-
-{
-    /* <SidebarMenu>
-    <Collapsible defaultOpen className="group/collapsible">
-        <SidebarMenuItem>
-            <CollapsibleTrigger asChild>
-                <SidebarMenuButton>
-
-                    <Home className="w-4 h-4" />
-                    <span>Main Menu</span>
-                </SidebarMenuButton>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-                <SidebarMenuSub>
-                    <SidebarMenuSubItem>test</SidebarMenuSubItem>
-                </SidebarMenuSub>
-            </CollapsibleContent>
-        </SidebarMenuItem>
-    </Collapsible>
-</SidebarMenu>; */
 }
