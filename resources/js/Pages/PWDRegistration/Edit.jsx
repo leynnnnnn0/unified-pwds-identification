@@ -1092,7 +1092,14 @@ const Edit = ({ application, image }) => {
                         <TableBody>
                             {visibleDocuments.map((item) => (
                                 <tr key={item.id}>
-                                    <TD>{item.name}</TD>
+                                    <TD>
+                                        <a
+                                            href={getFileUrl(item.path)}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    </TD>
                                     <TD>{item.status.toUpperCase()}</TD>
                                     <TD>{item.remarks ?? "None"}</TD>
                                     <TD className="flex items-center space-x-2">
