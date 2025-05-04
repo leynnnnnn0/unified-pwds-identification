@@ -138,7 +138,7 @@ const Show = ({ application, image }) => {
         father_last_name: application.father_last_name,
         father_first_name: application.father_first_name,
         father_middle_name: application.father_middle_name,
-        father_first_name: application.father_first_name,
+
         mother_last_name: application.mother_last_name,
         mother_first_name: application.mother_first_name,
         mother_middle_name: application.mother_middle_name,

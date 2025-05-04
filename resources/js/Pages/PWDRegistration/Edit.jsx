@@ -128,7 +128,7 @@ const Edit = ({ application, image }) => {
         father_last_name: application.father_last_name,
         father_first_name: application.father_first_name,
         father_middle_name: application.father_middle_name,
-        father_first_name: application.father_first_name,
+
         mother_last_name: application.mother_last_name,
         mother_first_name: application.mother_first_name,
         mother_middle_name: application.mother_middle_name,
@@ -744,13 +744,13 @@ const Edit = ({ application, image }) => {
                         }
                     >
                         <RadioGroup
-                            disabled={isShowMode}
                             value={form.data.types_of_employment || ""}
                             onValueChange={(value) =>
                                 form.setData("types_of_employment", value)
                             }
                             disabled={
-                                form.data.status_of_employment == "unemployed"
+                                form.data.status_of_employment ==
+                                    "unemployed" || isShowMode
                             }
                         >
                             {typesOfEmployment.map((item) => (
@@ -779,10 +779,10 @@ const Edit = ({ application, image }) => {
                         }
                     >
                         <RadioGroup
-                            disabled={isShowMode}
                             value={form.data.category_of_employment || ""}
                             disabled={
-                                form.data.status_of_employment == "unemployed"
+                                form.data.status_of_employment ==
+                                    "unemployed" || isShowMode
                             }
                             onValueChange={(value) =>
                                 form.setData("category_of_employment", value)
@@ -817,10 +817,12 @@ const Edit = ({ application, image }) => {
                 />
 
                 <RadioGroup
-                    disabled={isShowMode}
                     value={form.data.work_field || ""}
                     onValueChange={(value) => form.setData("work_field", value)}
-                    disabled={form.data.status_of_employment == "unemployed"}
+                    disabled={
+                        form.data.status_of_employment == "unemployed" ||
+                        isShowMode
+                    }
                     className="col-span-4 grid grid-cols-4"
                 >
                     {occupations.map((item) => (
