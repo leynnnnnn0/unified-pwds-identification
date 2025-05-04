@@ -12,7 +12,6 @@ import { Link } from "@inertiajs/react";
 const Index = ({ applications }) => {
     return (
         <>
-        
             <H1 title="Applications" />
             <TableContainer>
                 <Table>

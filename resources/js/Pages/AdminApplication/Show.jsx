@@ -7,7 +7,7 @@ import BorderBInput from "@/Components/Input/border-b-Input";
 import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
 import { Button } from "@/Components/ui/button";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import Checkbox from "@/Components/Checkbox";
 import Table from "@/Components/table/table";
 import TableBody from "@/Components/table/table-body";
@@ -273,7 +273,7 @@ const Show = ({ application, image }) => {
                     console.log("successs");
                 },
                 onError: (errors) => {
-                    console.log("error");
+                    console.log(errors);
                 },
             }
         );
@@ -284,7 +284,6 @@ const Show = ({ application, image }) => {
         remarks: application.remarks ?? "",
     });
 
-    console.log(updateForm.data.status);
     const updateApplicationStatus = () => {
         updateForm.put(
             route(
@@ -301,20 +300,32 @@ const Show = ({ application, image }) => {
             }
         );
     };
+
+    const processApplication = () => {
+        const result = application.supporting_documents.filter(
+            (item) => item.status === "pending"
+        );
+        if (result.length > 0) {
+            toast({
+                className:
+                    "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description:
+                    "Uploaded documents must be verified and approved first before processing the appliction.",
+            });
+            return;
+        }
+
+        router.get(route("admin.applications.process", application.id));
+    };
     return (
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Application Form Details" />
                 {application.status == "pending" && (
-                    <Button>
-                        <Link
-                            href={route(
-                                "admin.applications.process",
-                                application.id
-                            )}
-                        >
-                            Process Application
-                        </Link>
+                    <Button onClick={processApplication}>
+                        Process Application
                     </Button>
                 )}
                 {application.status == "APPROVED" && (

@@ -8,6 +8,7 @@ use App\Models\PWDApplicationForm;
 use App\Models\SupportingDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -16,7 +17,9 @@ class PWDRegistrationController extends Controller
 {
     public function index()
     {
-        $applications = PWDApplicationForm::with('user')->select(['id', 'application_number', 'application_date', 'status'])->paginate(10);
+        $applications = PWDApplicationForm::with('user')
+            ->where('user_id', Auth::id())
+            ->select(['id', 'application_number', 'application_date', 'status'])->paginate(10);
 
         return Inertia::render('PWDRegistration/Index', [
             'applications' => $applications,
@@ -138,8 +141,8 @@ class PWDRegistrationController extends Controller
 
         $validated['photo'] = $photoPath;
 
-        $validated['user_id'] = 1;
-        $validated['encoder_id'] = 1;
+        $validated['user_id'] = Auth::id();
+        $validated['encoder_id'] = Auth::id();
         $validated['application_number'] = 'PWD-' . time();
         $validated['application_date'] = now();
 

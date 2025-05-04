@@ -128,9 +128,12 @@ const Home = () => {
                                 <a href="/login">Login</a>
                             </li>
                             <li>
-                                <button className="px-5 py-2 bg-blue-900 text-white rounded-full text-xs font-bold hover:bg-blue-700 transition-colors duration-300">
+                                <a
+                                    href="/register"
+                                    className="px-5 py-2 bg-blue-900 text-white rounded-full text-xs font-bold hover:bg-blue-700 transition-colors duration-300"
+                                >
                                     Create an Account
-                                </button>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -139,9 +142,12 @@ const Home = () => {
                         <h1 className="font-[inter] text-xs hover:text-blue-700 transition-colors duration-300">
                             <a href="/login">Login</a>
                         </h1>
-                        <button className="font-[inter] px-3 lg:px-5 py-2 bg-blue-900 text-white rounded-full text-xs font-bold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+                        <a
+                            href="/register"
+                            className="font-[inter] px-3 lg:px-5 py-2 bg-blue-900 text-white rounded-full text-xs font-bold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                        >
                             Create an Account
-                        </button>
+                        </a>
                     </div>
                 </nav>
 
