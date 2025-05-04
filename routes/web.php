@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('applications/{id}/process', 'process')->name('process');
         Route::get('applications/{id}', 'show')->name('applications.show');
         Route::post('applications/{id}/store-identification-card', 'storeIdentificationCard')->name('store-identification-card');
+        Route::put('applications/{id}/update-document-details', 'updateDocumentDetails')->name('update-document-details');
     });
 });
 Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');

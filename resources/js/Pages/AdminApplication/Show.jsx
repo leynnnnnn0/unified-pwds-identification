@@ -59,7 +59,6 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
 
-import { Label } from "@/components/ui/label";
 import {
     Popover,
     PopoverContent,
@@ -253,8 +252,29 @@ const Show = ({ application, image }) => {
         console.log(documentId);
     }, [documentId]);
 
+    const documentForm = useForm({
+        status: null,
+        remarks: null,
+    });
+
     const updateDocumentDetails = () => {
-        console.log(documentToEdit);
+        documentForm.setData("status", documentToEdit.status);
+        documentForm.setData("remarks", documentToEdit.remarks);
+
+        documentForm.put(
+            route(
+                "admin.applications.update-document-details",
+                documentToEdit.id
+            ),
+            {
+                onSuccess: () => {
+                    console.log("successs");
+                },
+                onError: (errors) => {
+                    console.log(errors);
+                },
+            }
+        );
     };
     return (
         <>

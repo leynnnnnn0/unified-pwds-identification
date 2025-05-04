@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PWDApplicationForm;
 use App\Models\PWDIdentificationCard;
+use App\Models\SupportingDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -29,6 +30,22 @@ class AdminApplicationController extends Controller
         return Inertia::render('AdminApplication/Index', [
             'applications' => $applications,
         ]);
+    }
+
+    public function updateDocumentDetails(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+        ]);
+
+        $document = SupportingDocument::find($id);
+        $document->update([
+            'status' => $validated['status'],
+            'remarks' => $validated['remarks'],
+        ]);
+
+        return back();
     }
 
     public function show($id)
