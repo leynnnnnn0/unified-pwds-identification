@@ -16,25 +16,27 @@ use Inertia\Inertia;
 
 Route::resource('', LandingPageController::class);
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('dashboard', AdminDashboardController::class);
-    Route::resource('applications', AdminApplicationController::class);
-    Route::resource('verification', IDVerification::class);
-    Route::resource('users', UserController::class);
+Route::middleware('auth')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('dashboard', AdminDashboardController::class);
+        Route::resource('applications', AdminApplicationController::class);
+        Route::resource('verification', IDVerification::class);
+        Route::resource('users', UserController::class);
 
-    Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
-        Route::get('applications/{id}/process', 'process')->name('process');
-        Route::get('applications/{id}', 'show')->name('applications.show');
-        Route::post('applications/{id}/store-identification-card', 'storeIdentificationCard')->name('store-identification-card');
-        Route::put('applications/{id}/update-document-details', 'updateDocumentDetails')->name('update-document-details');
-        Route::put('applications/{id}/update-application-status', 'updateApplicationStatus')->name('update-application-status');
+        Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
+            Route::get('applications/{id}/process', 'process')->name('process');
+            Route::get('applications/{id}', 'show')->name('applications.show');
+            Route::post('applications/{id}/store-identification-card', 'storeIdentificationCard')->name('store-identification-card');
+            Route::put('applications/{id}/update-document-details', 'updateDocumentDetails')->name('update-document-details');
+            Route::put('applications/{id}/update-application-status', 'updateApplicationStatus')->name('update-application-status');
+        });
     });
-});
-Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
-Route::resource('my-profile', PWDProfileController::class);
+    Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('my-profile', PWDProfileController::class);
 
-Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form'); 
-Route::resource('registration', PWDRegistrationController::class);
+    Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');
+    Route::resource('registration', PWDRegistrationController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

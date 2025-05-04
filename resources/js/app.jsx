@@ -17,20 +17,25 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.jsx")
         );
 
-        if (window.location.pathname.startsWith("/admin")) {
-            page.default.layout =
-                page.default.layout ??
-                ((page) => <AdminLayout>{page}</AdminLayout>);
-        } else if (
-            window.location.pathname.startsWith("/login") ||
-            window.location.pathname == "/" ||
-            window.location.pathname.startsWith("/register")
-        ) {
-            page.default.layout = null;
-        } else {
-            page.default.layout =
-                page.default.layout ?? ((page) => <Layout>{page}</Layout>);
+        if (page.default.layout) {
+            return page;
         }
+
+        page.default.layout = (page) => {
+            const path = window.location.pathname;
+
+            if (path.startsWith("/admin")) {
+                return <AdminLayout>{page}</AdminLayout>;
+            } else if (
+                path.startsWith("/login") ||
+                path === "/" ||
+                path.startsWith("/register")
+            ) {
+                return page; 
+            } else {
+                return <Layout>{page}</Layout>;
+            }
+        };
 
         return page;
     },
