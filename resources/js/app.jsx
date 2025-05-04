@@ -23,7 +23,8 @@ createInertiaApp({
                 ((page) => <AdminLayout>{page}</AdminLayout>);
         } else if (
             window.location.pathname.startsWith("/login") ||
-            window.location.pathname == "/"
+            window.location.pathname == "/" ||
+            window.location.pathname.startsWith("/register")
         ) {
             page.default.layout = null;
         } else {

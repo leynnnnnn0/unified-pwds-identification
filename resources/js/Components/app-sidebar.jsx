@@ -1,5 +1,6 @@
 import {
     Calendar,
+    CircleAlertIcon,
     Home,
     Inbox,
     Search,
@@ -23,7 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
 import { icon } from "@fortawesome/fontawesome-svg-core";
-
+import { router } from "@inertiajs/react";
 
 const items = [
     {
@@ -42,6 +43,15 @@ const items = [
         icon: UserCircle,
     },
 ];
+
+const logout = () => {
+    console.log("test");
+    router.post("/logout", {
+        onFinish: () => {
+            console.log("Logged out");
+        },
+    });
+};
 
 export function AppSidebar() {
     return (
@@ -85,6 +95,13 @@ export function AppSidebar() {
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton onClick={logout}>
+                                        <SidebarLink icon={CircleAlertIcon}>
+                                            Logout
+                                        </SidebarLink>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
