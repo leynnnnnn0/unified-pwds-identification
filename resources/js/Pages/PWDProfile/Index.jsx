@@ -10,7 +10,8 @@ import TableHead from "@/Components/table/table-head";
 import TH from "@/Components/table/th";
 import TableBody from "@/Components/table/table-body";
 import TD from "@/Components/table/td";
-
+import MainLogo from "../../../images/mainLogo.jpg";
+import Flag from "../../../images/philippines.jpg";
 const Index = ({ application, image }) => {
     const getFileUrl = (path) => {
         return `/storage/${path}`;
@@ -121,6 +122,84 @@ const Index = ({ application, image }) => {
                             ))}
                         </TableBody>
                     </Table>
+                </TabsContent>
+                <TabsContent value="digital_id">
+                    <section className="mt-5">
+                        <div className="bg-white rouded-lg shadow-lg h-52 w-96 p-4">
+                            <section className="flex items-center justify-between">
+                                <img
+                                    src={MainLogo}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                                <span className="text-gray-700 font-bold text-xs">
+                                    Republic of the Philippines{" "}
+                                </span>
+                                <img
+                                    src={Flag}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                            </section>
+
+                            <section className="flex gap-5 h-full items-center">
+                                <div className="flex flex-col gap-1">
+                                    <img
+                                        src={image ?? Image}
+                                        alt=""
+                                        className="size-24"
+                                    />
+
+                                    <div className="flex flex-col">
+                                        <div className="border-b  border-gray-500 h-auto mt-5"></div>
+                                        <span className="text-center text-[9px]">
+                                            Signature
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1  flex flex-col gap-2">
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">ID Number:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] text-start">
+                                            PWD-1213456
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Card Holder:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] text-start">
+                                            {application.first_name +
+                                                " " +
+                                                application.middle_name +
+                                                " " +
+                                                application.last_name}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Type of Disabilities:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] text-start">
+                                            Mental, Deaf
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">Address:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] text-start">
+                                            {application.house_no_and_street +
+                                                " " +
+                                                application.municipality +
+                                                ", " +
+                                                application.province}
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
                 </TabsContent>
             </Tabs>
         </>
