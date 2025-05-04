@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\PWDApplicationForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -33,6 +35,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'is_verified' => PWDApplicationForm::where('user_id', Auth::id())->where('status', 'approved')->first() ? true : false
             ],
         ];
     }

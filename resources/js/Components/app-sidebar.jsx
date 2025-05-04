@@ -1,6 +1,6 @@
 import { CircleAlertIcon, Home, UserCircle } from "lucide-react";
 import MainLago from "../../images/mainLogo.jpg";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import {
     Sidebar,
     SidebarContent,
@@ -13,38 +13,42 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
 
-const items = [
-    {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: Home,
-        isLocked: false,
-    },
-    {
-        title: "My Profile",
-        url: "/my-profile",
-        icon: UserCircle,
-        isLocked: true,
-        requiredStep:
-            "Your Account is not yet fully verified, please create an application first.",
-    },
-    {
-        title: "My Applications",
-        url: "/registration",
-        icon: UserCircle,
-        isLocked: false,
-    },
-];
+import React from "react";
 
-const logout = () => {
-    router.post("/logout", {
-        onFinish: () => {
-            console.log("Logged out");
+const AppSidebar = () => {
+    const { auth } = usePage().props;
+
+    const items = [
+        {
+            title: "Dashboard",
+            url: "/dashboard",
+            icon: Home,
+            isLocked: false,
         },
-    });
-};
+        {
+            title: "My Profile",
+            url: "/my-profile",
+            icon: UserCircle,
+            isLocked: !auth.is_verified,
+            requiredStep:
+                "Your Account is not yet fully verified, please create an application first.",
+        },
+        {
+            title: "My Applications",
+            url: "/registration",
+            icon: UserCircle,
+            isLocked: false,
+        },
+    ];
 
-export function AppSidebar() {
+    const logout = () => {
+        router.post("/logout", {
+            onFinish: () => {
+                console.log("Logged out");
+            },
+        });
+    };
+
     return (
         <div className="min-h-screen">
             <Sidebar>
@@ -99,4 +103,6 @@ export function AppSidebar() {
             </Sidebar>
         </div>
     );
-}
+};
+
+export default AppSidebar;

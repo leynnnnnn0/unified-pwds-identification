@@ -5,7 +5,9 @@ import {
     Search,
     Settings,
     UserCircle,
+    CircleAlertIcon,
 } from "lucide-react";
+import { router } from "@inertiajs/react";
 import MainLago from "../../images/mainLogo.jpg";
 import { Link } from "@inertiajs/react";
 import {
@@ -45,6 +47,14 @@ const items = [
         icon: UserCircle,
     },
 ];
+
+const logout = () => {
+    router.post("/logout", {
+        onFinish: () => {
+            console.log("Logged out");
+        },
+    });
+};
 
 export function AdminSidebar() {
     return (
@@ -88,6 +98,15 @@ export function AdminSidebar() {
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
+
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton onClick={logout}>
+                                        <div className="flex items-center gap-2">
+                                            <CircleAlertIcon className="w-4 h-4" />
+                                            <span>Logout</span>
+                                        </div>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
