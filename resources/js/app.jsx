@@ -17,13 +17,13 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.jsx")
         );
 
-        if (name.startsWith("admin")) {
-            page.default.layout =
-                page.default.layout ?? ((page) => <Layout>{page}</Layout>);
-        } else {
+        if (window.location.pathname.startsWith("/admin")) {
             page.default.layout =
                 page.default.layout ??
                 ((page) => <AdminLayout>{page}</AdminLayout>);
+        } else {
+            page.default.layout =
+                page.default.layout ?? ((page) => <Layout>{page}</Layout>);
         }
 
         return page;
