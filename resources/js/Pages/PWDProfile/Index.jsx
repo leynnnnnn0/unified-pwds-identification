@@ -4,8 +4,18 @@ import { MapPin, AlertTriangle, CheckCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Span from "@/Components/text/span";
 import SpanValue from "@/Components/text/span-value";
+import TableContainer from "@/Components/table/table-container";
+import Table from "@/Components/table/table";
+import TableHead from "@/Components/table/table-head";
+import TH from "@/Components/table/th";
+import TableBody from "@/Components/table/table-body";
+import TD from "@/Components/table/td";
 
 const Index = ({ application, image }) => {
+    const getFileUrl = (path) => {
+        return `/storage/${path}`;
+    };
+
     return (
         <>
             <div className="flex gap-10">
@@ -87,8 +97,30 @@ const Index = ({ application, image }) => {
                         </div>
                     </section>
                 </TabsContent>
-                <TabsContent value="account_security">
-                    Change your password here.
+                <TabsContent value="documents">
+                    <Table>
+                        <TableHead>
+                            <TH>File Name</TH>
+                            <TH>Status</TH>
+                            <TH>Remarks</TH>
+                        </TableHead>
+                        <TableBody>
+                            {application.supporting_documents.map((item) => (
+                                <tr key={item.id}>
+                                    <TD>
+                                        <a
+                                            href={getFileUrl(item.path)}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    </TD>
+                                    <TD>{item.status}</TD>
+                                    <TD>{item.remarks}</TD>
+                                </tr>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </TabsContent>
             </Tabs>
         </>
