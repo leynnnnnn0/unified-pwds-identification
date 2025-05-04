@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class PWDApplicationForm extends Model
     protected $table = 'pwd_application_forms';
 
     protected $fillable = [
+        'remarks',
         'user_id',
         'encoder_id',
         'application_number',
@@ -80,6 +82,7 @@ class PWDApplicationForm extends Model
         'formatted_status',
         'formatted_type_of_application',
     ];
+
 
     public function user()
     {

@@ -27,6 +27,8 @@ class AdminApplicationController extends Controller
                     'type_of_registration' => $item->formatted_type_of_application,
                 ];
             });
+
+
         return Inertia::render('AdminApplication/Index', [
             'applications' => $applications,
         ]);
@@ -48,6 +50,22 @@ class AdminApplicationController extends Controller
         return back();
     }
 
+    public function updateApplicationStatus(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+        ]);
+
+        $application = PWDApplicationForm::find($id);
+        $application->update([
+            'status' => $validated['status'],
+            'remarks' => $validated['remarks'],
+        ]);
+
+        return back();
+    }
+
     public function show($id)
     {
         $application = PWDApplicationForm::with([
@@ -57,6 +75,7 @@ class AdminApplicationController extends Controller
             'disabilities',
             'supporting_documents',
         ])->findOrFail($id);
+
 
         $image = Storage::url($application->photo);
 

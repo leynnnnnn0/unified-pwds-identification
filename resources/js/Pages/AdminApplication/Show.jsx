@@ -65,6 +65,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/Components/ui/textarea";
+import { Label } from "@/Components/ui/label";
+import Infolist from "@/Components/infolist";
 
 const Show = ({ application, image }) => {
     const isInitialMount = useRef(true);
@@ -271,7 +273,30 @@ const Show = ({ application, image }) => {
                     console.log("successs");
                 },
                 onError: (errors) => {
-                    console.log(errors);
+                    console.log("error");
+                },
+            }
+        );
+    };
+
+    const updateForm = useForm({
+        status: application.status,
+        remarks: application.remarks ?? "",
+    });
+
+    console.log(updateForm.data.status);
+    const updateApplicationStatus = () => {
+        updateForm.put(
+            route(
+                "admin.applications.update-application-status",
+                application.id
+            ),
+            {
+                onSuccess: () => {
+                    console.log("successs");
+                },
+                onError: (errors) => {
+                    console.log("error");
                 },
             }
         );
@@ -297,6 +322,46 @@ const Show = ({ application, image }) => {
                         Approved
                     </Badge>
                 )}
+            </div>
+            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-2 gap-3 auto-rows-auto">
+                <Infolist
+                    title="Application Number"
+                    value={application.application_number}
+                />
+                <Infolist
+                    title="Application Date"
+                    value={application.formatted_application_date}
+                />
+                <FormField label="Status" className="col-span-2">
+                    <Select
+                        value={updateForm.data.status}
+                        onValueChange={(value) =>
+                            updateForm.setData("status", value)
+                        }
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="incomplete">
+                                Incomplete
+                            </SelectItem>
+                            <SelectItem value="rejected">Rejected</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </FormField>
+                <FormField label="Remarks" className="col-span-2">
+                    <Textarea
+                        value={updateForm.data.remarks}
+                        onChange={(e) =>
+                            updateForm.setData("remarks", e.target.value)
+                        }
+                    />
+                </FormField>
+                <div className="col-span-2 flex items-center justify-end">
+                    <Button onClick={updateApplicationStatus}>Update</Button>
+                </div>
             </div>
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
                 <FormField
