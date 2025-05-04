@@ -33,7 +33,7 @@ const Index = ({ applications }) => {
                         <section>
                             <Link
                                 href={route(
-                                    "registration.edit",
+                                    "registration.show",
                                     application.id
                                 )}
                                 className="text-blue-500 hover:text-blue-700"

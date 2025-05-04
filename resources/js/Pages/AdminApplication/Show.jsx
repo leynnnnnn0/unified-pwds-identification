@@ -1,11 +1,42 @@
-import React, { useState, useRef } from "react";
 import H1 from "@/Components/text/h1";
+import React, { useState, useRef, useEffect, use } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import FormField from "@/Components/form/form-field";
 import Span from "@/Components/text/span";
 import { Input } from "@/components/ui/Input";
+import BorderBInput from "@/Components/Input/border-b-Input";
+import FormField from "@/Components/form/form-field";
 import FormH1 from "@/Components/text/form-h1";
-import { Badge } from "@/Components/ui/badge";
+import { Button } from "@/Components/ui/button";
+import { useForm } from "@inertiajs/react";
+import Checkbox from "@/Components/Checkbox";
+import Table from "@/Components/table/table";
+import TableBody from "@/Components/table/table-body";
+import TableHead from "@/Components/table/table-head";
+import TD from "@/Components/table/td";
+import TableContainer from "@/Components/table/table-container";
+import TH from "@/Components/table/th";
+import { Link } from "@inertiajs/react";
+import { Badge } from "@/components/ui/badge";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
 import {
     civilStatus,
     typeOfDisabilities,
@@ -17,24 +48,219 @@ import {
     occupations,
     categoryOfEmployment,
 } from "@/lib/formOptions";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Link } from "@inertiajs/react";
-import { Button } from "@/Components/ui/button";
 
-const Show = ({ application }) => {
-    const [previewImage, setPreviewImage] = useState(null);
+import { FilePond, registerPlugin } from "react-filepond";
+
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
+import { useToast } from "@/hooks/use-toast";
+
+import { Label } from "@/components/ui/label";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Textarea } from "@/Components/ui/textarea";
+
+const Show = ({ application, image }) => {
+    const isInitialMount = useRef(true);
+
+    const [isShowMode, setIsShowMode] = useState(true);
+
+    const { toast } = useToast();
+    const [previewImage, setPreviewImage] = useState(image);
+
     const fileInputRef = useRef(null);
+    const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
+        useState(true);
+
+    const [visibleDocuments, setVisibleDocuments] = useState([
+        ...application.supporting_documents,
+    ]);
+
+    console.log(application.causes_of_disabilities.map((item) => item.name));
+
+    const form = useForm({
+        supporting_documents: [],
+        type_of_registration: application.type_of_registration,
+        pwd_number: application.pwd_number,
+        photo: null,
+
+        first_name: application.first_name,
+        middle_name: application.middle_name,
+        last_name: application.last_name,
+        suffix: application.suffix,
+        date_of_birth: application.date_of_birth,
+        sex: application.sex,
+        civil_status: application.civil_status,
+        type_of_disabilities: application.disabilities.map((item) => item.name),
+        cause_of_disability: application.cause_of_disability,
+        cause_of_disabilities: application.causes_of_disabilities.map(
+            (item) => item.name
+        ),
+
+        house_no_and_street: application.house_no_and_street,
+        barangay: application.barangay,
+        municipality: application.municipality,
+        province: application.province,
+        region: application.region,
+
+        landline_no: application.landline_no,
+        mobile_no: application.mobile_no,
+        email_address: application.email_address,
+
+        educational_attainment: application.educational_attainment,
+
+        status_of_employment: application.status_of_employment,
+        types_of_employment: application.types_of_employment,
+        category_of_employment: application.category_of_employment,
+
+        work_field: application.work_field,
+        other_field: application.other_field,
+
+        organization_affiliated: application.organization_affiliated,
+        contact_person: application.contact_person,
+        office_address: application.office_address,
+        telephone_no: application.telephone_no,
+
+        sss_no: application.sss_no,
+        gsis_no: application.gsis_no,
+        pag_ibig_no: application.pag_ibig_no,
+        psn_no: application.psn_no,
+        philhealth_no: application.philhealth_no,
+
+        father_last_name: application.father_last_name,
+        father_first_name: application.father_first_name,
+        father_middle_name: application.father_middle_name,
+        father_first_name: application.father_first_name,
+        mother_last_name: application.mother_last_name,
+        mother_first_name: application.mother_first_name,
+        mother_middle_name: application.mother_middle_name,
+        guardian_last_name: application.guardian_last_name,
+        guardian_first_name: application.guardian_first_name,
+        guardian_middle_name: application.guardian_middle_name,
+
+        removed_documents: [],
+    });
+
+    useEffect(() => {
+        if (form.data.type_of_registration == "renewal") {
+            setIsPWDNumberInputDisabled(false);
+        } else {
+            setIsPWDNumberInputDisabled(true);
+        }
+    }, [form.data.type_of_registration]);
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            form.setData("cause_of_disabilities", []);
+        }
+    }, [form.data.cause_of_disability]);
+
+    useEffect(() => {
+        if (form.data.status_of_employment == "unemployed") {
+            form.setData("types_of_employment", null);
+            form.setData("category_of_employment", null);
+            form.setData("work_field", null);
+            console.log(form.data);
+        }
+    }, [form.data.status_of_employment]);
+
+    const handlePhotoChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setPreviewImage(e.target.result);
+                form.setData("photo", file);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleImageClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        setIsConfirmationModalOpen(true);
+
+        const fileObjects = files.map((fileItem) => fileItem.file);
+
+        form.setData("supporting_documents", fileObjects);
+
+        form.post(route("registration.update-form", application.id), {
+            onSuccess: () => {
+                setPreviewImage(null);
+                form.reset();
+                toast({
+                    className:
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                    description: "Your message has been sent.",
+                });
+            },
+            onError: (errors) => {
+                console.error(errors);
+                toast({
+                    className:
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                    variant: "destructive",
+                    title: "Uh oh! Something went wrong.",
+                    description: "There was a problem with your request.",
+                });
+            },
+            onFinish: () => {
+                setIsConfirmationModalOpen(false);
+            },
+        });
+    };
+
+    const [files, setFiles] = useState([]);
+
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+        useState(false);
+
+    useEffect(() => {
+        console.log(files);
+    }, [files]);
+
+    const getFileUrl = (path) => {
+        return `/storage/${path}`;
+    };
+
+    const removeFile = (id) => {
+        form.setData("removed_documents", [...form.data.removed_documents, id]);
+        setVisibleDocuments(() =>
+            visibleDocuments.filter((document) => document.id !== id)
+        );
+    };
+
+    const [documentId, setDocumentId] = useState(null);
+    const [documentToEdit, setDocumentToEdit] = useState({
+        id: null,
+        status: null,
+        remarks: null,
+    });
+    useEffect(() => {
+        console.log(documentId);
+    }, [documentId]);
+
+    const updateDocumentDetails = () => {
+        console.log(documentToEdit);
+    };
     return (
         <>
             <div className="flex items-center justify-between">
-                <H1 title="Application Details" />
-                {application.status == "PENDING" && (
+                <H1 title="Application Form Details" />
+                {application.status == "pending" && (
                     <Button>
                         <Link
                             href={route(
@@ -53,10 +279,17 @@ const Show = ({ application }) => {
                 )}
             </div>
             <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
-                <FormField className="col-span-3" label="Type of Registration">
+                <FormField
+                    className="col-span-3"
+                    label="Type of Registration"
+                    error={form.errors.type_of_registration}
+                >
                     <RadioGroup
-                        disabled
-                        value={application.type_of_registration}
+                        disabled={isShowMode}
+                        value={form.data.type_of_registration}
+                        onValueChange={(value) =>
+                            form.setData("type_of_registration", value)
+                        }
                         className="flex w-full"
                     >
                         <div className="flex space-x-2 items-center h-fit flex-1">
@@ -76,8 +309,15 @@ const Show = ({ application }) => {
                     </RadioGroup>
                 </FormField>
 
-                <FormField label='1"x1" Photo' className="row-span-3">
-                    <div className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden">
+                <FormField
+                    label='1"x1" Photo'
+                    className="row-span-3"
+                    error={form.errors.photo}
+                >
+                    <div
+                        className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
+                        onClick={handleImageClick}
+                    >
                         {previewImage ? (
                             <img
                                 src={previewImage}
@@ -86,13 +326,15 @@ const Show = ({ application }) => {
                             />
                         ) : (
                             <div className="text-center text-gray-500 text-sm">
-                                No photo to show
+                                Click to select photo
                             </div>
                         )}
                     </div>
                     <input
+                        disabled={isShowMode}
                         type="file"
                         ref={fileInputRef}
+                        onChange={handlePhotoChange}
                         className="hidden"
                         accept="image/*"
                     />
@@ -106,44 +348,88 @@ const Show = ({ application }) => {
                 <FormField
                     className="col-span-3"
                     label="Person with disability number"
+                    isRequired={!isPWDNumberInputDisabled}
+                    error={form.errors.pwd_number}
                 >
-                    <Input disabled value={application.pwd_number || ""} />
+                    <Input
+                        disabled={isPWDNumberInputDisabled || isShowMode}
+                        value={form.data.pwd_number || ""}
+                        onChange={(e) =>
+                            form.setData("pwd_number", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormH1 label="Personal Information" />
+                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
+                    Personal Information
+                </h1>
 
-                <FormField label="Last Name">
+                <FormField label="Last Name" error={form.errors.last_name}>
                     <Input
-                        disabled
-                        value={application.last_name || ""}
+                        disabled={isShowMode}
+                        value={form.data.last_name || ""}
                         onChange={(e) =>
                             form.setData("last_name", e.target.value)
                         }
                     />
                 </FormField>
 
-                <FormField label="First Name">
-                    <Input disabled value={application.first_name || ""} />
-                </FormField>
-
-                <FormField label="Middle Name" isRequired={false}>
-                    <Input disabled value={application.middle_name || ""} />
-                </FormField>
-
-                <FormField label="Suffix" isRequired={false}>
-                    <Input disabled value={application.suffix || ""} />
-                </FormField>
-
-                <FormField label="Date of Birth">
+                <FormField label="First Name" error={form.errors.first_name}>
                     <Input
-                        disabled
-                        type="date"
-                        value={application.date_of_birth || ""}
+                        disabled={isShowMode}
+                        value={form.data.first_name || ""}
+                        onChange={(e) =>
+                            form.setData("first_name", e.target.value)
+                        }
                     />
                 </FormField>
 
-                <FormField label="Sex">
-                    <Select disabled value={application.sex || ""}>
+                <FormField
+                    label="Middle Name"
+                    error={form.errors.middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    label="Suffix"
+                    error={form.errors.suffix}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.suffix || ""}
+                        onChange={(e) => form.setData("suffix", e.target.value)}
+                    />
+                </FormField>
+
+                <FormField
+                    label="Date of Birth"
+                    error={form.errors.date_of_birth}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        type="date"
+                        value={form.data.date_of_birth || ""}
+                        onChange={(e) =>
+                            form.setData("date_of_birth", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField label="Sex" error={form.errors.sex}>
+                    <Select
+                        disabled={isShowMode}
+                        value={form.data.sex || ""}
+                        onValueChange={(value) => form.setData("sex", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Options" />
                         </SelectTrigger>
@@ -154,8 +440,17 @@ const Show = ({ application }) => {
                     </Select>
                 </FormField>
 
-                <FormField label="Civil Status">
-                    <Select disabled value={application.civil_status || ""}>
+                <FormField
+                    label="Civil Status"
+                    error={form.errors.civil_status}
+                >
+                    <Select
+                        disabled={isShowMode}
+                        value={form.data.civil_status || ""}
+                        onValueChange={(value) =>
+                            form.setData("civil_status", value)
+                        }
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Options" />
                         </SelectTrigger>
@@ -169,75 +464,289 @@ const Show = ({ application }) => {
                     </Select>
                 </FormField>
 
-                <FormField label="Type of Disability">
-                    <Select
-                        disabled
-                        value={application.type_of_disability || ""}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Options" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {typeOfDisabilities.map((item) => (
-                                <SelectItem key={item.value} value={item.value}>
-                                    {item.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                <FormH1 label="Disabilities" />
+
+                <FormField
+                    label="Types of Disability"
+                    className="col-span-4 grid grid-cols-4"
+                >
+                    <div className="col-span-4 grid grid-cols-3 gap-2">
+                        {typeOfDisabilities.map((item) => (
+                            <div
+                                key={item.value}
+                                className="flex items-center space-x-2"
+                            >
+                                <Checkbox
+                                    disabled={isShowMode}
+                                    id={item.value}
+                                    value={item.value}
+                                    onChange={(e) => {
+                                        const checked = e.target.checked;
+                                        form.setData(
+                                            "type_of_disabilities",
+                                            checked
+                                                ? [
+                                                      ...form.data
+                                                          .type_of_disabilities,
+                                                      item.value,
+                                                  ]
+                                                : form.data.type_of_disabilities.filter(
+                                                      (v) => v !== item.value
+                                                  )
+                                        );
+                                    }}
+                                    checked={form.data.type_of_disabilities.includes(
+                                        item.value
+                                    )}
+                                />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
                 </FormField>
+
+                <FormH1 label="Cause of Disability" />
+                <FormField
+                    className="col-span-4"
+                    label="Cause of Disability"
+                    error={form.errors.cause_of_disability}
+                >
+                    <RadioGroup
+                        disabled={isShowMode}
+                        value={form.data.cause_of_disability}
+                        onValueChange={(value) => {
+                            form.setData("cause_of_disability", value);
+                        }}
+                        className="flex w-full"
+                    >
+                        <div className="flex space-x-2 items-center h-fit flex-1">
+                            <RadioGroupItem
+                                value="congenital_inborn"
+                                id="congenital_inborn"
+                            />
+                            <Span
+                                label="Congenital / Inborn"
+                                htmlFor="Congenital / Inborn"
+                            />
+                        </div>
+                        <div className="flex space-x-2 items-center h-fit flex-1">
+                            <RadioGroupItem value="acquired" id="acquired" />
+                            <Span label="Acquired" htmlFor="acquired" />
+                        </div>
+                    </RadioGroup>
+                </FormField>
+
+                <div className="col-span-4 grid grid-cols-2">
+                    <div className=" grid grid-cols-1 gap-2">
+                        {congenitalCause.map((item) => (
+                            <div className="flex space-x-2" key={item.value}>
+                                <Checkbox
+                                    value={item.value}
+                                    id={item.value}
+                                    disabled={
+                                        form.data.cause_of_disability ==
+                                            "acquired" || isShowMode
+                                    }
+                                    onChange={(e) => {
+                                        const checked = e.target.checked;
+                                        form.setData(
+                                            "cause_of_disabilities",
+                                            checked
+                                                ? [
+                                                      ...form.data
+                                                          .cause_of_disabilities,
+                                                      item.value,
+                                                  ]
+                                                : form.data.cause_of_disabilities.filter(
+                                                      (v) => v !== item.value
+                                                  )
+                                        );
+                                    }}
+                                    checked={form.data.cause_of_disabilities.includes(
+                                        item.value
+                                    )}
+                                />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className=" grid grid-cols-1 gap-2">
+                        {acquiredCause.map((item) => (
+                            <div className="flex space-x-2" key={item.value}>
+                                <Checkbox
+                                    value={item.value}
+                                    id={item.value}
+                                    disabled={
+                                        form.data.cause_of_disability !=
+                                            "acquired" || isShowMode
+                                    }
+                                    onChange={(e) => {
+                                        const checked = e.target.checked;
+                                        form.setData(
+                                            "cause_of_disabilities",
+                                            checked
+                                                ? [
+                                                      ...form.data
+                                                          .cause_of_disabilities,
+                                                      item.value,
+                                                  ]
+                                                : form.data.cause_of_disabilities.filter(
+                                                      (v) => v !== item.value
+                                                  )
+                                        );
+                                    }}
+                                    checked={form.data.cause_of_disabilities.includes(
+                                        item.value
+                                    )}
+                                />
+                                <Span label={item.label} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <FormH1 label="Residence Address" />
 
-                <FormField label="House No. and Street">
+                <FormField
+                    label="House No. and Street"
+                    error={form.errors.house_no_and_street}
+                >
                     <Input
-                        disabled
-                        value={application.house_no_and_street || ""}
+                        disabled={isShowMode}
+                        value={form.data.house_no_and_street || ""}
+                        onChange={(e) =>
+                            form.setData("house_no_and_street", e.target.value)
+                        }
                     />
                 </FormField>
 
-                <FormField label="Barangay">
-                    <Input disabled value={application.barangay || ""} />
+                <FormField label="Barangay" error={form.errors.barangay}>
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.barangay || ""}
+                        onChange={(e) =>
+                            form.setData("barangay", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="Municipality">
-                    <Input disabled value={application.municipality || ""} />
+                <FormField
+                    label="Municipality"
+                    error={form.errors.municipality}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.municipality || ""}
+                        onChange={(e) =>
+                            form.setData("municipality", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="Province">
-                    <Input disabled value={application.province || ""} />
+                <FormField label="Province" error={form.errors.province}>
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.province || ""}
+                        onChange={(e) =>
+                            form.setData("province", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="Region">
-                    <Input disabled value={application.region || ""} />
+                <FormField label="Region" error={form.errors.region}>
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.region || ""}
+                        onChange={(e) => form.setData("region", e.target.value)}
+                    />
                 </FormField>
 
                 <FormH1 label="Contact Details" />
 
                 <div className="col-span-4 grid grid-cols-3 gap-3">
-                    <FormField label="Landline No." isRequired={false}>
-                        <Input value={application.landline_no || ""} disabled />
-                    </FormField>
-
-                    <FormField label="Mobile No.">
-                        <Input value={application.mobile_no || ""} disabled />
-                    </FormField>
-
-                    <FormField label="Email Address" isRequired={false}>
+                    <FormField
+                        label="Landline No."
+                        error={form.errors.landline_no}
+                        isRequired={false}
+                    >
                         <Input
-                            value={application.email_address || ""}
-                            disabled
+                            disabled={isShowMode}
+                            value={form.data.landline_no || ""}
+                            onChange={(e) =>
+                                form.setData("landline_no", e.target.value)
+                            }
+                        />
+                    </FormField>
+
+                    <FormField label="Mobile No." error={form.errors.mobile_no}>
+                        <Input
+                            disabled={isShowMode}
+                            value={form.data.mobile_no || ""}
+                            onChange={(e) =>
+                                form.setData("mobile_no", e.target.value)
+                            }
+                        />
+                    </FormField>
+
+                    <FormField
+                        label="Email Address"
+                        error={form.errors.email_address}
+                        isRequired={false}
+                    >
+                        <Input
+                            disabled={isShowMode}
+                            value={form.data.email_address || ""}
+                            onChange={(e) =>
+                                form.setData("email_address", e.target.value)
+                            }
                         />
                     </FormField>
                 </div>
 
+                <FormH1 label="Education" />
+
+                <FormField
+                    label="Educational Attainment"
+                    className="col-span-4"
+                    error={form.errors.educational_attainment}
+                />
+
+                <RadioGroup
+                    disabled={isShowMode}
+                    value={form.data.educational_attainment || ""}
+                    onValueChange={(value) =>
+                        form.setData("educational_attainment", value)
+                    }
+                    className="col-span-4 grid grid-cols-4"
+                >
+                    {educationalAttainment.map((item) => (
+                        <div
+                            key={item.value}
+                            className="flex items-center space-x-2"
+                        >
+                            <RadioGroupItem
+                                value={item.value}
+                                id={item.value}
+                            />
+                            <Span label={item.label} htmlFor={item.value} />
+                        </div>
+                    ))}
+                </RadioGroup>
+
                 <FormH1 label="Employment Details" />
 
                 <div className="col-span-4 grid grid-cols-3">
-                    <FormField label="Status of Employment">
+                    <FormField
+                        label="Status of Employment"
+                        error={form.errors.status_of_employment}
+                    >
                         <RadioGroup
-                            disabled
-                            value={application.status_of_employment || ""}
+                            disabled={isShowMode}
+                            value={form.data.status_of_employment || ""}
+                            onValueChange={(value) =>
+                                form.setData("status_of_employment", value)
+                            }
                         >
                             {statusOfEmployment.map((item) => (
                                 <div
@@ -257,10 +766,22 @@ const Show = ({ application }) => {
                         </RadioGroup>
                     </FormField>
 
-                    <FormField label="Types Of Employment" isRequired={false}>
+                    <FormField
+                        label="Type Of Employment"
+                        error={form.errors.types_of_employment}
+                        isRequired={
+                            form.data.status_of_employment != "unemployed"
+                        }
+                    >
                         <RadioGroup
-                            disabled
-                            value={application.types_of_employment || ""}
+                            value={form.data.types_of_employment || ""}
+                            onValueChange={(value) =>
+                                form.setData("types_of_employment", value)
+                            }
+                            disabled={
+                                form.data.status_of_employment ==
+                                    "unemployed" || isShowMode
+                            }
                         >
                             {typesOfEmployment.map((item) => (
                                 <div
@@ -282,11 +803,20 @@ const Show = ({ application }) => {
 
                     <FormField
                         label="Category of Employment"
-                        isRequired={false}
+                        error={form.errors.category_of_employment}
+                        isRequired={
+                            form.data.status_of_employment != "unemployed"
+                        }
                     >
                         <RadioGroup
-                            disabled
-                            value={application.category_of_employment || ""}
+                            value={form.data.category_of_employment || ""}
+                            disabled={
+                                form.data.status_of_employment ==
+                                    "unemployed" || isShowMode
+                            }
+                            onValueChange={(value) =>
+                                form.setData("category_of_employment", value)
+                            }
                         >
                             {categoryOfEmployment.map((item) => (
                                 <div
@@ -307,47 +837,182 @@ const Show = ({ application }) => {
                     </FormField>
                 </div>
 
+                <FormH1 label="Occupation" />
+
+                <FormField
+                    label="Work Field"
+                    className="col-span-4"
+                    error={form.errors.work_field}
+                    isRequired={form.data.status_of_employment != "unemployed"}
+                />
+
+                <RadioGroup
+                    value={form.data.work_field || ""}
+                    onValueChange={(value) => form.setData("work_field", value)}
+                    disabled={
+                        form.data.status_of_employment == "unemployed" ||
+                        isShowMode
+                    }
+                    className="col-span-4 grid grid-cols-4"
+                >
+                    {occupations.map((item) => (
+                        <div
+                            key={item.value}
+                            className="flex items-center space-x-2"
+                        >
+                            <RadioGroupItem
+                                value={item.value}
+                                id={item.value}
+                            />
+                            <Span label={item.label} htmlFor={item.value} />
+                            {item.hasInput ? (
+                                <BorderBInput
+                                    disabled={form.data.work_field != "others"}
+                                    value={
+                                        (item.value === form.data.work_field &&
+                                            form.data.other_field) ||
+                                        ""
+                                    }
+                                    onChange={(e) =>
+                                        form.setData(
+                                            "work_field ",
+                                            e.target.value
+                                        )
+                                    }
+                                    error={form.errors.other_field}
+                                />
+                            ) : null}
+                        </div>
+                    ))}
+                </RadioGroup>
+
                 <FormH1 label="Organization Information" />
 
-                <FormField label="Organization Affiliated" isRequired={false}>
+                <FormField
+                    label="Organization Affiliated"
+                    error={form.errors.organization_affiliated}
+                    isRequired={false}
+                >
                     <Input
-                        disabled
-                        value={application.organization_affiliated || ""}
+                        disabled={isShowMode}
+                        value={form.data.organization_affiliated || ""}
+                        onChange={(e) =>
+                            form.setData(
+                                "organization_affiliated",
+                                e.target.value
+                            )
+                        }
                     />
                 </FormField>
 
-                <FormField label="Contact Person" isRequired={false}>
-                    <Input disabled value={application.contact_person || ""} />
+                <FormField
+                    label="Contact Person"
+                    error={form.errors.contact_person}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.contact_person || ""}
+                        onChange={(e) =>
+                            form.setData("contact_person", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="Office Address" isRequired={false}>
-                    <Input disabled value={application.office_address || ""} />
+                <FormField
+                    label="Office Address"
+                    error={form.errors.office_address}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.office_address || ""}
+                        onChange={(e) =>
+                            form.setData("office_address", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="Telephone No." isRequired={false}>
-                    <Input disabled value={application.telephone_no || ""} />
+                <FormField
+                    label="Telephone No."
+                    error={form.errors.telephone_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.telephone_no || ""}
+                        onChange={(e) =>
+                            form.setData("telephone_no", e.target.value)
+                        }
+                    />
                 </FormField>
 
                 <FormH1 label="ID Reference No." />
 
-                <FormField label="SSS No." isRequired={false}>
-                    <Input disabled value={application.sss_no || ""} />
+                <FormField
+                    label="SSS No."
+                    error={form.errors.sss_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.sss_no || ""}
+                        onChange={(e) => form.setData("sss_no", e.target.value)}
+                    />
                 </FormField>
 
-                <FormField label="GSIS No." isRequired={false}>
-                    <Input disabled value={application.gsis_no || ""} />
+                <FormField
+                    label="GSIS No."
+                    error={form.errors.gsis_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.gsis_no || ""}
+                        onChange={(e) =>
+                            form.setData("gsis_no", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="PAG-IBIG No." isRequired={false}>
-                    <Input disabled value={application.pag_ibig_no || ""} />
+                <FormField
+                    label="PAG-IBIG No."
+                    error={form.errors.pag_ibig_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.pag_ibig_no || ""}
+                        onChange={(e) =>
+                            form.setData("pag_ibig_no", e.target.value)
+                        }
+                    />
                 </FormField>
 
-                <FormField label="PSN No." isRequired={false}>
-                    <Input disabled value={application.psn_no || ""} />
+                <FormField
+                    label="PSN No."
+                    error={form.errors.psn_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.psn_no || ""}
+                        onChange={(e) => form.setData("psn_no", e.target.value)}
+                    />
                 </FormField>
 
-                <FormField label="PhilHealth No." isRequired={false}>
-                    <Input disabled value={application.philhealth_no || ""} />
+                <FormField
+                    label="PhilHealth No."
+                    error={form.errors.philhealth_no}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.philhealth_no || ""}
+                        onChange={(e) =>
+                            form.setData("philhealth_no", e.target.value)
+                        }
+                    />
                 </FormField>
 
                 <FormH1 label="Family Information" />
@@ -358,23 +1023,252 @@ const Show = ({ application }) => {
                 <FormField label="Middle Name" />
 
                 <Span label="Father's Name:"></Span>
-                <Input value={application.father_last_name || ""} disabled />
-                <Input value={application.father_first_name || ""} disabled />
-                <Input value={application.father_middle_name || ""} disabled />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.father_last_name || ""}
+                    onChange={(e) =>
+                        form.setData("father_last_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.father_first_name || ""}
+                    onChange={(e) =>
+                        form.setData("father_first_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.father_middle_name || ""}
+                    onChange={(e) =>
+                        form.setData("father_middle_name", e.target.value)
+                    }
+                />
 
                 <Span label="Mother's Name:"></Span>
-                <Input value={application.mother_last_name || ""} disabled />
-                <Input value={application.mother_first_name || ""} disabled />
-                <Input value={application.mother_middle_name || ""} disabled />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.mother_last_name || ""}
+                    onChange={(e) =>
+                        form.setData("mother_last_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.mother_first_name || ""}
+                    onChange={(e) =>
+                        form.setData("mother_first_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.mother_middle_name || ""}
+                    onChange={(e) =>
+                        form.setData("mother_middle_name", e.target.value)
+                    }
+                />
 
                 <Span label="Guardian's Name:"></Span>
-                <Input value={application.guardian_last_name || ""} disabled />
-                <Input value={application.guardian_first_name || ""} disabled />
                 <Input
-                    value={application.guardian_middle_name || ""}
-                    disabled
+                    disabled={isShowMode}
+                    value={form.data.guardian_last_name || ""}
+                    onChange={(e) =>
+                        form.setData("guardian_last_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.guardian_first_name || ""}
+                    onChange={(e) =>
+                        form.setData("guardian_first_name", e.target.value)
+                    }
+                />
+                <Input
+                    disabled={isShowMode}
+                    value={form.data.guardian_middle_name || ""}
+                    onChange={(e) =>
+                        form.setData("guardian_middle_name", e.target.value)
+                    }
                 />
             </div>
+
+            {isShowMode ? null : (
+                <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                    <FormH1 label="Supporting Documents" />
+                    <FormField
+                        label="Upload Files"
+                        error={form.errors.supporting_documents}
+                        isRequired={true}
+                    >
+                        <FilePond
+                            files={files}
+                            onupdatefiles={setFiles}
+                            allowMultiple={true}
+                            // maxFiles={3}
+                            // name="files" /* sets the file input name, it's filepond by default */
+                            labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                        />
+                    </FormField>
+                </div>
+            )}
+            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                <FormH1 label="Uploaded Documents" />
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TH>File Name</TH>
+                            <TH>Status</TH>
+                            <TH>Remarks</TH>
+                            <TH>Actions</TH>
+                        </TableHead>
+                        <TableBody>
+                            {visibleDocuments.map((item) => (
+                                <tr key={item.id}>
+                                    <TD>
+                                        <a
+                                            href={getFileUrl(item.path)}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    </TD>
+                                    <TD>{item.status.toUpperCase()}</TD>
+                                    <TD>{item.remarks ?? "None"}</TD>
+                                    <TD className="flex items-center space-x-2">
+                                        <Popover
+                                            onOpenChange={() =>
+                                                setDocumentToEdit({
+                                                    id: item.id,
+                                                    status: item.status,
+                                                    remarks: item.remarks,
+                                                })
+                                            }
+                                        >
+                                            <PopoverTrigger asChild>
+                                                <Button variant="outline">
+                                                    Edit Details
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-80">
+                                                <div className="grid gap-4">
+                                                    <div className="space-y-2">
+                                                        <h4 className="font-medium leading-none">
+                                                            Edit Details
+                                                        </h4>
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Input all the
+                                                            required fields.
+                                                        </p>
+                                                    </div>
+                                                    <div className="grid gap-2">
+                                                        <FormField label="Status">
+                                                            <Select
+                                                                value={
+                                                                    documentToEdit.status
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) =>
+                                                                    setDocumentToEdit(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            status: value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue placeholder="Options" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="pending">
+                                                                        Pending
+                                                                    </SelectItem>
+                                                                    <SelectItem value="approved">
+                                                                        Approved
+                                                                    </SelectItem>
+                                                                    <SelectItem value="rejected">
+                                                                        Rejected
+                                                                    </SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormField>
+                                                        <FormField label="Remarks">
+                                                            <Textarea
+                                                                value={
+                                                                    documentToEdit.remarks ??
+                                                                    ""
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setDocumentToEdit(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            remarks:
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                            />
+                                                        </FormField>
+                                                        <Button
+                                                            onClick={
+                                                                updateDocumentDetails
+                                                            }
+                                                        >
+                                                            Save
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
+                                    </TD>
+                                </tr>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+
+            {isShowMode ? null : (
+                <div className="flex items-center justify-end col-span-4">
+                    <AlertDialog
+                        open={isConfirmationModalOpen}
+                        onOpenChange={setIsConfirmationModalOpen}
+                    >
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                onClick={() => setIsConfirmationModalOpen(true)}
+                            >
+                                Update
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Please make sure all the information you
+                                    have entered is accurate and complete before
+                                    proceeding.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={submitForm}>
+                                    Continue
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
+            )}
         </>
     );
 };

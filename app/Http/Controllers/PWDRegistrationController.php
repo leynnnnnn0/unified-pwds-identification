@@ -28,6 +28,24 @@ class PWDRegistrationController extends Controller
         return Inertia::render('PWDRegistration/Create');
     }
 
+    public function show($id)
+    {
+        $application = PWDApplicationForm::with([
+            'user',
+            'disabilities',
+            'causes_of_disabilities',
+            'disabilities',
+            'supporting_documents',
+        ])->findOrFail($id);
+
+        $image = Storage::url($application->photo);
+
+        return Inertia::render('PWDRegistration/Edit', [
+            'application' => $application,
+            'image' => $image,
+        ]);
+    }
+
     public function edit($id)
     {
         $application = PWDApplicationForm::with([

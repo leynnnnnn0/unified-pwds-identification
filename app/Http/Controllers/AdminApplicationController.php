@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PWDApplicationForm;
 use App\Models\PWDIdentificationCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
 
@@ -32,8 +33,19 @@ class AdminApplicationController extends Controller
 
     public function show($id)
     {
+        $application = PWDApplicationForm::with([
+            'user',
+            'disabilities',
+            'causes_of_disabilities',
+            'disabilities',
+            'supporting_documents',
+        ])->findOrFail($id);
+
+        $image = Storage::url($application->photo);
+
         return Inertia::render('AdminApplication/Show', [
-            'application' => PWDApplicationForm::with('encoder')->find($id),
+            'application' => $application,
+            'image' => $image,
         ]);
     }
 
