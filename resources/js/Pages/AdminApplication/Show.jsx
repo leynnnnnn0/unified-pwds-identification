@@ -17,6 +17,17 @@ import TableContainer from "@/Components/table/table-container";
 import TH from "@/Components/table/th";
 import { Link } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -258,6 +269,7 @@ const Show = ({ application, image }) => {
         console.log(documentForm);
     }, [documentToEdit.status, documentToEdit.remarks]);
 
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const updateDocumentDetails = () => {
         documentForm.put(
             route(
@@ -279,6 +291,9 @@ const Show = ({ application, image }) => {
                         title: "Success",
                         description: "Updated Successfully.",
                     });
+
+                    // We don't need this anymore since the Dialog has a built-in close mechanism
+                    // in the onClick handler through document.querySelector('[role="dialog"]').close();
                 },
                 onError: (errors) => {
                     toast({
@@ -1258,98 +1273,106 @@ const Show = ({ application, image }) => {
                                     <TD>{item.status.toUpperCase()}</TD>
                                     <TD>{item.remarks ?? "None"}</TD>
                                     <TD className="flex items-center space-x-2">
-                                        <Popover
-                                            onOpenChange={() =>
-                                                setDocumentToEdit({
-                                                    id: item.id,
-                                                    status: item.status,
-                                                    remarks: item.remarks,
-                                                })
-                                            }
+                                        <Dialog
+                                            open={isEditDialogOpen}
+                                            onOpenChange={setIsEditDialogOpen}
                                         >
-                                            <PopoverTrigger asChild>
-                                                <Button variant="outline">
+                                            <DialogTrigger asChild>
+                                                <Button
+                                                    variant="outline"
+                                                    onClick={() => {
+                                                        setDocumentToEdit({
+                                                            id: item.id,
+                                                            status: item.status,
+                                                            remarks:
+                                                                item.remarks,
+                                                        });
+                                                        setIsEditDialogOpen(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
                                                     Edit Details
                                                 </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent className="w-80">
-                                                <div className="grid gap-4">
-                                                    <div className="space-y-2">
-                                                        <h4 className="font-medium leading-none">
-                                                            Edit Details
-                                                        </h4>
-                                                        <p className="text-sm text-muted-foreground">
-                                                            Input all the
-                                                            required fields.
-                                                        </p>
-                                                    </div>
-                                                    <div className="grid gap-2">
-                                                        <FormField label="Status">
-                                                            <Select
-                                                                value={
-                                                                    documentToEdit.status
-                                                                }
-                                                                onValueChange={(
-                                                                    value
-                                                                ) =>
-                                                                    setDocumentToEdit(
-                                                                        (
-                                                                            prev
-                                                                        ) => ({
-                                                                            ...prev,
-                                                                            status: value,
-                                                                        })
-                                                                    )
-                                                                }
-                                                            >
-                                                                <SelectTrigger>
-                                                                    <SelectValue placeholder="Options" />
-                                                                </SelectTrigger>
-                                                                <SelectContent>
-                                                                    <SelectItem value="pending">
-                                                                        Pending
-                                                                    </SelectItem>
-                                                                    <SelectItem value="approved">
-                                                                        Approved
-                                                                    </SelectItem>
-                                                                    <SelectItem value="rejected">
-                                                                        Rejected
-                                                                    </SelectItem>
-                                                                </SelectContent>
-                                                            </Select>
-                                                        </FormField>
-                                                        <FormField label="Remarks">
-                                                            <Textarea
-                                                                value={
-                                                                    documentToEdit.remarks ??
-                                                                    ""
-                                                                }
-                                                                onChange={(e) =>
-                                                                    setDocumentToEdit(
-                                                                        (
-                                                                            prev
-                                                                        ) => ({
-                                                                            ...prev,
-                                                                            remarks:
-                                                                                e
-                                                                                    .target
-                                                                                    .value,
-                                                                        })
-                                                                    )
-                                                                }
-                                                            />
-                                                        </FormField>
-                                                        <Button
-                                                            onClick={
-                                                                updateDocumentDetails
+                                            </DialogTrigger>
+                                            <DialogContent className="sm:max-w-[425px]">
+                                                <DialogHeader>
+                                                    <DialogTitle>
+                                                        Edit Document Details
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        Update the status and
+                                                        remarks for this
+                                                        document.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <div className="grid gap-4 py-4">
+                                                    <FormField label="Status">
+                                                        <Select
+                                                            value={
+                                                                documentToEdit.status
+                                                            }
+                                                            onValueChange={(
+                                                                value
+                                                            ) =>
+                                                                setDocumentToEdit(
+                                                                    (prev) => ({
+                                                                        ...prev,
+                                                                        status: value,
+                                                                    })
+                                                                )
                                                             }
                                                         >
-                                                            Save
-                                                        </Button>
-                                                    </div>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Options" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="pending">
+                                                                    Pending
+                                                                </SelectItem>
+                                                                <SelectItem value="approved">
+                                                                    Approved
+                                                                </SelectItem>
+                                                                <SelectItem value="rejected">
+                                                                    Rejected
+                                                                </SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormField>
+                                                    <FormField label="Remarks">
+                                                        <Textarea
+                                                            value={
+                                                                documentToEdit.remarks ??
+                                                                ""
+                                                            }
+                                                            onChange={(e) =>
+                                                                setDocumentToEdit(
+                                                                    (prev) => ({
+                                                                        ...prev,
+                                                                        remarks:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    })
+                                                                )
+                                                            }
+                                                        />
+                                                    </FormField>
                                                 </div>
-                                            </PopoverContent>
-                                        </Popover>
+                                                <DialogFooter>
+                                                    <Button
+                                                        onClick={() => {
+                                                            updateDocumentDetails();
+                                                            setIsEditDialogOpen(
+                                                                false
+                                                            );
+                                                        }}
+                                                    >
+                                                        Save Changes
+                                                    </Button>
+                                                </DialogFooter>
+                                            </DialogContent>
+                                        </Dialog>
                                     </TD>
                                 </tr>
                             ))}
