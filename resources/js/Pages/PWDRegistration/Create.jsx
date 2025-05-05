@@ -30,7 +30,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-
 import {
     civilStatus,
     typeOfDisabilities,
@@ -44,7 +43,6 @@ import {
 } from "@/lib/formOptions";
 
 import { FilePond, registerPlugin } from "react-filepond";
-
 
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -111,7 +109,7 @@ const Create = () => {
         father_last_name: "secret",
         father_first_name: "secret",
         father_middle_name: "secret",
-        
+
         mother_last_name: "secret",
         mother_first_name: "secret",
         mother_middle_name: "secret",
@@ -161,9 +159,7 @@ const Create = () => {
         e.preventDefault();
         setIsConfirmationModalOpen(true);
 
-        const fileObjects = files.map((fileItem) => fileItem.file);
-
-        form.setData("supporting_documents", fileObjects);
+        console.log(form);
 
         form.post(route("registration.store"), {
             onSuccess: () => {
@@ -172,7 +168,7 @@ const Create = () => {
                 toast({
                     className:
                         "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    description: "Your message has been sent.",
+                    description: "Application Created Successfully.",
                 });
             },
             onError: (errors) => {
@@ -197,7 +193,8 @@ const Create = () => {
         useState(false);
 
     useEffect(() => {
-        console.log(files);
+        const fileObjects = files.map((fileItem) => fileItem.file);
+        form.setData("supporting_documents", fileObjects);
     }, [files]);
     return (
         <>

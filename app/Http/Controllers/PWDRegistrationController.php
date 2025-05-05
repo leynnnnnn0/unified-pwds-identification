@@ -42,6 +42,7 @@ class PWDRegistrationController extends Controller
         ])->findOrFail($id);
 
         $image = Storage::url($application->photo);
+
         $image = asset($application->photo);
 
         return Inertia::render('PWDRegistration/Edit', [
@@ -84,11 +85,15 @@ class PWDRegistrationController extends Controller
             if ($application->photo) {
                 Storage::disk('public')->delete($application->photo);
             }
+
+            $application->update([
+                'photo' => $photoPath
+            ]);
         }
 
         $application->update(Arr::except(
             $validated,
-            ['disabilities', 'causes_of_disabilities', 'supporting_documents']
+            ['disabilities', 'causes_of_disabilities', 'supporting_documents', 'photo']
         ));
 
         $application->disabilities()->delete();

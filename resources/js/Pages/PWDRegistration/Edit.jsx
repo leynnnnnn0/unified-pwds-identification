@@ -184,10 +184,6 @@ const Edit = ({ application, image }) => {
         e.preventDefault();
         setIsConfirmationModalOpen(true);
 
-        const fileObjects = files.map((fileItem) => fileItem.file);
-
-        form.setData("supporting_documents", fileObjects);
-
         form.post(route("registration.update-form", application.id), {
             onSuccess: () => {
                 setPreviewImage(null);
@@ -220,7 +216,9 @@ const Edit = ({ application, image }) => {
         useState(false);
 
     useEffect(() => {
-        console.log(files);
+        const fileObjects = files.map((fileItem) => fileItem.file);
+
+        form.setData("supporting_documents", fileObjects);
     }, [files]);
 
     const getFileUrl = (path) => {
