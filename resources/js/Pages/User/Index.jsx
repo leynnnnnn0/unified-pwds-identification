@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import H1 from "@/Components/text/h1";
 import Table from "@/Components/table/table";
 import TableBody from "@/Components/table/table-body";
@@ -10,40 +10,41 @@ import { EyeIcon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
 
-const Index = () => {
-  return (
-    <>
-      
-      <div  className='flex items-center justify-between'>
-      <H1 title="Users"/>
-      <Button>
-      <Link href={route("admin.users.create")}>Create New User</Link>
-      </Button>
-
-      </div>
-      <TableContainer>
+const Index = ({ users }) => {
+    return (
+        <>
+            <div className="flex items-center justify-between">
+                <H1 title="Users" />
+                <Button>
+                    <Link href={route("admin.users.create")}>
+                        Create New User
+                    </Link>
+                </Button>
+            </div>
+            <TableContainer>
                 <Table>
                     <TableHead>
-                        <TH>Id</TH>
-                        <TH>Fullname</TH>
+                        <TH>Username</TH>
+                        <TH>Full Name</TH>
                         <TH>Email</TH>
                         <TH>Roles</TH>
-                        <TH>Is Active</TH>
                         <TH>Actions</TH>
                     </TableHead>
                     <TableBody>
-                                <tr>
-                                    <TD></TD>
-                                    <TD></TD>
-                                    <TD></TD>
-                                    <TD></TD>
-                                    <TD></TD>
-                                </tr>
+                        {users.data.map((item) => (
+                            <tr key={item.id}>
+                                <TD>{item.username}</TD>
+                                <TD>{item.full_name}</TD>
+                                <TD>{item.email}</TD>
+                                <TD>{item.role}</TD>
+                                <TD></TD>
+                            </tr>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-    </>
-  )
-}
+        </>
+    );
+};
 
-export default Index
+export default Index;
