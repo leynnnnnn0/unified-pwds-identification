@@ -28,7 +28,9 @@ const Index = () => {
         if (!identificationNumber) return;
         axios
             .get(
-                `http://unified-pwds-identification.test/api/pwd-identification-cards/show?card_number=${identificationNumber}`
+                route("pwd-identification-cards.show", {
+                    card_number: identificationNumber,
+                })
             )
             .then((res) => {
                 if (res.data.isFound) {

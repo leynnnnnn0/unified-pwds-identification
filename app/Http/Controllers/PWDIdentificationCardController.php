@@ -12,10 +12,6 @@ class PWDIdentificationCardController extends Controller
     {
         $card_number = request('card_number');
 
-
-
-
-
         $pwdIdentificationCard = PWDIdentificationCard::with('application_form')
             ->where('rfid_card_number', $card_number)
             ->orWhere('pwd_card_number', $card_number)
