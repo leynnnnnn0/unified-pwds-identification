@@ -42,6 +42,7 @@ class PWDRegistrationController extends Controller
         ])->findOrFail($id);
 
         $image = Storage::url($application->photo);
+        $image = asset($application->photo);
 
         return Inertia::render('PWDRegistration/Edit', [
             'application' => $application,

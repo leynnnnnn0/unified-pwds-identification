@@ -112,7 +112,7 @@ class AdminApplicationController extends Controller
 
         PWDIdentificationCard::create($validated);
         PWDApplicationForm::where('id', $validated['application_form_id'])
-            ->update(['status' => 'APPROVED']);
+            ->update(['status' => 'approved']);
 
         return redirect()->route('admin.applications.index');
     }

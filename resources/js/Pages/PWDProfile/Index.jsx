@@ -12,7 +12,7 @@ import TableBody from "@/Components/table/table-body";
 import TD from "@/Components/table/td";
 import MainLogo from "../../../images/mainLogo.jpg";
 import Flag from "../../../images/philippines.jpg";
-const Index = ({ application, image }) => {
+const Index = ({ application, image, qr }) => {
     const getFileUrl = (path) => {
         return `/storage/${path}`;
     };
@@ -124,7 +124,7 @@ const Index = ({ application, image }) => {
                     </Table>
                 </TabsContent>
                 <TabsContent value="digital_id">
-                    <section className="mt-5">
+                    <section className="mt-5 flex items-center gap-5">
                         <div className="bg-white rouded-lg shadow-lg h-52 w-96 p-4">
                             <section className="flex items-center justify-between">
                                 <img
@@ -198,6 +198,10 @@ const Index = ({ application, image }) => {
                                     </div>
                                 </div>
                             </section>
+                        </div>
+
+                        <div className="bg-white rouded-lg shadow-lg h-52 w-96 p-4">
+                            <img src={qr} alt="test" className="size-40" />
                         </div>
                     </section>
                 </TabsContent>
