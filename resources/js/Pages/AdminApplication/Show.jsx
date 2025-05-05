@@ -292,10 +292,23 @@ const Show = ({ application, image }) => {
             ),
             {
                 onSuccess: () => {
-                    console.log("successs");
+                    toast({
+                        className:
+                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                        variant: "success",
+                        title: "Success",
+                        description: "Status Updated Successfully.",
+                    });
                 },
                 onError: (errors) => {
-                    console.log("error");
+                    toast({
+                        className:
+                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                        variant: "destructive",
+                        title: "Uh oh! Something went wrong.",
+                        description:
+                            "Something went wrong while trying to update the status.",
+                    });
                 },
             }
         );
