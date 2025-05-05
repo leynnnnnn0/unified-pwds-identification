@@ -32,7 +32,7 @@ jobs:
           server: win1135.site4now.net
           username: leyn19-001
           password: Plokinopki00
-          protocol: sftp
+          protocol: ftp
           port: 21
           timeout: 120000
           exclude: |
