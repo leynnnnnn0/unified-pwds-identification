@@ -84,8 +84,6 @@ const Show = ({ application, image }) => {
         ...application.supporting_documents,
     ]);
 
-    console.log(application.causes_of_disabilities.map((item) => item.name));
-
     const form = useForm({
         supporting_documents: [],
         type_of_registration: application.type_of_registration,
@@ -170,7 +168,6 @@ const Show = ({ application, image }) => {
             form.setData("types_of_employment", null);
             form.setData("category_of_employment", null);
             form.setData("work_field", null);
-            console.log(form.data);
         }
     }, [form.data.status_of_employment]);
 
@@ -209,7 +206,6 @@ const Show = ({ application, image }) => {
                 });
             },
             onError: (errors) => {
-                console.error(errors);
                 toast({
                     className:
                         "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
@@ -229,9 +225,7 @@ const Show = ({ application, image }) => {
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
         useState(false);
 
-    useEffect(() => {
-        console.log(files);
-    }, [files]);
+    useEffect(() => {}, [files]);
 
     const getFileUrl = (path) => {
         return `/storage/${path}`;
@@ -250,19 +244,21 @@ const Show = ({ application, image }) => {
         status: null,
         remarks: null,
     });
-    useEffect(() => {
-        console.log(documentId);
-    }, [documentId]);
+    useEffect(() => {}, [documentId]);
 
     const documentForm = useForm({
         status: null,
         remarks: null,
     });
 
-    const updateDocumentDetails = () => {
+    useEffect(() => {
         documentForm.setData("status", documentToEdit.status);
         documentForm.setData("remarks", documentToEdit.remarks);
 
+        console.log(documentForm);
+    }, [documentToEdit.status, documentToEdit.remarks]);
+
+    const updateDocumentDetails = () => {
         documentForm.put(
             route(
                 "admin.applications.update-document-details",
@@ -270,10 +266,28 @@ const Show = ({ application, image }) => {
             ),
             {
                 onSuccess: () => {
-                    console.log("successs");
+                    const index = visibleDocuments.findIndex(
+                        (item) => item.id == documentToEdit.id
+                    );
+                    visibleDocuments[index].status = documentToEdit.status;
+                    visibleDocuments[index].remarks = documentToEdit.remarks;
+
+                    toast({
+                        className:
+                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                        variant: "success",
+                        title: "Success",
+                        description: "Updated Successfully.",
+                    });
                 },
                 onError: (errors) => {
-                    console.log(errors);
+                    toast({
+                        className:
+                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+                        variant: "destructive",
+                        title: "Uh oh! Something went wrong.",
+                        description: "There was a problem with your request.",
+                    });
                 },
             }
         );
