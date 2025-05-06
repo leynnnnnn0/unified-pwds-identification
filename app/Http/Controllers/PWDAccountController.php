@@ -19,6 +19,7 @@ class PWDAccountController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
+            'username' => ['required'],
             'first_name' => ['required'],
             'middle_name' => ['nullable'],
             'last_name' => ['required'],

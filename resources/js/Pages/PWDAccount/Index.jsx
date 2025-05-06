@@ -12,6 +12,7 @@ const Index = ({ user }) => {
 
     // Initialize the form with user data
     const { data, setData, put, processing, errors } = useForm({
+        username: user?.username || "",
         first_name: user?.first_name || "",
         middle_name: user?.middle_name || "",
         last_name: user?.last_name || "",
@@ -37,6 +38,12 @@ const Index = ({ user }) => {
         <>
             <H1 title="My Account" />
             <FormContainer onSubmit={handleSubmit}>
+                <FormField label="Username" error={errors.username}>
+                    <Input
+                        value={data.username}
+                        onChange={(e) => setData("username", e.target.value)}
+                    />
+                </FormField>
                 <FormField label="First Name" error={errors.first_name}>
                     <Input
                         value={data.first_name}
