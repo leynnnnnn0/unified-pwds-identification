@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Illuminate\Validation\Rules;
 
 class PWDAccountController extends Controller
 {
@@ -28,6 +30,19 @@ class PWDAccountController extends Controller
         ]);
 
         User::findOrFail($id)->update($validated);
+
+        return back();
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()]
+        ]);
+
+        User::findOrFail($id)->update([
+            'password' => Hash::make($validated['password'])
+        ]);
 
         return back();
     }

@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
+import FormH1 from "@/Components/text/form-h1";
 
 const Index = ({ user }) => {
     const { toast } = useToast();
@@ -20,6 +21,11 @@ const Index = ({ user }) => {
         last_name: user?.last_name || "",
         email: user?.email || "",
         phone_number: user?.phone_number || "",
+    });
+
+    const updateFormPassword = useForm({
+        password: "",
+        password_confirmation: "",
     });
 
     // Handle form submission
@@ -37,6 +43,23 @@ const Index = ({ user }) => {
         });
     };
 
+    const updatePassword = (e) => {
+        e.preventDefault();
+
+        updateFormPassword.put(route("my-account.update-password", user.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Success",
+                    description: "Your password has been updated successfully.",
+                });
+                updateFormPassword.reset();
+                console.log("test");
+            },
+            onError: (e) => {
+                console.log(e);
+            },
+        });
+    };
     return (
         <>
             <div className="flex items-center justify-between">
@@ -59,7 +82,10 @@ const Index = ({ user }) => {
                     )}
                 </span>
             </div>
-            <FormContainer onSubmit={handleSubmit}>
+            <FormContainer>
+                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-2">
+                    Personal Information
+                </h1>
                 <FormField label="Username" error={errors.username}>
                     <Input
                         value={data.username}
@@ -72,7 +98,11 @@ const Index = ({ user }) => {
                         onChange={(e) => setData("first_name", e.target.value)}
                     />
                 </FormField>
-                <FormField label="Middle Name" error={errors.middle_name}>
+                <FormField
+                    label="Middle Name"
+                    error={errors.middle_name}
+                    isRequired={false}
+                >
                     <Input
                         value={data.middle_name}
                         onChange={(e) => setData("middle_name", e.target.value)}
@@ -101,13 +131,51 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button
-                        type="submit"
-                        disabled={processing}
-                        onClick={handleSubmit}
-                    >
+                    <Button disabled={processing} onClick={handleSubmit}>
                         {processing ? "Updating..." : "Update"}
                     </Button>
+                </section>
+            </FormContainer>
+
+            <FormContainer className="flex flex-col">
+                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5">
+                    Account Security
+                </h1>
+
+                <FormField
+                    label="Password"
+                    error={updateFormPassword.errors.password}
+                >
+                    <Input
+                        type="password"
+                        value={updateFormPassword.data.password}
+                        onChange={(e) =>
+                            updateFormPassword.setData(
+                                "password",
+                                e.target.value
+                            )
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    label="Confirm Password"
+                    error={updateFormPassword.errors.password_confirmation}
+                >
+                    <Input
+                        type="password"
+                        value={updateFormPassword.data.password_confirmation}
+                        onChange={(e) =>
+                            updateFormPassword.setData(
+                                "password_confirmation",
+                                e.target.value
+                            )
+                        }
+                    />
+                </FormField>
+
+                <section className="col-span-2 flex items-center justify-end">
+                    <Button onClick={updatePassword}>Update</Button>
                 </section>
             </FormContainer>
         </>

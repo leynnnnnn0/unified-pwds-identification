@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');
     Route::resource('registration', PWDRegistrationController::class);
+
+    Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
 });
 
 Route::middleware('auth')->group(function () {

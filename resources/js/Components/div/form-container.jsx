@@ -4,7 +4,7 @@ const FormContainer = ({ children, className }) => {
     return (
         <div
             className={cn(
-                "w-full rounded-lg shadow-xl border p-10 grid grid-cols-2 gap-3 auto-rows-auto",
+                "w-full rounded-lg shadow-xl border p-10 grid gap-3",
                 className
             )}
         >
