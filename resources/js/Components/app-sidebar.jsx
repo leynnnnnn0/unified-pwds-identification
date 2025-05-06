@@ -39,6 +39,12 @@ const AppSidebar = () => {
             icon: UserCircle,
             isLocked: false,
         },
+        {
+            title: "My Account",
+            url: "/my-account",
+            icon: UserCircle,
+            isLocked: false,
+        },
     ];
 
     const logout = () => {

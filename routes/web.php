@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('verification', IDVerification::class);
         Route::resource('users', UserController::class);
 
+
         Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
             Route::get('applications/{id}/process', 'process')->name('process');
             Route::get('applications/{id}', 'show')->name('applications.show');
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
             Route::put('applications/{id}/update-application-status', 'updateApplicationStatus')->name('update-application-status');
         });
     });
+
+    Route::resource('my-account', PWDAccountController::class);
     Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
     Route::resource('my-profile', PWDProfileController::class);
 
