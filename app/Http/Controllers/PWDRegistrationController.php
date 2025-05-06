@@ -21,8 +21,18 @@ class PWDRegistrationController extends Controller
             ->where('user_id', Auth::id())
             ->select(['id', 'application_number', 'application_date', 'status'])->paginate(10);
 
+        $data = PWDApplicationForm::with('pwd_identification_card')
+            ->where('user_id', Auth::id())
+            ->where('status', 'approved')
+            ->latest()
+            ->first();
+
+        $canCreateNew = true;
+        if ($data) $canCreateNew = $data->pwd_identification_card->is_expired;
+
         return Inertia::render('PWDRegistration/Index', [
             'applications' => $applications,
+            'canCreateNew' => $canCreateNew
         ]);
     }
 

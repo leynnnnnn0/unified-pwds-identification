@@ -3,13 +3,15 @@ import FormField from "@/Components/form/form-field";
 import H1 from "@/Components/text/h1";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
 import { useToast } from "@/hooks/use-toast";
+import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
 
 const Index = ({ user }) => {
     const { toast } = useToast();
 
+    const [isAccountVerified, setIsAccountVerified] = useState(user.first_name);
     // Initialize the form with user data
     const { data, setData, put, processing, errors } = useForm({
         username: user?.username || "",
@@ -30,13 +32,33 @@ const Index = ({ user }) => {
                     title: "Success",
                     description: "Your account has been updated successfully.",
                 });
+                setIsAccountVerified(true);
             },
         });
     };
 
     return (
         <>
-            <H1 title="My Account" />
+            <div className="flex items-center justify-between">
+                <H1 title="My Account" />
+                <span
+                    className={`text-white font-bold text-xs rounded-lg px-5 py-1 flex items-center gap-1 ${
+                        isAccountVerified ? "bg-green-500" : "bg-red-500"
+                    }`}
+                >
+                    {!isAccountVerified ? (
+                        <>
+                            <MessageCircleWarningIcon className="size-4" />
+                            Incomplete
+                        </>
+                    ) : (
+                        <>
+                            <CheckCircleIcon className="size-4" />
+                            Completed
+                        </>
+                    )}
+                </span>
+            </div>
             <FormContainer onSubmit={handleSubmit}>
                 <FormField label="Username" error={errors.username}>
                     <Input

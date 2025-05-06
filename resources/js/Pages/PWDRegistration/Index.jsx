@@ -8,12 +8,12 @@ import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
 import NoData from "../../../images/noApplicationToShow.png";
 
-const Index = ({ applications }) => {
+const Index = ({ applications, canCreateNew }) => {
     return (
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Applications" />
-                <Button>
+                <Button disabled={!canCreateNew}>
                     <Link href={route("registration.create")}>Create</Link>
                 </Button>
             </div>

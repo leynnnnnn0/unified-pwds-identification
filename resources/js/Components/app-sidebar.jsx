@@ -26,7 +26,7 @@ const AppSidebar = () => {
             isLocked: false,
         },
         {
-            title: "My Profile",
+            title: "Profile",
             url: "/my-profile",
             icon: UserCircle,
             isLocked: !auth.is_verified,
@@ -34,10 +34,12 @@ const AppSidebar = () => {
                 "Your Account is not yet fully verified, please create an application first.",
         },
         {
-            title: "My Applications",
+            title: "Applications",
             url: "/registration",
             icon: UserCircle,
-            isLocked: false,
+            isLocked: !auth.is_account_completed,
+            requiredStep:
+                "You need to complete your account setup before proceeding to this page",
         },
         {
             title: "My Account",
