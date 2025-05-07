@@ -36,7 +36,10 @@ const Index = ({ user }) => {
             onSuccess: () => {
                 toast({
                     title: "Success",
-                    description: "Your account has been updated successfully.",
+                    className:
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white",
+                    description:
+                        "Your account details has been updated successfully.",
                 });
                 setIsAccountVerified(true);
             },
@@ -50,6 +53,8 @@ const Index = ({ user }) => {
             onSuccess: () => {
                 toast({
                     title: "Success",
+                    className:
+                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white",
                     description: "Your password has been updated successfully.",
                 });
                 updateFormPassword.reset();
