@@ -17,16 +17,14 @@ const GeneralInformationTab = ({ application }) => {
                     DISABILITY INFORMATION
                 </span>
                 <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
-                    <Span label="Type of Registration:" />
-                    <SpanValue
-                        text={application.type_of_registration || "N/A"}
-                    />
                     <Span label="PWD Number:" />
                     <SpanValue text={application.pwd_number || "N/A"} />
-                    <Span label="Cause of Disability:" />
+                    <Span label="Cause of Disabilities:" />
                     <SpanValue
-                        text={application.cause_of_disability || "N/A"}
+                        text={application.cause_of_disabilities_list || "N/A"}
                     />
+                    <Span label="Disabilities:" />
+                    <SpanValue text={application.disabilities_list || "N/A"} />
                 </div>
             </section>
 

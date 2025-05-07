@@ -183,7 +183,7 @@ const Index = ({ application, image, qr }) => {
                                             Type of Disabilities:
                                         </p>
                                         <p className="border-b border-spacing-1 text-[10px] text-start">
-                                            Mental, Deaf
+                                            {application.disabilities_list}
                                         </p>
                                     </div>
 
