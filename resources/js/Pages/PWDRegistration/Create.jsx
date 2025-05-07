@@ -1012,8 +1012,11 @@ const Create = () => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={submitForm}>
-                                Continue
+                            <AlertDialogAction
+                                onClick={submitForm}
+                                disabled={form.processing}
+                            >
+                                {form.processing ? "Processing..." : "Continue"}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>

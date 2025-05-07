@@ -180,7 +180,7 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button onClick={updatePassword}>Update</Button>
+                    <Button  onClick={updatePassword}>Update</Button>
                 </section>
             </FormContainer>
         </>

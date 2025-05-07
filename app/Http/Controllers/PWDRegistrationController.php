@@ -19,7 +19,7 @@ class PWDRegistrationController extends Controller
     {
         $applications = PWDApplicationForm::with('user')
             ->where('user_id', Auth::id())
-            ->select(['id', 'application_number', 'application_date', 'status'])->paginate(10);
+            ->select(['id', 'application_number', 'application_date', 'status', 'type_of_registration'])->paginate(10);
 
         $data = PWDApplicationForm::with('pwd_identification_card')
             ->where('user_id', Auth::id())
