@@ -49,7 +49,7 @@ export function SidebarLink({
                         // Clickable div for locked items that shows modal
                         <div className={commonStyles}>
                             <Icon className={iconStyles} />
-                            <div className="flex-1 flex items-center justify-between">
+                            <div className="flex-1 flex items-center justify-between font-poppins">
                                 {children}
                                 <Lock className="size-4 ml-2" />
                             </div>
@@ -58,7 +58,7 @@ export function SidebarLink({
                         // Regular link for unlocked items
                         <Link href={href} className={commonStyles}>
                             <Icon className={iconStyles} />
-                            <div className="flex-1 flex items-center justify-between">
+                            <div className="flex-1 flex items-center justify-between font-poppins">
                                 {children}
                             </div>
                         </Link>

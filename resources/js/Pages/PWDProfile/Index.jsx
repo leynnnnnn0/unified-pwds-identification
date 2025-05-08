@@ -12,6 +12,7 @@ import TableBody from "@/Components/table/table-body";
 import TD from "@/Components/table/td";
 import MainLogo from "../../../images/mainLogo.jpg";
 import Flag from "../../../images/philippines.jpg";
+import GeneralInformationTab from "@/Components/profile-tabs/general-information-tab";
 const Index = ({ application, image, qr }) => {
     const getFileUrl = (path) => {
         return `/storage/${path}`;
@@ -57,9 +58,6 @@ const Index = ({ application, image, qr }) => {
                     </TabsTrigger>
                     <TabsTrigger value="documents">Documents</TabsTrigger>
                     <TabsTrigger value="digital_id">Digital ID</TabsTrigger>
-                    <TabsTrigger value="account_security">
-                        Account Security
-                    </TabsTrigger>
                 </TabsList>
                 <TabsContent value="basic_information">
                     <section>
@@ -123,6 +121,9 @@ const Index = ({ application, image, qr }) => {
                         </TableBody>
                     </Table>
                 </TabsContent>
+                <TabsContent value="general_information">
+                    <GeneralInformationTab application={application} />
+                </TabsContent>
                 <TabsContent value="digital_id">
                     <section className="mt-5 flex items-center gap-5">
                         <div className="bg-white rouded-lg shadow-lg h-52 w-96 p-4">
@@ -182,7 +183,7 @@ const Index = ({ application, image, qr }) => {
                                             Type of Disabilities:
                                         </p>
                                         <p className="border-b border-spacing-1 text-[10px] text-start">
-                                            Mental, Deaf
+                                            {application.disabilities_list}
                                         </p>
                                     </div>
 

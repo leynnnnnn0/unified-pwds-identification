@@ -23,8 +23,14 @@ class PWDIdentificationCard extends Model
 
     protected $appends = [
         'formatted_effective_date',
-        'formatted_expiry_date'
+        'formatted_expiry_date',
+        'is_expired'
     ];
+
+    public function getIsExpiredAttribute()
+    {
+        return $this->expiry_date <= now()->format('Y-m-d');
+    }
 
     public function application_form()
     {

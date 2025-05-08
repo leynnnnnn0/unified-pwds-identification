@@ -27,6 +27,7 @@ class PWDProfileController extends Controller
 
         $image = Storage::url($application->photo);
 
+
         $qr = 'data:image/svg+xml;base64,' . base64_encode(
             QrCode::format('svg')
                 ->size(300)

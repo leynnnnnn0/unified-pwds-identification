@@ -1,4 +1,11 @@
-import { CircleAlertIcon, Home, UserCircle } from "lucide-react";
+import {
+    CircleAlertIcon,
+    Home,
+    UserCircle,
+    FileUser,
+    UserRound,
+    LogOut,
+} from "lucide-react";
 import MainLago from "../../images/mainLogo.jpg";
 import { router, usePage } from "@inertiajs/react";
 import {
@@ -26,16 +33,24 @@ const AppSidebar = () => {
             isLocked: false,
         },
         {
-            title: "My Profile",
+            title: "Profile",
             url: "/my-profile",
-            icon: UserCircle,
+            icon: UserRound,
             isLocked: !auth.is_verified,
             requiredStep:
                 "Your Account is not yet fully verified, please create an application first.",
         },
         {
-            title: "My Applications",
+            title: "Applications",
             url: "/registration",
+            icon: FileUser,
+            isLocked: !auth.is_account_completed,
+            requiredStep:
+                "You need to complete your account setup before proceeding to this page",
+        },
+        {
+            title: "My Account",
+            url: "/my-account",
             icon: UserCircle,
             isLocked: false,
         },
@@ -91,7 +106,7 @@ const AppSidebar = () => {
                                 <SidebarMenuItem>
                                     <SidebarMenuButton onClick={logout}>
                                         <div className="flex items-center gap-2">
-                                            <CircleAlertIcon className="w-4 h-4" />
+                                            <LogOut className="w-4 h-4" />
                                             <span>Logout</span>
                                         </div>
                                     </SidebarMenuButton>

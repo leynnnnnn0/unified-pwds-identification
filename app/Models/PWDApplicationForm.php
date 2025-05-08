@@ -81,6 +81,8 @@ class PWDApplicationForm extends Model
         'formatted_application_date',
         'formatted_status',
         'formatted_type_of_application',
+        'disabilities_list',
+        'cause_of_disabilities_list'
     ];
 
 
@@ -98,6 +100,26 @@ class PWDApplicationForm extends Model
     {
         return $this->hasMany(Disability::class, 'application_form_id');
     }
+
+    public function getDisabilitiesListAttribute()
+    {
+        return $this->disabilities->pluck('name')
+            ->map(function ($name) {
+                return ucwords(str_replace('_', ' ', $name));
+            })
+            ->implode(', ');
+    }
+
+    public function getCauseOfDisabilitiesListAttribute()
+    {
+        return $this->causes_of_disabilities->pluck('name')
+            ->map(function ($name) {
+                return ucwords(str_replace('_', ' ', $name));
+            })
+            ->implode(', ');
+    }
+
+
 
     public function causes_of_disabilities()
     {
