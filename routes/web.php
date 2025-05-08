@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('applications', AdminApplicationController::class);
         Route::resource('verification', IDVerification::class);
         Route::resource('users', UserController::class);
+        Route::resource('my-account', PWDAccountController::class);
 
 
         Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
             Route::post('applications/{id}/store-identification-card', 'storeIdentificationCard')->name('store-identification-card');
             Route::put('applications/{id}/update-document-details', 'updateDocumentDetails')->name('update-document-details');
             Route::put('applications/{id}/update-application-status', 'updateApplicationStatus')->name('update-application-status');
+
+            Route::get('/api/municipalities/{province}', [UserController::class, 'getMunicipalities']);
         });
     });
 
@@ -42,6 +45,8 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
 });
+
+Route::get('/api/municipalities/{province}', [UserController::class, 'getMunicipalities']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

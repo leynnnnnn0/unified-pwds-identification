@@ -46,6 +46,12 @@ const items = [
         url: "/admin/users",
         icon: UserCircle,
     },
+    {
+        title: "My Account",
+        url: "/admin/my-account",
+        icon: UserCircle,
+        isLocked: false,
+    },
 ];
 
 const logout = () => {
