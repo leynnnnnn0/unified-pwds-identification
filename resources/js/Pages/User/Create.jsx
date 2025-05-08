@@ -24,10 +24,10 @@ const Create = ({ provinces, municipalities }) => {
 
     const [assignProvinces, setassignProvinces] = useState(false);
     const form = useForm({
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        phoneNumber: "",
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        phone_number: "",
         email: "",
         role: "",
         remarks: "",
@@ -53,10 +53,15 @@ const Create = ({ provinces, municipalities }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission
-        // form.post(route('users.store'));
 
-        console.log(form.data);
+        form.post(route("admin.users.store"), {
+            onSuccess: () => {
+                console.log("succ");
+            },
+            onError: () => {
+                console.log("err");
+            },
+        });
     };
 
     const addToProvinces = () => {
@@ -120,39 +125,51 @@ const Create = ({ provinces, municipalities }) => {
                     <FormH1 label="User Details" />
 
                     <div className="col-span-2 grid grid-cols-2 gap-4">
-                        <FormField label="First Name">
+                        <FormField
+                            label="First Name"
+                            error={form.errors.first_name}
+                        >
                             <Input
-                                value={form.data.firstName}
+                                value={form.data.first_name}
                                 onChange={(e) =>
-                                    form.setData("firstName", e.target.value)
+                                    form.setData("first_name", e.target.value)
                                 }
                             />
                         </FormField>
-                        <FormField label="Middle Name">
+                        <FormField
+                            label="Middle Name"
+                            error={form.errors.middle_name}
+                        >
                             <Input
-                                value={form.data.middleName}
+                                value={form.data.middle_name}
                                 onChange={(e) =>
-                                    form.setData("middleName", e.target.value)
+                                    form.setData("middle_name", e.target.value)
                                 }
                             />
                         </FormField>
-                        <FormField label="Last Name">
+                        <FormField
+                            label="Last Name"
+                            error={form.errors.last_name}
+                        >
                             <Input
-                                value={form.data.lastName}
+                                value={form.data.last_name}
                                 onChange={(e) =>
-                                    form.setData("lastName", e.target.value)
+                                    form.setData("last_name", e.target.value)
                                 }
                             />
                         </FormField>
-                        <FormField label="Phone Number">
+                        <FormField
+                            label="Phone Number"
+                            error={form.errors.phone_number}
+                        >
                             <Input
-                                value={form.data.phoneNumber}
+                                value={form.data.phone_number}
                                 onChange={(e) =>
-                                    form.setData("phoneNumber", e.target.value)
+                                    form.setData("phone_number", e.target.value)
                                 }
                             />
                         </FormField>
-                        <FormField label="Email">
+                        <FormField label="Email" error={form.errors.email}>
                             <Input
                                 type="email"
                                 value={form.data.email}
@@ -161,7 +178,7 @@ const Create = ({ provinces, municipalities }) => {
                                 }
                             />
                         </FormField>
-                        <FormField label="Role">
+                        <FormField label="Role" error={form.errors.role}>
                             <Select
                                 value={form.data.role}
                                 onValueChange={(value) =>
@@ -183,7 +200,7 @@ const Create = ({ provinces, municipalities }) => {
                                 </SelectContent>
                             </Select>
                         </FormField>
-                        <FormField label="Remarks">
+                        <FormField label="Remarks" error={form.errors.remarks}>
                             <Input
                                 value={form.data.remarks}
                                 onChange={(e) =>
@@ -200,7 +217,11 @@ const Create = ({ provinces, municipalities }) => {
                             Assign Provinces
                         </h1>
                         <div className="flex items-center gap-2 mb-4">
-                            <FormField label="Provinces" className="flex-1">
+                            <FormField
+                                label="Provinces"
+                                className="flex-1"
+                                error={form.errors.assignedProvinces}
+                            >
                                 <SearchableSelect
                                     options={provinces}
                                     value={province}
@@ -271,6 +292,7 @@ const Create = ({ provinces, municipalities }) => {
                             <FormField
                                 label="Municipalities"
                                 className="flex-1"
+                                error={form.errors.assignedMunicipalities}
                             >
                                 <SearchableSelect
                                     options={municipalitiesOption}

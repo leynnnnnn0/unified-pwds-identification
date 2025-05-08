@@ -56,6 +56,16 @@ class User extends Authenticatable
         ];
     }
 
+    public function provinces()
+    {
+        return $this->hasMany(Province::class);
+    }
+
+    public function municipalities()
+    {
+        return $this->hasMany(Municipality::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
