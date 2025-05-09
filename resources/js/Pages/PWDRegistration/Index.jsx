@@ -7,6 +7,7 @@ import DivTable from "@/Components/div/div-table";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
 import NoData from "../../../images/noApplicationToShow.png";
+import Pagination from "@/Components/pagination";
 
 const Index = ({ applications, canCreateNew }) => {
     // Function to determine badge color based on status
@@ -114,6 +115,8 @@ const Index = ({ applications, canCreateNew }) => {
                             ))}
                         </tbody>
                     </table>
+
+                    <Pagination data={applications}/>
                 </div>
             )}
         </>
