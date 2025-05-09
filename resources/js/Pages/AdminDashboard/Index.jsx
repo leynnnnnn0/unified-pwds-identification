@@ -1,3 +1,5 @@
+import LineChartComponent from "@/Components/charts/line-chart";
+import PieChartComponent from "@/Components/charts/pie-chart";
 import DashboardContainer from "@/Components/dashboard-container";
 import React from "react";
 
@@ -18,6 +20,8 @@ const Index = () => {
                     value="1,240"
                 />
             </div>
+
+            <LineChartComponent />
         </>
     );
 };

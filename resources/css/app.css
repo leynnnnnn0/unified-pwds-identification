@@ -12,6 +12,8 @@ html, body, #root {
   [data-sidebar="trigger"] {
     display: none;
   }
+
+  
   
   @layer base {
     :root {
@@ -23,6 +25,14 @@ html, body, #root {
       --sidebar-accent-foreground: 240 5.9% 10%;
       --sidebar-border: 220 13% 91%;
       --sidebar-ring: 217.2 91.2% 59.8%;
+
+
+        --color-chrome: #4285F4;
+        --color-safari: #1CD758;
+        --color-firefox: #FF9500;
+        --color-edge: #0078D7;
+        --color-other: #A5AAAF;
+      
     }
   
     .dark {
@@ -73,6 +83,9 @@ html, body, #root {
         --sidebar-accent-foreground: 240 5.9% 10%;
         --sidebar-border: 220 13% 91%;
         --sidebar-ring: 217.2 91.2% 59.8%;
+
+
+        
     }
   .dark {
         --background: 0 0% 3.9%;
