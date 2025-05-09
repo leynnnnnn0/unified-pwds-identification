@@ -9,6 +9,7 @@ import TH from "@/Components/table/th";
 import { EyeIcon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
+import Pagination from "@/Components/pagination";
 const Index = ({ applications }) => {
     return (
         <>
@@ -47,6 +48,7 @@ const Index = ({ applications }) => {
                         })}
                     </TableBody>
                 </Table>
+                <Pagination data={applications} />
             </TableContainer>
         </>
     );

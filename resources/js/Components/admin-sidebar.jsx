@@ -32,7 +32,7 @@ const items = [
         icon: Home,
     },
     {
-        title: "Registration",
+        title: "Applications",
         url: "/admin/applications",
         icon: UserCircle,
     },
@@ -42,7 +42,7 @@ const items = [
         icon: UserCircle,
     },
     {
-        title: "User",
+        title: "Users",
         url: "/admin/users",
         icon: UserCircle,
     },

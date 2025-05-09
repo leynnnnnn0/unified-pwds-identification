@@ -38,10 +38,10 @@ class AuthenticatedSessionController extends Controller
 
         $route = "";
 
-        if ($user->role == 'admin') {
-            $route = 'admin.dashboard.index';
-        } else {
+        if ($user->role == 'user') {
             $route = 'dashboard';
+        } else {
+            $route = 'admin.dashboard.index';
         }
 
 
