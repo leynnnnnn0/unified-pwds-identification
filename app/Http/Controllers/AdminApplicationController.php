@@ -6,6 +6,7 @@ use App\Models\PWDApplicationForm;
 use App\Models\PWDIdentificationCard;
 use App\Models\SupportingDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
@@ -14,8 +15,18 @@ class AdminApplicationController extends Controller
 {
     public function index()
     {
-        $applications = PWDApplicationForm::with('encoder')
-            ->orderBy('created_at', 'desc')
+        $query = PWDApplicationForm::with('encoder');
+
+        $user = Auth::user();
+        $user->load(['municipalities']);
+
+
+        if ($user->role === 'processer') {
+            $query->whereIn('municipality', $user->municipalities()->pluck('municipality'));
+        }
+
+
+        $applications = $query->orderBy('created_at', 'desc')
             ->paginate(10)
             ->through(function ($item) {
                 return [

@@ -198,9 +198,6 @@ const Create = () => {
         form.setData("supporting_documents", fileObjects);
     }, [files]);
 
-    const [region, setRegion] = useState(null);
-    const [province, setProvince] = useState(null);
-    const [municipality, setMunicipality] = useState(null);
 
     const [regions, setRegions] = useState({});
     useEffect(() => {

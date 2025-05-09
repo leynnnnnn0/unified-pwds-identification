@@ -361,6 +361,63 @@ const Show = ({ application, image }) => {
 
         router.get(route("admin.applications.process", application.id));
     };
+
+    const [regions, setRegions] = useState({});
+    useEffect(() => {
+        console.log("calling regopms");
+        axios
+            .get("/api/regions")
+            .then((res) => {
+                setRegions(res.data.regions);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    const [provinces, setProvinces] = useState({});
+    useEffect(() => {
+        if (form.data.region) {
+            console.log("calling provincies");
+            axios
+                .get(`/api/provinces?id=${form.data.region}`)
+                .then((res) => {
+                    setProvinces(res.data.provinces);
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [form.data.region]);
+
+    const [municipalities, setMunicipalities] = useState({});
+    useEffect(() => {
+        if (!form.data.province) return;
+        console.log("calling municipaliies");
+        axios
+            .get(`/api/municipalities?id=${form.data.province}`)
+            .then((res) => {
+                setMunicipalities(res.data.municipalities);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [form.data.province]);
+
+    const [barangays, setBarangays] = useState({});
+    useEffect(() => {
+        if (!form.data.municipality) return;
+        console.log("calling barangays");
+        axios
+            .get(`/api/barangays?id=${form.data.municipality}`)
+            .then((res) => {
+                setBarangays(res.data.barangays);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [form.data.municipality]);
     return (
         <>
             <div className="flex items-center justify-between">
@@ -759,45 +816,95 @@ const Show = ({ application, image }) => {
                     />
                 </FormField>
 
-                <FormField label="Barangay" error={form.errors.barangay}>
-                    <Input
-                        disabled={isShowMode}
-                        value={form.data.barangay || ""}
-                        onChange={(e) =>
-                            form.setData("barangay", e.target.value)
+                <FormField label="Regions" error={form.errors.region}>
+                    <Select
+                        disabled={true}
+                        value={form.data.region || ""}
+                        onValueChange={(value) => form.setData("region", value)}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(regions).length > 0 &&
+                                Object.entries(regions).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
+                </FormField>
+
+                <FormField label="Pronvinces" error={form.errors.province}>
+                    <Select
+                        disabled={true}
+                        value={form.data.province || ""}
+                        onValueChange={(value) =>
+                            form.setData("province", value)
                         }
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(provinces).length > 0 &&
+                                Object.entries(provinces).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
                 <FormField
                     label="Municipality"
                     error={form.errors.municipality}
                 >
-                    <Input
-                        disabled={isShowMode}
+                    <Select
+                        disabled={true}
                         value={form.data.municipality || ""}
-                        onChange={(e) =>
-                            form.setData("municipality", e.target.value)
+                        onValueChange={(value) =>
+                            form.setData("municipality", value)
                         }
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(municipalities).length > 0 &&
+                                Object.entries(municipalities).map(
+                                    ([key, name]) => (
+                                        <SelectItem key={key} value={key}>
+                                            {name}
+                                        </SelectItem>
+                                    )
+                                )}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
-                <FormField label="Province" error={form.errors.province}>
-                    <Input
-                        disabled={isShowMode}
-                        value={form.data.province || ""}
-                        onChange={(e) =>
-                            form.setData("province", e.target.value)
+                <FormField label="Barangay" error={form.errors.region}>
+                    <Select
+                        disabled={true}
+                        value={form.data.barangay || ""}
+                        onValueChange={(value) =>
+                            form.setData("barangay", value)
                         }
-                    />
-                </FormField>
-
-                <FormField label="Region" error={form.errors.region}>
-                    <Input
-                        disabled={isShowMode}
-                        value={form.data.region || ""}
-                        onChange={(e) => form.setData("region", e.target.value)}
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(barangays).length > 0 &&
+                                Object.entries(barangays).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
                 <FormH1 label="Contact Details" />
