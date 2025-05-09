@@ -4,8 +4,12 @@ import {
     Inbox,
     Search,
     Settings,
+    FileUser,
     UserCircle,
+    Users,
+    LogOut,
     CircleAlertIcon,
+    ShieldCheck,
 } from "lucide-react";
 import { router } from "@inertiajs/react";
 import MainLago from "../../images/mainLogo.jpg";
@@ -34,17 +38,17 @@ const items = [
     {
         title: "Applications",
         url: "/admin/applications",
-        icon: UserCircle,
+        icon: FileUser,
     },
     {
         title: "Verification",
         url: "/admin/verification",
-        icon: UserCircle,
+        icon: ShieldCheck,
     },
     {
         title: "Users",
         url: "/admin/users",
-        icon: UserCircle,
+        icon: Users,
     },
     {
         title: "My Account",
@@ -108,7 +112,7 @@ export function AdminSidebar() {
                                 <SidebarMenuItem>
                                     <SidebarMenuButton onClick={logout}>
                                         <div className="flex items-center gap-2">
-                                            <CircleAlertIcon className="w-4 h-4" />
+                                            <LogOut className="w-4 h-4" />
                                             <span>Logout</span>
                                         </div>
                                     </SidebarMenuButton>
