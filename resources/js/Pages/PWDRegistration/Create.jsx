@@ -51,6 +51,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 const Create = () => {
     const { toast } = useToast();
@@ -77,10 +78,10 @@ const Create = () => {
         cause_of_disabilities: ["injury"],
 
         house_no_and_street: "Block 0 Lot - Phase 1 Lavanya Subdivision",
-        barangay: "Bacao 2",
-        municipality: "General Trias",
-        province: "Cavite",
-        region: "4-a",
+        barangay: null,
+        municipality: null,
+        province: null,
+        region: null,
 
         landline_no: null,
         mobile_no: "09266887267",
@@ -196,6 +197,68 @@ const Create = () => {
         const fileObjects = files.map((fileItem) => fileItem.file);
         form.setData("supporting_documents", fileObjects);
     }, [files]);
+
+    const [region, setRegion] = useState(null);
+    const [province, setProvince] = useState(null);
+    const [municipality, setMunicipality] = useState(null);
+
+    const [regions, setRegions] = useState({});
+    useEffect(() => {
+        console.log("calling regopms");
+        axios
+            .get("/api/regions")
+            .then((res) => {
+                setRegions(res.data.regions);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    const [provinces, setProvinces] = useState({});
+    useEffect(() => {
+        if (form.data.region) {
+            console.log("calling provincies");
+            axios
+                .get(`/api/provinces?id=${form.data.region}`)
+                .then((res) => {
+                    setProvinces(res.data.provinces);
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [form.data.region]);
+
+    const [municipalities, setMunicipalities] = useState({});
+    useEffect(() => {
+        if (!form.data.province) return;
+        console.log("calling municipaliies");
+        axios
+            .get(`/api/municipalities?id=${form.data.province}`)
+            .then((res) => {
+                setMunicipalities(res.data.municipalities);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [form.data.province]);
+
+    const [barangays, setBarangays] = useState({});
+    useEffect(() => {
+        if (!form.data.municipality) return;
+        console.log("calling barangays");
+        axios
+            .get(`/api/barangays?id=${form.data.municipality}`)
+            .then((res) => {
+                setBarangays(res.data.barangays);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [form.data.municipality]);
+
     return (
         <>
             <H1 title="Registration Form" />
@@ -530,41 +593,91 @@ const Create = () => {
                     />
                 </FormField>
 
-                <FormField label="Barangay" error={form.errors.barangay}>
-                    <Input
-                        value={form.data.barangay || ""}
-                        onChange={(e) =>
-                            form.setData("barangay", e.target.value)
+                <FormField label="Regions" error={form.errors.region}>
+                    <Select
+                        value={form.data.region || ""}
+                        onValueChange={(value) => form.setData("region", value)}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(regions).length > 0 &&
+                                Object.entries(regions).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
+                </FormField>
+
+                <FormField label="Pronvinces" error={form.errors.province}>
+                    <Select
+                        value={form.data.province || ""}
+                        onValueChange={(value) =>
+                            form.setData("province", value)
                         }
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(provinces).length > 0 &&
+                                Object.entries(provinces).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
                 <FormField
                     label="Municipality"
                     error={form.errors.municipality}
                 >
-                    <Input
+                    <Select
                         value={form.data.municipality || ""}
-                        onChange={(e) =>
-                            form.setData("municipality", e.target.value)
+                        onValueChange={(value) =>
+                            form.setData("municipality", value)
                         }
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(municipalities).length > 0 &&
+                                Object.entries(municipalities).map(
+                                    ([key, name]) => (
+                                        <SelectItem key={key} value={key}>
+                                            {name}
+                                        </SelectItem>
+                                    )
+                                )}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
-                <FormField label="Province" error={form.errors.province}>
-                    <Input
-                        value={form.data.province || ""}
-                        onChange={(e) =>
-                            form.setData("province", e.target.value)
+                <FormField label="Barangay" error={form.errors.region}>
+                    <Select
+                        value={form.data.barangay || ""}
+                        onValueChange={(value) =>
+                            form.setData("barangay", value)
                         }
-                    />
-                </FormField>
-
-                <FormField label="Region" error={form.errors.region}>
-                    <Input
-                        value={form.data.region || ""}
-                        onChange={(e) => form.setData("region", e.target.value)}
-                    />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Options" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(barangays).length > 0 &&
+                                Object.entries(barangays).map(([key, name]) => (
+                                    <SelectItem key={key} value={key}>
+                                        {name}
+                                    </SelectItem>
+                                ))}
+                        </SelectContent>
+                    </Select>
                 </FormField>
 
                 <FormH1 label="Contact Details" />

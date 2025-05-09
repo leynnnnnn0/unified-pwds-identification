@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\IDVerification;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PWDAccountController;
 use App\Http\Controllers\PWDDashboardController;
@@ -47,6 +48,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/municipalities/{province}', [UserController::class, 'getMunicipalities']);
+
+
+Route::controller(LocationController::class)->group(function () {
+    Route::get('/api/municipalities', 'getMunicipalities');
+    Route::get('/api/regions', 'getRegions');
+    Route::get('/api/barangays', 'getBarangays');
+    Route::get('/api/provinces', 'getProvinces');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
