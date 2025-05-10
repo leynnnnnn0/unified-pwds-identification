@@ -2,7 +2,7 @@ import React from "react";
 
 const TableHead = ({ children }) => {
     return (
-        <thead className="bg-gray-50 border-b border-gray-200">
+        <thead>
             <tr>{children}</tr>
         </thead>
     );
