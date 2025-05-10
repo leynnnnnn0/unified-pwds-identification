@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'is_verified' => PWDApplicationForm::where('user_id', Auth::id())->where('status', 'approved')->first() ? true : false,
+                'role' => Auth::user()?->role,
                 'is_account_completed' => Auth::user()?->first_name
             ],
         ];

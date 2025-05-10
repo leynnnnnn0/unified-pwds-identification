@@ -16,7 +16,7 @@ import { useForm, router } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 import { X } from "lucide-react";
 
-const Create = ({ provinces, municipalities }) => {
+const Create = ({ provinces, municipalities, auth }) => {
     const [province, setProvince] = useState("");
     const [municipality, setMunicipality] = useState("");
     const [municipalitiesOption, setMunicipalitiesOption] =
@@ -40,14 +40,17 @@ const Create = ({ provinces, municipalities }) => {
         {
             label: "Admin",
             value: "admin",
+            isVisible: auth.role == "admin",
         },
         {
             label: "Sub Admin",
             value: "sub_admin",
+            isVisible: auth.role == "admin",
         },
         {
             label: "Processer",
             value: "processer",
+            isVisible: true,
         },
     ];
 
@@ -189,14 +192,17 @@ const Create = ({ provinces, municipalities }) => {
                                     <SelectValue placeholder="Select Role" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {roles.map((item) => (
-                                        <SelectItem
-                                            key={item.value}
-                                            value={item.value}
-                                        >
-                                            {item.label}
-                                        </SelectItem>
-                                    ))}
+                                    {roles.map(
+                                        (item) =>
+                                            item.isVisible && (
+                                                <SelectItem
+                                                    key={item.value}
+                                                    value={item.value}
+                                                >
+                                                    {item.label}
+                                                </SelectItem>
+                                            )
+                                    )}
                                 </SelectContent>
                             </Select>
                         </FormField>
