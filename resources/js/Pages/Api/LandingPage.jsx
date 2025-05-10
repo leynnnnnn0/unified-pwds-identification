@@ -10,7 +10,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const LandingPage = () => {
-    // Settings for the image carousel
     const carouselSettings = {
         dots: true,
         infinite: true,
@@ -41,6 +40,7 @@ const LandingPage = () => {
         { id: 3, logo: BANDWDOH, alt: "DOH Logo" },
         { id: 4, logo: BANDWLOGO, alt: "Main Logo" },
         { id: 5, logo: BANDWDOH, alt: "DOH Logo" },
+        { id: 6, logo: BANDWLOGO, alt: "Main Logo" },
     ];
 
     return (

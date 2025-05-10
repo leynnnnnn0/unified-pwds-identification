@@ -9,6 +9,6 @@ class LandingPageController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Api/LandingPage');
+        return Inertia::render('LandingPage/Home');
     }
 }

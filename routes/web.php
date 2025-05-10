@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\IDVerification;
+use App\Http\Controllers\Api\LandingPageController as APILandingPage;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
@@ -18,7 +19,7 @@ use Inertia\Inertia;
 Route::resource('', LandingPageController::class);
 
 Route::prefix('api')->group(function () {
-    Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+    Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
 });
 
 Route::middleware('auth')->group(function () {
