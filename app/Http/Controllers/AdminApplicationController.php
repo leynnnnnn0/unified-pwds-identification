@@ -21,11 +21,16 @@ class AdminApplicationController extends Controller
         $query = PWDApplicationForm::with('encoder');
 
         $user = Auth::user();
-        $user->load(['municipalities']);
+
 
 
         if ($user->role === 'processer') {
+            $user->load(['municipalities']);
             $query->whereIn('municipality', $user->municipalities()->pluck('municipality'));
+        }
+        if ($user->role == 'sub_admin') {
+            $user->load(['provinces']);
+            $query->whereIn('province', $user->provinces()->pluck('province'));
         }
 
         if ($search) {
