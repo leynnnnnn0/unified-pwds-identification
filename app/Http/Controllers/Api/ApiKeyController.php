@@ -75,7 +75,8 @@ class ApiKeyController extends Controller
 
         return response()->json([
             'success' => true,
-            'key' => $key->secret_key
+            'key' => $key->secret_key,
+            'key_id' => $key->id
         ]);
     }
 }

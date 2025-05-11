@@ -5,7 +5,7 @@ import TD from "@/Components/table/td";
 import TH from "@/Components/table/th";
 import { Button } from "@/Components/ui/button";
 import { Copy, LockIcon, PlusIcon, Trash, Trash2Icon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -18,7 +18,8 @@ import {
 import FormField from "@/Components/form/form-field";
 import { Input } from "@/Components/ui/input";
 import axios from "axios";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
+import toast from "react-hot-toast";
 
 const Index = ({ keys: initialKeys }) => {
     // Convert initial keys to a state so we can update it
@@ -36,6 +37,7 @@ const Index = ({ keys: initialKeys }) => {
     });
 
     const openDeleteModal = (id, key) => {
+        console.log(keys);
         deleteForm.setData("id", id);
         deleteForm.setData("secret_key", key);
 
@@ -44,17 +46,14 @@ const Index = ({ keys: initialKeys }) => {
 
     const deleteApiKey = () => {
         deleteForm.delete(route("api-keys.destroy", deleteForm.data.id), {
-            onSuccess: () => {
-                // Remove the deleted key from state
-                setKeys((prevKeys) => ({
-                    ...prevKeys,
-                    data: prevKeys.data.filter(
-                        (key) => key.id !== deleteForm.data.id
-                    ),
-                }));
+            preserveScroll: true,
+            onSuccess: (page) => {
+                // Use the fresh data from the server response
+                setKeys(page.props.keys);
 
                 setIsDeleteModalOpen(false);
                 deleteForm.reset();
+                toast.success("API key destroyed.");
             },
         });
     };
@@ -96,7 +95,9 @@ const Index = ({ keys: initialKeys }) => {
                 setApiKey(res.data.key);
 
                 // Add the new key to the keys state with masked version
+
                 const newKey = {
+                    id: res.data.key_id,
                     name: name || "Secret key",
                     secret_key: maskApiKey(res.data.key), // Use a front-end version of the mask function
                     last_used: "Never",
@@ -109,10 +110,14 @@ const Index = ({ keys: initialKeys }) => {
                     data: [newKey, ...prevKeys.data],
                 }));
 
+                console.log(keys);
+
                 // Open the key display modal
                 setIsAPIKeyModalOpen(true);
                 setIsCreateApiModalOpen(false);
                 setName("");
+
+                toast.success("API key created!");
             })
             .catch((e) => console.log(e));
     };
@@ -321,20 +326,21 @@ const Index = ({ keys: initialKeys }) => {
                     </TableBody>
                 </Table>
 
-               {keys.data.length == 0 &&  <div className="mt-24 flex flex-col items-center jsutify-center w-full gap-3">
-                    <LockIcon/>
-                <h1 className="font-bold text-black/90">
-                Create an API key to access the UPID API
-                </h1>
+                {keys.data.length == 0 && (
+                    <div className="mt-24 flex flex-col items-center jsutify-center w-full gap-3">
+                        <LockIcon />
+                        <h1 className="font-bold text-black/90">
+                            Create an API key to access the UPID API
+                        </h1>
 
-                <Button
-                    onClick={() => setIsCreateApiModalOpen(true)}
-                    className="bg-primary-color"
-                >
-                    <PlusIcon /> Create new secret key
-                </Button>
-
-                </div>}
+                        <Button
+                            onClick={() => setIsCreateApiModalOpen(true)}
+                            className="bg-primary-color"
+                        >
+                            <PlusIcon /> Create new secret key
+                        </Button>
+                    </div>
+                )}
             </div>
         </>
     );

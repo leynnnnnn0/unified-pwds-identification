@@ -1,8 +1,9 @@
 import { AdminSidebar } from "@/Components/admin-sidebar";
 import { APISidebar } from "@/Components/api-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar";
-import { Toaster } from "@/Components/ui/toaster";
+
 import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const APILayout = ({ children }) => {
     return (
@@ -14,7 +15,11 @@ const APILayout = ({ children }) => {
                         <SidebarTrigger />
                     </div>
                     <div className="flex-1 overflow-auto p-5 flex flex-col gap-5 w-full">
-                        <Toaster />
+                        <Toaster
+                            toastOptions={{
+                                removeDelay: 2000,
+                            }}
+                        />
                         {children}
                     </div>
                 </main>
