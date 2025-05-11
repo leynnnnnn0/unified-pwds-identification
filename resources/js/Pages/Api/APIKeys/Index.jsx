@@ -4,7 +4,14 @@ import TableHead from "@/Components/table/table-head";
 import TD from "@/Components/table/td";
 import TH from "@/Components/table/th";
 import { Button } from "@/Components/ui/button";
-import { Copy, LockIcon, PlusIcon, Trash, Trash2Icon } from "lucide-react";
+import {
+    Copy,
+    Loader2,
+    LockIcon,
+    PlusIcon,
+    Trash,
+    Trash2Icon,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
     Dialog,
@@ -30,6 +37,8 @@ const Index = ({ keys: initialKeys }) => {
     const [copied, setCopied] = useState(false);
     const [apiKey, setApiKey] = useState("");
     const [name, setName] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const deleteForm = useForm({
         id: null,
@@ -45,6 +54,7 @@ const Index = ({ keys: initialKeys }) => {
     };
 
     const deleteApiKey = () => {
+        setIsDeleting(true);
         deleteForm.delete(route("api-keys.destroy", deleteForm.data.id), {
             preserveScroll: true,
             onSuccess: (page) => {
@@ -54,6 +64,9 @@ const Index = ({ keys: initialKeys }) => {
                 setIsDeleteModalOpen(false);
                 deleteForm.reset();
                 toast.success("API key destroyed.");
+            },
+            onFinish: () => {
+                setIsDeleting(false);
             },
         });
     };
@@ -84,6 +97,7 @@ const Index = ({ keys: initialKeys }) => {
     };
 
     const generateAPIKey = () => {
+        setIsCreating(true);
         axios
             .post(
                 route("api-keys.store", {
@@ -119,7 +133,8 @@ const Index = ({ keys: initialKeys }) => {
 
                 toast.success("API key created!");
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally((e) => setIsCreating(false));
     };
 
     // Function to mask API keys on the front-end (matching the backend masking)
@@ -162,7 +177,12 @@ const Index = ({ keys: initialKeys }) => {
                     />
 
                     <div className="flex justify-end mt-4">
-                        <Button className="bg-red-500" onClick={deleteApiKey}>
+                        <Button
+                            disabled={isDeleting}
+                            className="bg-red-500"
+                            onClick={deleteApiKey}
+                        >
+                            {isDeleting && <Loader2 className="animate-spin" />}
                             Remove key
                         </Button>
                     </div>
@@ -260,9 +280,13 @@ const Index = ({ keys: initialKeys }) => {
 
                         <DialogFooter>
                             <Button
+                                disabled={isCreating}
                                 onClick={generateAPIKey}
                                 className="bg-primary-color"
                             >
+                                {isCreating && (
+                                    <Loader2 className="animate-spin" />
+                                )}
                                 Create secret key
                             </Button>
                         </DialogFooter>
