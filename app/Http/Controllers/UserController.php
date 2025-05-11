@@ -24,8 +24,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-
-
+        
+        $user->load(["municipalities", "provinces"]);
         return Inertia::render('User/Show', [
             'user' => $user,
         ]);
@@ -53,6 +53,7 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
+        $user->load(["municipalities", "provinces"]);
         return Inertia::render('User/Edit', [
             'user' => $user,
         ]);

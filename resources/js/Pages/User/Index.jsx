@@ -6,10 +6,24 @@ import TableHead from "@/Components/table/table-head";
 import TD from "@/Components/table/td";
 import TableContainer from "@/Components/table/table-container";
 import TH from "@/Components/table/th";
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, EditIcon, TrashIcon, Trash2Icon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import Pagination from "@/Components/pagination";
+
 const Index = ({ users }) => {
     return (
         <>
@@ -37,7 +51,39 @@ const Index = ({ users }) => {
                                 <TD>{item.full_name}</TD>
                                 <TD>{item.email}</TD>
                                 <TD>{item.role}</TD>
-                                <TD></TD>
+                                <TD> 
+                                    <div className="w-fit flex gap-3 items-center">
+                                     <Link
+                                    href={route("admin.users.show", item.id)}
+                                > 
+                                    <EyeIcon/> 
+                                    </Link>
+                                    
+                                    <Link
+                                    href={route("admin.users.edit", item.id)}
+                                > 
+                                    <EditIcon className="text-blue-500"/> 
+                                    </Link>
+                                    
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Trash2Icon className="text-red-500"/>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>
+                                                    Are you absolutely sure you want to delete this application?
+                                                </AlertDialogTitle>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogAction>Yes</AlertDialogAction>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>   
+                                    </div>
+
+                                </TD>
                             </tr>
                         ))}
                     </TableBody>

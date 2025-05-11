@@ -15,6 +15,7 @@ import SearchableSelect from "@/Components/searchable-select";
 import { useForm, router } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 import { X } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 const Create = ({ provinces, municipalities, auth }) => {
     const [province, setProvince] = useState("");
