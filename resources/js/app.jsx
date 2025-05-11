@@ -6,6 +6,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import Layout from "./Layouts/Layout";
 import AdminLayout from "./Layouts/AdminLayout";
+import APILayout from "./Layouts/APILayout";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -30,9 +31,11 @@ createInertiaApp({
                 path.startsWith("/login") ||
                 path === "/" ||
                 path.startsWith("/register") ||
-                path.startsWith("/api")
+                path == "/api"
             ) {
                 return page;
+            } else if (path.startsWith("/api")) {
+                return <APILayout>{page}</APILayout>;
             } else {
                 return <Layout>{page}</Layout>;
             }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Api\ApiKeyController;
 use App\Http\Controllers\IDVerification;
 use App\Http\Controllers\Api\LandingPageController as APILandingPage;
 use App\Http\Controllers\LandingPageController;
@@ -15,11 +16,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Api\DashboardController as ApiDashboardController;
 
 Route::resource('', LandingPageController::class);
 
 Route::prefix('api')->group(function () {
     Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
+    Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
+    Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
 });
 
 Route::middleware('auth')->group(function () {

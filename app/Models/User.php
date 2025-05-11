@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone_number',
         'email',
         'password',
+        'remarks',
         'role',
     ];
 
@@ -54,6 +55,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function api_keys()
+    {
+        return $this->hasMany(ApiKey::class);
     }
 
     public function provinces()
