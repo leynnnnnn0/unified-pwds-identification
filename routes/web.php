@@ -24,6 +24,7 @@ Route::prefix('api')->group(function () {
     Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
     Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
     Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
+    Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
 });
 
 Route::middleware('auth')->group(function () {

@@ -57,6 +57,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function api_keys()
+    {
+        return $this->hasMany(ApiKey::class);
+    }
+
     public function provinces()
     {
         return $this->hasMany(Province::class);
