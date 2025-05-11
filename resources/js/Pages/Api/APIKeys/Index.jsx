@@ -4,7 +4,7 @@ import TableHead from "@/Components/table/table-head";
 import TD from "@/Components/table/td";
 import TH from "@/Components/table/th";
 import { Button } from "@/Components/ui/button";
-import { Copy, PlusIcon } from "lucide-react";
+import { Copy, LockIcon, PlusIcon, Trash, Trash2Icon } from "lucide-react";
 import React, { useState } from "react";
 import {
     Dialog,
@@ -18,15 +18,46 @@ import {
 import FormField from "@/Components/form/form-field";
 import { Input } from "@/Components/ui/input";
 import axios from "axios";
+import { useForm } from "@inertiajs/react";
 
 const Index = ({ keys: initialKeys }) => {
     // Convert initial keys to a state so we can update it
     const [keys, setKeys] = useState(initialKeys);
     const [isAPIKeyModalOpen, setIsAPIKeyModalOpen] = useState(false);
     const [isCreateApiModalOpen, setIsCreateApiModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [copied, setCopied] = useState(false);
     const [apiKey, setApiKey] = useState("");
     const [name, setName] = useState("");
+
+    const deleteForm = useForm({
+        id: null,
+        secret_key: null,
+    });
+
+    const openDeleteModal = (id, key) => {
+        deleteForm.setData("id", id);
+        deleteForm.setData("secret_key", key);
+
+        setIsDeleteModalOpen(true);
+    };
+
+    const deleteApiKey = () => {
+        deleteForm.delete(route("api-keys.destroy", deleteForm.data.id), {
+            onSuccess: () => {
+                // Remove the deleted key from state
+                setKeys((prevKeys) => ({
+                    ...prevKeys,
+                    data: prevKeys.data.filter(
+                        (key) => key.id !== deleteForm.data.id
+                    ),
+                }));
+
+                setIsDeleteModalOpen(false);
+                deleteForm.reset();
+            },
+        });
+    };
 
     const handleCopy = () => {
         try {
@@ -103,6 +134,35 @@ const Index = ({ keys: initialKeys }) => {
 
     return (
         <>
+            <Dialog
+                open={isDeleteModalOpen}
+                onOpenChange={setIsDeleteModalOpen}
+            >
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Revoke secret key</DialogTitle>
+                        <DialogDescription className="text-xs">
+                            This API key will immediately be disabled. API
+                            requests made using this key will be rejected, which
+                            could cause any systems still depending on it to
+                            break. Once revoked, you'll no longer be able to
+                            view or modify this API key.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <Input
+                        className="cursor-default"
+                        disabled={true}
+                        value={deleteForm.data.secret_key}
+                    />
+
+                    <div className="flex justify-end mt-4">
+                        <Button className="bg-red-500" onClick={deleteApiKey}>
+                            Remove key
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
             <Dialog
                 open={isAPIKeyModalOpen}
                 onOpenChange={setIsAPIKeyModalOpen}
@@ -244,11 +304,37 @@ const Index = ({ keys: initialKeys }) => {
                                     <TD>{item.secret_key}</TD>
                                     <TD>{item.last_used}</TD>
                                     <TD>{item.created_by}</TD>
-                                    <TD></TD>
+                                    <TD>
+                                        <button
+                                            onClick={() =>
+                                                openDeleteModal(
+                                                    item.id,
+                                                    item.secret_key
+                                                )
+                                            }
+                                        >
+                                            <Trash2Icon className="size-4 text-red-500" />
+                                        </button>
+                                    </TD>
                                 </tr>
                             ))}
                     </TableBody>
                 </Table>
+
+               {keys.data.length == 0 &&  <div className="mt-24 flex flex-col items-center jsutify-center w-full gap-3">
+                    <LockIcon/>
+                <h1 className="font-bold text-black/90">
+                Create an API key to access the UPID API
+                </h1>
+
+                <Button
+                    onClick={() => setIsCreateApiModalOpen(true)}
+                    className="bg-primary-color"
+                >
+                    <PlusIcon /> Create new secret key
+                </Button>
+
+                </div>}
             </div>
         </>
     );

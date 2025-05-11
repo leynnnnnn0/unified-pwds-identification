@@ -25,6 +25,8 @@ Route::prefix('api')->group(function () {
     Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
     Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
     Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
+    Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+
 });
 
 Route::middleware('auth')->group(function () {

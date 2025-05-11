@@ -21,6 +21,7 @@ class ApiKeyController extends Controller
             ->paginate(10)
             ->through(function ($item) {
                 return [
+                    'id' => $item->id,
                     'name' => $item->name,
                     'secret_key' => $this->maskApiKey($item->secret_key),
                     'last_used' => 'Never',
@@ -31,6 +32,12 @@ class ApiKeyController extends Controller
         return Inertia::render('Api/APIKeys/Index', [
             'keys' => $keys
         ]);
+    }
+
+    public function destroy($id)
+    {
+        ApiKey::findOrFail($id)->delete();
+        return back();
     }
 
     public function maskApiKey(string $apiKey, int $prefixChars = 8, int $suffixChars = 5): string
