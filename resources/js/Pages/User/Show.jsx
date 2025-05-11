@@ -14,10 +14,13 @@ const Show = ({user}) => {
         email: user.email,
         role: user.role,
         remarks: user.remarks,
-        
+        assigned_provinces: user.provinces.map((item) => item.province + "\n"),
+        assigned_municipalities: user.municipalities.map((item) => item.municipality + "\n"), 
     });
 
     console.log(form.data);
+    console.log(user.provinces);
+
   return (
     <>
     <H1 title="User Details"/>
@@ -30,7 +33,9 @@ const Show = ({user}) => {
         />
       </FormField>
 
-      <FormField label="Middle Name">
+      <FormField label="Middle Name"
+        isRequired={false}
+      >
         <InfoLabel 
           label={form.data.middle_name}
         />
@@ -39,33 +44,51 @@ const Show = ({user}) => {
 
       <FormField label="Last Name">
         <InfoLabel 
-        value={form.data.last_name}
+        label={form.data.last_name}
         />
       </FormField>
 
       <FormField label="Phone Number">
         <InfoLabel 
-        value={form.data.phone_number}
+        label={form.data.phone_number}
         />
       </FormField>
 
       <FormField label="Email">
         <InfoLabel 
-        value={form.data.email}
+        label={form.data.email}
         />
       </FormField>
 
       <FormField label="Roles">
         <InfoLabel 
-        value={form.data.roles}
+        label={form.data.role}
         />
       </FormField>
 
-      <FormField label="Remarks">
+      <FormField label="Remarks"
+        isRequired={false}
+      >
         <InfoLabel 
-        value={form.data.remarks}
+        label={form.data.remarks}
         />
       </FormField>
+
+      {form.data.role === 'sub_admin' && (
+        <FormField label="Assigned Provinces">
+          <InfoLabel 
+            label={form.data.assigned_provinces}
+          />
+        </FormField>
+      )}
+
+      {form.data.role === 'processer' && (
+        <FormField label="Assigned Municipalities">
+          <InfoLabel 
+            label={form.data.assigned_municipalities}
+          />
+        </FormField>
+      )}
 
     </div>
     <Button>Back</Button>

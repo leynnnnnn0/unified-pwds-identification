@@ -22,6 +22,8 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+import Pagination from "@/Components/pagination";
+
 const Index = ({ users }) => {
     return (
         <>
@@ -86,6 +88,7 @@ const Index = ({ users }) => {
                         ))}
                     </TableBody>
                 </Table>
+                <Pagination data={users} />
             </TableContainer>
         </>
     );

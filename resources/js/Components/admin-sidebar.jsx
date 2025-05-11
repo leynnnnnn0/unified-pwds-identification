@@ -4,12 +4,17 @@ import {
     Inbox,
     Search,
     Settings,
+    FileUser,
     UserCircle,
+    Users,
+    LogOut,
     CircleAlertIcon,
+    ShieldCheck,
 } from "lucide-react";
 import { router } from "@inertiajs/react";
 import MainLago from "../../images/mainLogo.jpg";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+
 import {
     Sidebar,
     SidebarContent,
@@ -25,35 +30,6 @@ import {
 } from "@/components/ui/sidebar";
 import { SidebarLink } from "./sidebar-link";
 
-const items = [
-    {
-        title: "Dashboard",
-        url: "/admin/dashboard",
-        icon: Home,
-    },
-    {
-        title: "Registration",
-        url: "/admin/applications",
-        icon: UserCircle,
-    },
-    {
-        title: "Verification",
-        url: "/admin/verification",
-        icon: UserCircle,
-    },
-    {
-        title: "User",
-        url: "/admin/users",
-        icon: UserCircle,
-    },
-    {
-        title: "My Account",
-        url: "/admin/my-account",
-        icon: UserCircle,
-        isLocked: false,
-    },
-];
-
 const logout = () => {
     router.post("/logout", {
         onFinish: () => {
@@ -63,6 +39,40 @@ const logout = () => {
 };
 
 export function AdminSidebar() {
+    const { auth } = usePage().props;
+    const items = [
+        {
+            title: "Dashboard",
+            url: "/admin/dashboard",
+            icon: Home,
+            isVisible: true,
+        },
+        {
+            title: "Applications",
+            url: "/admin/applications",
+            icon: FileUser,
+            isVisible: true,
+        },
+        {
+            title: "Verification",
+            url: "/admin/verification",
+            icon: ShieldCheck,
+            isVisible: true,
+        },
+        {
+            title: "Users",
+            url: "/admin/users",
+            icon: Users,
+            isVisible: auth.role == "admin" || auth.role == "sub_admin",
+        },
+        {
+            title: "My Account",
+            url: "/admin/my-account",
+            icon: UserCircle,
+            isLocked: false,
+            isVisible: true,
+        },
+    ];
     return (
         <div className="min-h-screen">
             <Sidebar>
@@ -92,23 +102,26 @@ export function AdminSidebar() {
                         {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
-                                            <SidebarLink
-                                                href={item.url}
-                                                icon={item.icon}
-                                            >
-                                                {item.title}
-                                            </SidebarLink>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
+                                {items.map(
+                                    (item) =>
+                                        item.isVisible && (
+                                            <SidebarMenuItem key={item.title}>
+                                                <SidebarMenuButton asChild>
+                                                    <SidebarLink
+                                                        href={item.url}
+                                                        icon={item.icon}
+                                                    >
+                                                        {item.title}
+                                                    </SidebarLink>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>
+                                        )
+                                )}
 
                                 <SidebarMenuItem>
                                     <SidebarMenuButton onClick={logout}>
                                         <div className="flex items-center gap-2">
-                                            <CircleAlertIcon className="w-4 h-4" />
+                                            <LogOut className="w-4 h-4" />
                                             <span>Logout</span>
                                         </div>
                                     </SidebarMenuButton>

@@ -6,6 +6,7 @@ use App\Models\PWDApplicationForm;
 use App\Models\PWDIdentificationCard;
 use App\Models\SupportingDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
@@ -14,23 +15,58 @@ class AdminApplicationController extends Controller
 {
     public function index()
     {
-        $applications = PWDApplicationForm::with('encoder')
-            ->orderBy('created_at', 'desc')
+        $search = request('search');
+        $status = request('status');
+        $type_of_application = request('type_of_application');
+        $query = PWDApplicationForm::with('encoder');
+
+        $user = Auth::user();
+
+
+
+        if ($user->role === 'processer') {
+            $user->load(['municipalities']);
+            $query->whereIn('municipality', $user->municipalities()->pluck('municipality'));
+        }
+        if ($user->role == 'sub_admin') {
+            $user->load(['provinces']);
+            $query->whereIn('province', $user->provinces()->pluck('province'));
+        }
+
+        if ($search) {
+            $query->where('application_number', 'like', "%$search%");
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        if ($type_of_application) {
+            $query->where('type_of_registration', $type_of_application);
+        }
+
+
+        $applications = $query->orderBy('created_at', 'desc')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($item) {
                 return [
                     'id' => $item->id,
                     'application_number' => $item->application_number,
                     'application_date' => $item->formatted_application_date,
                     'status' => strtoupper($item->status),
+                    'stat' => $item->status,
                     'encoder' => $item->encoder->username,
-                    'type_of_registration' => $item->formatted_type_of_application,
+                    'formatted_type_of_application' => $item->formatted_type_of_application,
+                    'type_of_application' => $item->type_of_application
+
                 ];
             });
 
 
         return Inertia::render('AdminApplication/Index', [
             'applications' => $applications,
+            'filters' => request()->only(['search', 'status', 'type_of_application'])
         ]);
     }
 

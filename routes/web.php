@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\IDVerification;
+use App\Http\Controllers\Api\LandingPageController as APILandingPage;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PWDAccountController;
 use App\Http\Controllers\PWDDashboardController;
@@ -15,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::resource('', LandingPageController::class);
+
+Route::prefix('api')->group(function () {
+    Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
+});
 
 Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -47,6 +53,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/municipalities/{province}', [UserController::class, 'getMunicipalities']);
+
+
+Route::controller(LocationController::class)->group(function () {
+    Route::get('/api/municipalities', 'getMunicipalities');
+    Route::get('/api/regions', 'getRegions');
+    Route::get('/api/barangays', 'getBarangays');
+    Route::get('/api/provinces', 'getProvinces');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
