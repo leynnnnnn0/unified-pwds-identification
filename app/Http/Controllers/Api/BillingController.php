@@ -66,6 +66,7 @@ class BillingController extends Controller
             $subscription['end_date'] = Carbon::parse($plan->created_at)->addMonth()->format('F d, Y');
         }
 
+
         // Get invoices from Stripe via Cashier
         $invoices = $user->invoices();
 
