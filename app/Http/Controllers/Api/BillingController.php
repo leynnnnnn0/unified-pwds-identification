@@ -20,17 +20,20 @@ class BillingController extends Controller
                 'price' => 10,
                 'price_id' => 'price_1RNo2DH0KVHxP8CWfAcg2ohS',
                 'request_limit' => 20,
+                'product_id' => 'prod_SIOpCxb9QabHGm'
             ],
             'prod_SIOrkY2gJyW45l' => [
                 'name' => 'Gold',
                 'price' => 15,
                 'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
                 'request_limit' => 50,
+                'product_id' => 'prod_SIOrkY2gJyW45l'
             ],
             'prod_SIOt2uy0I2upNo' => [
                 'name' => 'Platinum',
                 'price' => 20,
                 'price_id' => 'price_1RNo5aH0KVHxP8CWIQvMeBaD',
+                'product_id' => 'prod_SIOt2uy0I2upNo'
             ],
         ];
 
@@ -47,7 +50,6 @@ class BillingController extends Controller
             $subscription = $subscriptions['prod_SIOt2uy0I2upNo'];
         }
 
-
         if ($subscription) {
             $user->load(['subscriptions', 'api_requests']);
 
@@ -57,6 +59,8 @@ class BillingController extends Controller
                 ->where('is_successfull', true)
                 ->whereBetween('created_at', [$plan->created_at, Carbon::parse($plan->created_at)->addMonth()])
                 ->count();
+
+            $subscription['is_cancelled'] = $plan->ends_at != null;
 
             $subscription['start_date'] = Carbon::parse($plan->created_at)->format('F d, Y');
             $subscription['end_date'] = Carbon::parse($plan->created_at)->addMonth()->format('F d, Y');
@@ -84,5 +88,17 @@ class BillingController extends Controller
             'subscription' => $subscription,
             'invoices' => $formattedInvoices
         ]);
+    }
+
+    public function cancelSubscription($plan)
+    {
+        Auth::user()->subscription($plan)->cancel();
+        return back();
+    }
+
+    public function renewSubscription($plan)
+    {
+        Auth::user()->subscription($plan)->reorder();
+        return back();
     }
 }

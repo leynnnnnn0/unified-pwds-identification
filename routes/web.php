@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Api\ApiKeyController;
+use App\Http\Controllers\Api\BillingController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\IDVerification;
 use App\Http\Controllers\Api\LandingPageController as APILandingPage;
@@ -32,6 +33,8 @@ Route::prefix('api')->group(function () {
 Route::middleware(['auth'])->prefix('api/billing')->group(function () {
     Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
     Route::get('/checkout/{plan?}', CheckoutController::class)->name('billing.checkout');
+    Route::put('/billing/cancel-subscription/{plan}', [BillingController::class, 'cancelSubscription'])->name('billing.cancel-subscription');
+    Route::put('/billing/renew-subscription/{plan}', [BillingController::class, 'renewSubscription'])->name('billing.renew-subscription');
 });
 
 Route::middleware('auth')->group(function () {

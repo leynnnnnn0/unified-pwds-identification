@@ -4,14 +4,60 @@ import TableContainer from "@/Components/table/table-container";
 import TableHead from "@/Components/table/table-head";
 import TD from "@/Components/table/td";
 import TH from "@/Components/table/th";
+import { Button } from "@/Components/ui/button";
 import { Progress } from "@/Components/ui/progress";
-import React from "react";
+import { router } from "@inertiajs/react";
+import { Download } from "lucide-react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const Index = ({ subscription, invoices }) => {
     const progressPercentage =
         (parseInt(subscription["api_requests"]) /
             parseInt(subscription["request_limit"])) *
         100;
+
+    const [isCancelled, setIsCancelled] = useState(
+        subscription["is_cancelled"]
+    );
+
+    const cancelSubscription = () => {
+        router.put(
+            route("billing.cancel-subscription", subscription["product_id"]),
+            {},
+            {
+                onSuccess: () => {
+                    toast.success("Subscription cancelled.");
+                    setIsCancelled(true);
+                },
+
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while trying to cancel the subscription."
+                    );
+                },
+            }
+        );
+    };
+
+    const renewSubscription = () => {
+        router.put(
+            route("billing.renew-subscription", subscription["product_id"]),
+            {},
+            {
+                onSuccess: () => {
+                    toast.success("Subscription renewed.");
+                    setIsCancelled(false);
+                },
+
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while trying to renew the subscription."
+                    );
+                },
+            }
+        );
+    };
     return (
         <>
             {!subscription && (
@@ -47,7 +93,6 @@ const Index = ({ subscription, invoices }) => {
                         <span className="text-gray-600 text-lg">/month</span>
                     </h1>
                 </div>
-
                 <div className="flex flex-col gap-2">
                     <p className="text-gray-700 text-sm font-medium">
                         {subscription["api_requests"]} /{" "}
@@ -55,6 +100,23 @@ const Index = ({ subscription, invoices }) => {
                     </p>
 
                     <Progress value={progressPercentage} />
+                </div>
+                <div className="flex items-center justify-end pt-5 border-t">
+                    {isCancelled ? (
+                        <Button
+                            className="bg-green-500"
+                            onClick={renewSubscription}
+                        >
+                            Renew subscription
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={cancelSubscription}
+                            variant="destructive"
+                        >
+                            Cancel subscription
+                        </Button>
+                    )}
                 </div>
             </div>
 
@@ -87,10 +149,11 @@ const Index = ({ subscription, invoices }) => {
                                     <TD>{item.status}</TD>
                                     <TD>
                                         <a
-                                            className="text-green-500 underline"
+                                            className="text-green-500 flex items-center gap-1 hover:underline"
                                             href={item.pdf_url}
                                             target="_blank"
                                         >
+                                            <Download className="size-4 hover:underline" />{" "}
                                             Download PDF
                                         </a>
                                     </TD>
