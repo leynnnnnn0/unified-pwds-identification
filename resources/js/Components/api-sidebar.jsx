@@ -48,6 +48,12 @@ export function APISidebar() {
             isVisible: true,
         },
         {
+            title: "Billing",
+            url: "/api/billing",
+            icon: FileUser,
+            isVisible: true,
+        },
+        {
             title: "API Keys",
             url: "/api/api-keys",
             icon: FileUser,

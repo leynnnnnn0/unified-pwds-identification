@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Api\ApiKeyController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\IDVerification;
 use App\Http\Controllers\Api\LandingPageController as APILandingPage;
 use App\Http\Controllers\LandingPageController;
@@ -26,7 +27,11 @@ Route::prefix('api')->group(function () {
     Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
     Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
     Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+});
 
+Route::middleware(['auth'])->prefix('api/billing')->group(function () {
+    Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
+    Route::get('/checkout/{plan?}', CheckoutController::class)->name('billing.checkout');
 });
 
 Route::middleware('auth')->group(function () {

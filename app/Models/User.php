@@ -6,12 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
+use Laravel\Cashier\Subscription;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +58,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function api_requests()
+    {
+        return $this->hasMany(ApiRequest::class);
+    }
+
 
     public function api_keys()
     {
