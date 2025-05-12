@@ -10,6 +10,8 @@ import {
     LogOut,
     CircleAlertIcon,
     ShieldCheck,
+    KeyRound,
+    ReceiptText,
 } from "lucide-react";
 import { router } from "@inertiajs/react";
 import MainLago from "../../images/mainLogo.jpg";
@@ -50,13 +52,13 @@ export function APISidebar() {
         {
             title: "Billing",
             url: "/api/billing",
-            icon: FileUser,
+            icon: ReceiptText,
             isVisible: true,
         },
         {
             title: "API Keys",
             url: "/api/api-keys",
-            icon: FileUser,
+            icon: KeyRound,
             isVisible: true,
         },
     ];
