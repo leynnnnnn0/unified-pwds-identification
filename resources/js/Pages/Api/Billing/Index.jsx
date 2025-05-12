@@ -13,15 +13,16 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 const Index = ({ subscription, invoices }) => {
+    let progressPercentage = 0;
+
+    const [isCancelled, setIsCancelled] = useState(
+        subscription ? subscription["is_cancelled"] : false
+    );
     if (subscription) {
-        const progressPercentage =
+        progressPercentage =
             (parseInt(subscription["api_requests"]) /
                 parseInt(subscription["request_limit"])) *
             100;
-
-        const [isCancelled, setIsCancelled] = useState(
-            subscription["is_cancelled"]
-        );
     }
 
     const cancelSubscription = () => {

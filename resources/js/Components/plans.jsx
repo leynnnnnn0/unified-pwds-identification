@@ -123,8 +123,8 @@ const Plans = () => {
                             </div>
 
                             <div className="p-6 bg-white border-t border-gray-200">
-                                <Link
-                                    href={route("billing.checkout", plan.id)}
+                                <a
+                                    href={`/api/billing/checkout/${plan.id}`}
                                     className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-colors ${
                                         plan.buttonColor
                                     } ${
@@ -136,7 +136,7 @@ const Plans = () => {
                                     {selectedPlan === plan.name
                                         ? "Selected"
                                         : "Choose Plan"}
-                                </Link>
+                                </a>
                             </div>
                         </div>
                     ))}
