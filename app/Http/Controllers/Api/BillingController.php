@@ -62,8 +62,27 @@ class BillingController extends Controller
             $subscription['end_date'] = Carbon::parse($plan->created_at)->addMonth()->format('F d, Y');
         }
 
+        // Get invoices from Stripe via Cashier
+        $invoices = $user->invoices();
+
+        // Format the invoices for frontend display
+        $formattedInvoices = [];
+        foreach ($invoices as $invoice) {
+            $formattedInvoices[] = [
+                'id' => $invoice->id,
+                'invoice_id' => $invoice->number,
+                'amount' => $invoice->total(),
+                'amount_formatted' => $invoice->total(),
+                'date' => Carbon::parse($invoice->date())->format('F d, Y'),
+                'status' => $invoice->status,
+                'pdf_url' => $invoice->asStripeInvoice()->invoice_pdf,
+            ];
+        }
+
+
         return Inertia::render('Api/Billing/Index', [
-            'subscription' => $subscription
+            'subscription' => $subscription,
+            'invoices' => $formattedInvoices
         ]);
     }
 }

@@ -1,7 +1,17 @@
+import Table from "@/Components/table/table";
+import TableBody from "@/Components/table/table-body";
+import TableContainer from "@/Components/table/table-container";
+import TableHead from "@/Components/table/table-head";
+import TD from "@/Components/table/td";
+import TH from "@/Components/table/th";
 import { Progress } from "@/Components/ui/progress";
 import React from "react";
 
-const Index = ({ subscription }) => {
+const Index = ({ subscription, invoices }) => {
+    const progressPercentage =
+        (parseInt(subscription["api_requests"]) /
+            parseInt(subscription["request_limit"])) *
+        100;
     return (
         <>
             {!subscription && (
@@ -17,11 +27,11 @@ const Index = ({ subscription }) => {
                 </div>
             )}
 
-            {/* <h1 className="font-bold text-xl border-b pb-5 mb-3 text-gray-800">
+            <h1 className="font-bold text-xl border-b pb-5 mb-3 text-gray-800">
                 Billing
-            </h1> */}
+            </h1>
 
-            <div className="border-b rounded-lg shadow-xl mt-3 p-5">
+            <div className="border rounded-lg shadow-xl p-5 space-y-4">
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-gray-800 text-lg font-bold">
@@ -38,8 +48,58 @@ const Index = ({ subscription }) => {
                     </h1>
                 </div>
 
-                <Progress value={10} />
+                <div className="flex flex-col gap-2">
+                    <p className="text-gray-700 text-sm font-medium">
+                        {subscription["api_requests"]} /{" "}
+                        {subscription["request_limit"]} requests used
+                    </p>
+
+                    <Progress value={progressPercentage} />
+                </div>
             </div>
+
+            <TableContainer>
+                <div>
+                    <h1 className="text-gray-800 text-lg font-bold">
+                        Billing History
+                    </h1>
+                    <p className="text-gray-600 text-sm">
+                        Here you will see your billing history
+                    </p>
+                </div>
+
+                <Table>
+                    <TableHead>
+                        <TH>Invoice Number</TH>
+                        <TH>Amount</TH>
+                        <TH>Date</TH>
+                        <TH>Status</TH>
+                        <TH>Actions</TH>
+                    </TableHead>
+
+                    <TableBody>
+                        {invoices.map(function (item) {
+                            return (
+                                <tr key={item.id}>
+                                    <TD>{item.invoice_id}</TD>
+                                    <TD>{item.amount_formatted}</TD>
+                                    <TD>{item.date}</TD>
+                                    <TD>{item.status}</TD>
+                                    <TD>
+                                        <a
+                                            className="text-green-500 underline"
+                                            href={item.pdf_url}
+                                            target="_blank"
+                                        >
+                                            Download PDF
+                                        </a>
+                                    </TD>
+                                </tr>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     );
 };
