@@ -62,7 +62,7 @@ const Plans = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4">
+        <div className="min-h-fiat bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -142,7 +142,7 @@ const Plans = () => {
                     ))}
                 </div>
 
-                <div className="mt-16 text-center max-w-2xl mx-auto">
+                {/* <div className="mt-16 text-center max-w-2xl mx-auto">
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">
                         Need Something Custom?
                     </h3>
@@ -154,7 +154,7 @@ const Plans = () => {
                     <button className="bg-gray-900 hover:bg-gray-800 text-white py-3 px-8 rounded-lg font-medium transition-colors">
                         Contact Sales
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

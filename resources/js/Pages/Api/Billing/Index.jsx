@@ -1,3 +1,4 @@
+import Plans from "@/Components/plans";
 import Table from "@/Components/table/table";
 import TableBody from "@/Components/table/table-body";
 import TableContainer from "@/Components/table/table-container";
@@ -63,16 +64,21 @@ const Index = ({ subscription, invoices }) => {
     return (
         <>
             {!subscription && (
-                <div className="w-full h-fit rounded-lg">
-                    <h1 className="font-bold text-xl border-b pb-5 mb-3 text-gray-800">
-                        No billing to manage yet
-                    </h1>
-                    <p className="text-gray-600 text-sm mt-3">
-                        You'll have billing options here once you've subscribed
-                        to a product. If you recently purchased a subscription
-                        try logging back in again to refresh your session.
-                    </p>
-                </div>
+                <>
+                    <div className="w-full h-fit rounded-lg">
+                        <h1 className="font-bold text-xl border-b pb-5 mb-3 text-gray-800">
+                            No billing to manage yet
+                        </h1>
+                        <p className="text-gray-600 text-sm mt-3">
+                            You'll have billing options here once you've
+                            subscribed to a product. If you recently purchased a
+                            subscription try logging back in again to refresh
+                            your session.
+                        </p>
+                    </div>
+
+                    <Plans />
+                </>
             )}
 
             {subscription && (
