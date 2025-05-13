@@ -25,13 +25,14 @@ class BillingController extends Controller
             'prod_SIOrkY2gJyW45l' => [
                 'name' => 'Gold',
                 'price' => 15,
-                'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
                 'request_limit' => 50,
+                'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
                 'product_id' => 'prod_SIOrkY2gJyW45l'
             ],
             'prod_SIOt2uy0I2upNo' => [
                 'name' => 'Platinum',
                 'price' => 20,
+                'request_limit' => 'Unlimited',
                 'price_id' => 'price_1RNo5aH0KVHxP8CWIQvMeBaD',
                 'product_id' => 'prod_SIOt2uy0I2upNo'
             ],
@@ -45,6 +46,15 @@ class BillingController extends Controller
         }
         if ($user->subscribed('prod_SIOrkY2gJyW45l')) {
             $subscription = $subscriptions['prod_SIOrkY2gJyW45l'];
+
+            // $subscription = $user->subscription('prod_SIOrkY2gJyW45l');
+
+            // // Swap to Platinum price
+            // $subscription->swap('price_1RNo5aH0KVHxP8CWIQvMeBaD');
+
+            // // Update the subscription name (product ID)
+            // $subscription->type = 'prod_SIOt2uy0I2upNo';
+            // $subscription->save();
         }
         if ($user->subscribed('prod_SIOt2uy0I2upNo')) {
             $subscription = $subscriptions['prod_SIOt2uy0I2upNo'];
