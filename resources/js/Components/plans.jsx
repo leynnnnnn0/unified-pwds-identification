@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { CheckCircle } from "lucide-react";
-import { Link } from "@inertiajs/react";
+import { CheckCircle, PackagePlusIcon } from "lucide-react";
+import { Link, router } from "@inertiajs/react";
+import { Button } from "@/Components/ui/button";
 
 const Plans = () => {
     const [selectedPlan, setSelectedPlan] = useState(null);
@@ -20,6 +21,7 @@ const Plans = () => {
             hoverColor: "hover:border-gray-400",
             buttonColor: "bg-gray-500 hover:bg-gray-600",
             id: "price_1RNo5aH0KVHxP8CWIQvMeBaD",
+            product_id: "prod_SIOpCxb9QabHGm",
         },
         {
             name: "Gold",
@@ -36,6 +38,7 @@ const Plans = () => {
             hoverColor: "hover:border-yellow-400",
             buttonColor: "bg-yellow-500 hover:bg-yellow-600",
             id: "price_1RNo47H0KVHxP8CWpWPOA9Zs",
+            product_id: "prod_SIOrkY2gJyW45l",
         },
         {
             name: "Platinum",
@@ -54,11 +57,19 @@ const Plans = () => {
             buttonColor: "bg-blue-500 hover:bg-blue-600",
             recommended: true,
             id: "price_1RNo5aH0KVHxP8CWIQvMeBaD",
+            product_id: "prod_SIOt2uy0I2upNo",
         },
     ];
 
     const handleSelectPlan = (planName) => {
         setSelectedPlan(planName);
+    };
+
+    const choosePlan = (product, plan) => {
+        const checkoutUrl = `/api/billing/checkout?plan=${encodeURIComponent(
+            plan
+        )}&product=${encodeURIComponent(product)}`;
+        window.open(checkoutUrl);
     };
 
     return (
@@ -123,8 +134,10 @@ const Plans = () => {
                             </div>
 
                             <div className="p-6 bg-white border-t border-gray-200">
-                                <a
-                                    href={`/api/billing/checkout/${plan.id}`}
+                                <Button
+                                    onClick={() =>
+                                        choosePlan(plan.product_id, plan.id)
+                                    }
                                     className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-colors ${
                                         plan.buttonColor
                                     } ${
@@ -136,7 +149,7 @@ const Plans = () => {
                                     {selectedPlan === plan.name
                                         ? "Selected"
                                         : "Choose Plan"}
-                                </a>
+                                </Button>
                             </div>
                         </div>
                     ))}
