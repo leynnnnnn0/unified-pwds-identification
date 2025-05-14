@@ -21,4 +21,9 @@ class ApiRequest extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function api_key()
+    {
+        return $this->belongsTo(ApiKey::class);
+    }
 }

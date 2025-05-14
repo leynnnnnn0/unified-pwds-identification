@@ -22,4 +22,9 @@ class ApiKey extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function api_requests()
+    {
+        return $this->hasMany(ApiRequest::class);
+    }
 }

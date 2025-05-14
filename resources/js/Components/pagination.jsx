@@ -40,15 +40,15 @@ const Pagination = ({ data }) => {
                                 dangerouslySetInnerHTML={{ __html: link.label }}
                                 className={`px-3 py-1 border border-gray-200 text-primary-font font-bold rounded-lg sm:text-sm text-xs ${
                                     link.active
-                                        ? "bg-primary text-white bg-primary-color"
-                                        : "hover:bg-primary/50 transition-colors duration-300 bg-primary-color"
+                                        ? "bg-primary text-white"
+                                        : "hover:bg-primary/50 transition-colors duration-300 "
                                 }`}
                             />
                         ) : (
                             <span
                                 key={index}
                                 dangerouslySetInnerHTML={{ __html: link.label }}
-                                className="px-3 py-1 border border-gray-200 text-primary-font font-bold rounded-lg sm:text-sm text-xs text-primary-color"
+                                className="px-3 py-1 border border-gray-200 text-primary-font font-bold rounded-lg sm:text-sm text-xs "
                             />
                         )
                     )}
