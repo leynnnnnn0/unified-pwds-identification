@@ -12,6 +12,7 @@ class ApiRequest extends Model
 
     protected $fillable = [
         'user_id',
+        'api_key_id',
         'ip_address',
         'is_successfull',
     ];

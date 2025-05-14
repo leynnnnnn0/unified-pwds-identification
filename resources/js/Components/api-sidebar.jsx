@@ -50,6 +50,12 @@ export function APISidebar() {
             isVisible: true,
         },
         {
+            title: "Usage",
+            url: "/api/usage",
+            icon: ReceiptText,
+            isVisible: true,
+        },
+        {
             title: "Billing",
             url: "/api/billing",
             icon: ReceiptText,

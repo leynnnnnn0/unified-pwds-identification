@@ -68,7 +68,7 @@ class ApiKeyController extends Controller
         } while (ApiKey::where('secret_key', $secretKey)->exists());
 
         $key = ApiKey::create([
-            'user_id' => 1,
+            'user_id' => Auth::id(),
             'name' => $validated['name'] ?? 'Secret key',
             'secret_key' => $secretKey
         ]);
