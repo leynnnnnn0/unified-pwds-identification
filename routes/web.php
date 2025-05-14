@@ -23,17 +23,7 @@ use App\Http\Controllers\Api\UsageController;
 
 Route::resource('', LandingPageController::class);
 
-Route::prefix('api')->group(function () {
-    Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
-    Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
-    Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
-    Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
 
-
-
-    Route::resource('usage', UsageController::class);
-});
 
 Route::middleware(['auth'])->prefix('api/billing')->group(function () {
     Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
@@ -43,6 +33,19 @@ Route::middleware(['auth'])->prefix('api/billing')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+
+    Route::prefix('api')->group(function () {
+        Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
+        Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
+        Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
+        Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+
+
+
+        Route::resource('usage', UsageController::class);
+    });
 
 
     Route::prefix('admin')->name('admin.')->group(function () {

@@ -22,7 +22,7 @@ class BillingController extends Controller
                 'request_limit' => 20,
                 'product_id' => 'prod_SIOpCxb9QabHGm'
             ],
-            'prod_SIOrkY2gJyW45l' => [http://unified-pwds-identification.test/api/verification?secret_key=sk-upid-nCWbK6IT1pVkA3zlSgJabwlr
+            'prod_SIOrkY2gJyW45l' => [
                 'name' => 'Gold',
                 'price' => 15,
                 'request_limit' => 50,

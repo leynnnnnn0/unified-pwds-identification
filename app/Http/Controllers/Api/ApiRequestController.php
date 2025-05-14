@@ -24,7 +24,6 @@ class ApiRequestController extends Controller
 
         if (!$api_key) {
             return response()->json([
-                'keys' => ApiKey::all(),
                 'success' => false,
                 'is_found' => null,
                 'message' => 'Unknown API key'
@@ -62,7 +61,6 @@ class ApiRequestController extends Controller
 
             DB::commit();
             return response()->json([
-                'api_key' => $api_key,
                 'success' => true,
                 'is_found' => false,
                 'data' => []

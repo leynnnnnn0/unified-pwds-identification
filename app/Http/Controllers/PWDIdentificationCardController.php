@@ -10,7 +10,6 @@ class PWDIdentificationCardController extends Controller
 {
     public function show()
     {
-        //
         $card_number = request('card_number');
 
         $pwdIdentificationCard = PWDIdentificationCard::with('application_form')
