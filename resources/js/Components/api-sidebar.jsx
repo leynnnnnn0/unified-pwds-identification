@@ -12,6 +12,7 @@ import {
     ShieldCheck,
     KeyRound,
     ReceiptText,
+    ChartBarDecreasing,
 } from "lucide-react";
 import { router } from "@inertiajs/react";
 import MainLago from "../../images/mainLogo.jpg";
@@ -44,15 +45,9 @@ export function APISidebar() {
     const { auth } = usePage().props;
     const items = [
         {
-            title: "Dashboard",
-            url: "/api/dashboard",
-            icon: Home,
-            isVisible: true,
-        },
-        {
             title: "Usage",
             url: "/api/usage",
-            icon: ReceiptText,
+            icon: ChartBarDecreasing,
             isVisible: true,
         },
         {
