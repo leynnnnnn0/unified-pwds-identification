@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
+use App\Http\Controllers\Api\ApiRegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -12,6 +14,12 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+
+    Route::get('/api/register', [ApiRegisteredUserController::class, 'create'])
+        ->name('api.register');
+
+    Route::post('/api/register/store', [ApiRegisteredUserController::class, 'store'])->name('api.register');
+
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
@@ -20,7 +28,12 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
+    Route::get('/api/login', [ApiAuthenticatedSessionController::class, 'create'])
+        ->name('api.login');
+
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::post('/api/login/store', [ApiAuthenticatedSessionController::class, 'store'])->name('api.login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');

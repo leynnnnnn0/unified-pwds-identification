@@ -32,19 +32,20 @@ Route::middleware(['auth'])->prefix('api/billing')->group(function () {
     Route::put('/billing/renew-subscription/{plan}', [BillingController::class, 'renewSubscription'])->name('billing.renew-subscription');
 });
 
+Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
+
 Route::middleware('auth')->group(function () {
 
 
     Route::prefix('api')->group(function () {
-        Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
-        Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
         Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
         Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
         Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
 
 
-
-        Route::resource('usage', UsageController::class);
+        Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
     });
 
 

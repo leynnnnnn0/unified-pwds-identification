@@ -8,6 +8,7 @@ import CodeContainer from "@/Components/code-container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "@inertiajs/react";
 
 const LandingPage = () => {
     const carouselSettings = {
@@ -64,9 +65,12 @@ const LandingPage = () => {
                     </span>
                 </div>
 
-                <button className="rounded-full bg-primary text-sm px-6 py-2 text-white font-bold hover:bg-primary-dark transition-colors">
+                <Link
+                    href="/api/login"
+                    className="rounded-full bg-primary text-sm px-6 py-2 text-white font-bold hover:bg-primary-dark transition-colors"
+                >
                     Login
-                </button>
+                </Link>
             </div>
 
             {/* Hero Section */}
@@ -166,11 +170,12 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+            
 
             {/* API Power Section */}
             <div className="px-0 bg-white w-full mt-20 py-10">
                 <h1 className="text-2xl md:text-3xl font-bold text-primary text-center">
-                    Access the power of our models with APIs
+                    Access the power of API
                 </h1>
 
                 <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-10 w-full p-4">

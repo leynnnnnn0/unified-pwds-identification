@@ -31,7 +31,9 @@ createInertiaApp({
                 path.startsWith("/login") ||
                 path === "/" ||
                 path.startsWith("/register") ||
-                path == "/api"
+                path == "/api" ||
+                path == "/api/login" ||
+                path == "/api/register"
             ) {
                 return page;
             } else if (path.startsWith("/api")) {
