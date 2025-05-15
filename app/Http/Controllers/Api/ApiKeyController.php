@@ -16,7 +16,7 @@ class ApiKeyController extends Controller
 {
     public function index()
     {
-        $keys = ApiKey::where('user_id', 1)
+        $keys = ApiKey::where('user_id', Auth::id())
             ->latest()
             ->paginate(10)
             ->through(function ($item) {

@@ -238,7 +238,7 @@ const Index = ({ keys: initialKeys }) => {
 
                     <div className="flex justify-end mt-4">
                         <Button
-                            className="bg-primary-color"
+                            className="bg-black"
                             onClick={() => setIsAPIKeyModalOpen(false)}
                         >
                             I've saved my key
@@ -251,7 +251,7 @@ const Index = ({ keys: initialKeys }) => {
 
                 <Button
                     onClick={() => setIsCreateApiModalOpen(true)}
-                    className="bg-primary-color"
+                    className="bg-black"
                 >
                     <PlusIcon /> Create new secret key
                 </Button>
@@ -282,7 +282,7 @@ const Index = ({ keys: initialKeys }) => {
                             <Button
                                 disabled={isCreating}
                                 onClick={generateAPIKey}
-                                className="bg-primary-color"
+                                className="bg-black"
                             >
                                 {isCreating && (
                                     <Loader2 className="animate-spin" />
@@ -309,7 +309,7 @@ const Index = ({ keys: initialKeys }) => {
 
                 <p className="text-gray-600 text-sm">
                     View usage per API key on the{" "}
-                    <span className="text-primary-color cursor-pointer hover:opacity-70">
+                    <span className="text-black cursor-pointer hover:opacity-70">
                         Usage page
                     </span>{" "}
                     .
@@ -359,7 +359,7 @@ const Index = ({ keys: initialKeys }) => {
 
                         <Button
                             onClick={() => setIsCreateApiModalOpen(true)}
-                            className="bg-primary-color"
+                            className="bg-black"
                         >
                             <PlusIcon /> Create new secret key
                         </Button>
