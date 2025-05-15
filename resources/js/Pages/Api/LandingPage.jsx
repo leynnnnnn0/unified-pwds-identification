@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "@inertiajs/react";
+import Plans from "@/Components/plans";
 
 const LandingPage = () => {
     const carouselSettings = {
@@ -170,7 +171,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-            
+            <Plans />
 
             {/* API Power Section */}
             <div className="px-0 bg-white w-full mt-20 py-10">
