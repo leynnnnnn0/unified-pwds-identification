@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../../images/mainLogo.jpg";
+import Logo from "../../../images/apiLogo.png";
 import { Button } from "@/Components/ui/button";
 import BANDWDOH from "../../../images/doh.png";
 import BANDWLOGO from "../../../images/mainLogo.jpg";
@@ -49,7 +49,7 @@ const LandingPage = () => {
         <div className="px-4 md:px-32 py-5 min-h-screen font-monteserat bg-gradient-to-b from-white to-blue-50">
             {/* Header */}
             <div className="flex items-center justify-between">
-                <img src={Logo} className="h-8" alt="Company Logo" />
+                <img src={Logo} className="h-14" alt="Company Logo" />
 
                 <div className="hidden md:flex items-center justify-between gap-10">
                     <span className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors">

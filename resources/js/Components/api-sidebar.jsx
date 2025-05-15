@@ -15,7 +15,7 @@ import {
     ChartBarDecreasing,
 } from "lucide-react";
 import { router } from "@inertiajs/react";
-import MainLago from "../../images/mainLogo.jpg";
+import MainLago from "../../images/apiLogo.png";
 import { Link, usePage } from "@inertiajs/react";
 
 import {
@@ -78,7 +78,7 @@ export function APISidebar() {
                                         <img
                                             src={MainLago}
                                             alt=""
-                                            className="h-7"
+                                            className="h-12"
                                         />
                                     </span>
                                 </a>

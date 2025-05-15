@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CheckCircle, PackagePlusIcon } from "lucide-react";
-import { Link, router } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 
 const Plans = () => {
@@ -61,6 +61,8 @@ const Plans = () => {
         },
     ];
 
+    const isAuthenticated = usePage().props.auth.user;
+
     const handleSelectPlan = (planName) => {
         setSelectedPlan(planName);
     };
@@ -69,6 +71,9 @@ const Plans = () => {
         const checkoutUrl = `/api/billing/checkout?plan=${encodeURIComponent(
             plan
         )}&product=${encodeURIComponent(product)}`;
+
+        if (!isAuthenticated) window.open("/api/login");
+
         window.open(checkoutUrl);
     };
 

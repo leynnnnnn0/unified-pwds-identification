@@ -4,7 +4,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import Logo from "../../../../images/mainLogo.jpg";
+import Logo from "../../../../images/apiLogo.png";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -28,7 +28,7 @@ export default function Register() {
 
             <div className="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 <div className="flex justify-center mb-6">
-                    <img src={Logo} alt="Logo" className="h-16 w-auto" />
+                    <img src={Logo} alt="Logo" className="h-20 w-auto" />
                 </div>
 
                 <h2 className="text-2xl font-poppins font-bold text-center text-black mb-6">
