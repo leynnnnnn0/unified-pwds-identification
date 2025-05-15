@@ -176,7 +176,7 @@ const LandingPage = () => {
             {/* API Power Section */}
             <div className="px-0 bg-white w-full mt-20 py-10">
                 <h1 className="text-2xl md:text-3xl font-bold text-primary text-center">
-                    Access the power of API
+                    Access the power of our API
                 </h1>
 
                 <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-10 w-full p-4">

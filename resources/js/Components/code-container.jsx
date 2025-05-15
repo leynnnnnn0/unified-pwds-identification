@@ -8,10 +8,10 @@ const CodeContainer = () => {
     const codeExamples = {
         javascript: `import axios from 'axios';
             
-const result = await axios.get('https://unified-pwds-identification/api/verification', {
+const result = await axios.get('http://unified-pwds-identification/api/verification', {
   params: {
-    apiKey: process.env.apiKey,
-    uid: 1434534645654346545
+    secret_key: process.env.secret_key,
+    card_uid: 1434534645654346545
   }
 })
 .then(res => console.log(res.data))
@@ -23,10 +23,10 @@ use GuzzleHttp\\Client;
 $client = new Client();
 
 try {
-    $response = $client->request('GET', 'https://unified-pwds-identification/api/verification', [
+    $response = $client->request('GET', 'http://unified-pwds-identification/api/verification', [
         'query' => [
-            'apiKey' => getenv('apiKey'),
-            'uid' => 1434534645654346545
+            'secret_key' => getenv('secret_key'),
+            'card_uid' => 1434534645654346545
         ]
     ]);
     
@@ -50,7 +50,7 @@ class Program
             try
             {
                 var response = await client.GetAsync(
-                    $"https://unified-pwds-identification/api/verification?apiKey={Environment.GetEnvironmentVariable("apiKey")}&uid=1434534645654346545");
+                    $"http://unified-pwds-identification/api/verification?secret_key={Environment.GetEnvironmentVariable("secret_key")}&card_uid=1434534645654346545");
                 
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
@@ -74,8 +74,8 @@ public class ApiClient {
     public static void main(String[] args) {
         HttpClient client = HttpClient.newHttpClient();
         
-        String apiKey = System.getenv("apiKey");
-        String url = "https://unified-pwds-identification/api/verification?apiKey=" + apiKey + "&uid=1434534645654346545";
+        String secret_key = System.getenv("secret_key");
+        String url = "http://unified-pwds-identification/api/verification?secret_key=" + secret_key + "&card_uid=1434534645654346545";
         
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))

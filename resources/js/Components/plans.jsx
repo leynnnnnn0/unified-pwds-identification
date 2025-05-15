@@ -20,7 +20,7 @@ const Plans = () => {
             borderColor: "border-gray-300",
             hoverColor: "hover:border-gray-400",
             buttonColor: "bg-gray-500 hover:bg-gray-600",
-            id: "price_1RNo5aH0KVHxP8CWIQvMeBaD",
+            id: "price_1RNo2DH0KVHxP8CWfAcg2ohS",
             product_id: "prod_SIOpCxb9QabHGm",
         },
         {
