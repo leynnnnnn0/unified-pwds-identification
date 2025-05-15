@@ -173,7 +173,7 @@ const LandingPage = () => {
                     Access the power of our models with APIs
                 </h1>
 
-                <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-10 w-full px-4 md:px-0">
+                <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-10 w-full p-4">
                     <CodeContainer />
                     <div className="flex flex-col gap-5 max-w-[500px]">
                         <h1 className="text-2xl md:text-3xl font-bold text-primary">
