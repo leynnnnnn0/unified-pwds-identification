@@ -303,88 +303,93 @@ const Edit = ({ application, image }) => {
                     {isShowMode ? "Edit Details" : "Cancel Edit"}
                 </Button>
             </div>
-            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
-                <FormField
-                    className="col-span-3"
-                    label="Type of Registration"
-                    error={form.errors.type_of_registration}
-                >
-                    <RadioGroup
-                        disabled={isShowMode}
-                        value={form.data.type_of_registration}
-                        onValueChange={(value) =>
-                            form.setData("type_of_registration", value)
-                        }
-                        className="flex w-full"
+            <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 lg:grid lg:grid-cols-4   gap-3 auto-rows-auto space-y-2">
+                <div className="w-full space-y-2 md:grid md:grid-cols-3 gap-3 lg:grid-cols-5 lg:col-span-4">
+                    <FormField
+                        className="col-span-3"
+                        label="Type of Registration"
+                        error={form.errors.type_of_registration}
                     >
-                        <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem
-                                value="new_applicant"
-                                id="new_applicant"
-                            />
-                            <Span
-                                label="New Applicant"
-                                htmlFor="new_applicant"
-                            />
-                        </div>
-                        <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem value="renewal" id="renewal" />
-                            <Span label="Renewal" htmlFor="renewal" />
-                        </div>
-                    </RadioGroup>
-                </FormField>
-
-                <FormField
-                    label='1"x1" Photo'
-                    className="row-span-3"
-                    error={form.errors.photo}
-                >
-                    <div
-                        className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
-                        onClick={handleImageClick}
-                    >
-                        {previewImage ? (
-                            <img
-                                src={previewImage}
-                                alt="Selected photo"
-                                className="w-full h-full object-cover"
-                            />
-                        ) : (
-                            <div className="text-center text-gray-500 text-sm">
-                                Click to select photo
+                        <RadioGroup
+                            disabled={isShowMode}
+                            value={form.data.type_of_registration}
+                            onValueChange={(value) =>
+                                form.setData("type_of_registration", value)
+                            }
+                            className="flex w-full"
+                        >
+                            <div className="flex space-x-2 items-center h-fit flex-1">
+                                <RadioGroupItem
+                                    value="new_applicant"
+                                    id="new_applicant"
+                                />
+                                <Span
+                                    label="New Applicant"
+                                    htmlFor="new_applicant"
+                                />
                             </div>
-                        )}
+                            <div className="flex space-x-2 items-center h-fit flex-1">
+                                <RadioGroupItem value="renewal" id="renewal" />
+                                <Span label="Renewal" htmlFor="renewal" />
+                            </div>
+                        </RadioGroup>
+                    </FormField>
+
+                    <div className="md:col-span-2 lg:col-span-4">
+                        <FormField
+                            label='1"x1" Photo'
+                            className="row-span-3"
+                            error={form.errors.photo}
+                        >
+                            <div
+                                className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
+                                onClick={handleImageClick}
+                            >
+                                {previewImage ? (
+                                    <img
+                                        src={previewImage}
+                                        alt="Selected photo"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="text-center text-gray-500 text-sm">
+                                        Click to select photo
+                                    </div>
+                                )}
+                            </div>
+                            <input
+                                disabled={isShowMode}
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handlePhotoChange}
+                                className="hidden"
+                                accept="image/*"
+                            />
+                            {previewImage && (
+                                <div className="text-xs text-gray-500">
+                                    Click image to change
+                                </div>
+                            )}
+                        </FormField>
+
+                        <FormField
+                            className="col-span-3"
+                            label="Person with disability number"
+                            isRequired={!isPWDNumberInputDisabled}
+                            error={form.errors.pwd_number}
+                        >
+                            <Input
+                                disabled={
+                                    isPWDNumberInputDisabled || isShowMode
+                                }
+                                value={form.data.pwd_number || ""}
+                                onChange={(e) =>
+                                    form.setData("pwd_number", e.target.value)
+                                }
+                            />
+                        </FormField>
                     </div>
-                    <input
-                        disabled={isShowMode}
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handlePhotoChange}
-                        className="hidden"
-                        accept="image/*"
-                    />
-                    {previewImage && (
-                        <div className="text-xs text-gray-500">
-                            Click image to change
-                        </div>
-                    )}
-                </FormField>
-
-                <FormField
-                    className="col-span-3"
-                    label="Person with disability number"
-                    isRequired={!isPWDNumberInputDisabled}
-                    error={form.errors.pwd_number}
-                >
-                    <Input
-                        disabled={isPWDNumberInputDisabled || isShowMode}
-                        value={form.data.pwd_number || ""}
-                        onChange={(e) =>
-                            form.setData("pwd_number", e.target.value)
-                        }
-                    />
-                </FormField>
-
+                </div>
                 <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
                     Personal Information
                 </h1>
@@ -493,9 +498,9 @@ const Edit = ({ application, image }) => {
 
                 <FormField
                     label="Types of Disability"
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid grid-cols-4"
                 >
-                    <div className="col-span-4 grid grid-cols-3 gap-2">
+                    <div className="col-span-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 space-y-1 gap-2">
                         {typeOfDisabilities.map((item) => (
                             <div
                                 key={item.value}
@@ -739,7 +744,7 @@ const Edit = ({ application, image }) => {
 
                 <FormH1 label="Contact Details" />
 
-                <div className="col-span-4 grid grid-cols-3 gap-3">
+                <div className="col-span-4 grid md:grid-cols-3 gap-3">
                     <FormField
                         label="Landline No."
                         error={form.errors.landline_no}
@@ -783,7 +788,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField
                     label="Educational Attainment"
-                    className="col-span-4"
+                    className="md:col-span-4"
                     error={form.errors.educational_attainment}
                 />
 
@@ -793,7 +798,7 @@ const Edit = ({ application, image }) => {
                     onValueChange={(value) =>
                         form.setData("educational_attainment", value)
                     }
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid md:grid-cols-4"
                 >
                     {educationalAttainment.map((item) => (
                         <div
@@ -811,7 +816,7 @@ const Edit = ({ application, image }) => {
 
                 <FormH1 label="Employment Details" />
 
-                <div className="col-span-4 grid grid-cols-3">
+                <div className="md:col-span-4 md:grid md:grid-cols-3 space-y-2">
                     <FormField
                         label="Status of Employment"
                         error={form.errors.status_of_employment}
@@ -916,7 +921,7 @@ const Edit = ({ application, image }) => {
 
                 <FormField
                     label="Work Field"
-                    className="col-span-4"
+                    className="md:col-span-4"
                     error={form.errors.work_field}
                     isRequired={form.data.status_of_employment != "unemployed"}
                 />
@@ -928,7 +933,7 @@ const Edit = ({ application, image }) => {
                         form.data.status_of_employment == "unemployed" ||
                         isShowMode
                     }
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid md:grid-cols-4"
                 >
                     {occupations.map((item) => (
                         <div
@@ -1168,7 +1173,7 @@ const Edit = ({ application, image }) => {
             </div>
 
             {isShowMode ? null : (
-                <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+                <div className="w-full rounded-lg shadow-xl border p-5 md:p-10 grid grid-cols-1 gap-3 auto-rows-auto">
                     <FormH1 label="Supporting Documents" />
                     <FormField
                         label="Upload Files"
@@ -1186,7 +1191,7 @@ const Edit = ({ application, image }) => {
                     </FormField>
                 </div>
             )}
-            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-1 gap-3 auto-rows-auto">
+            <div className="w-full rounded-lg shadow-xl border p-5 md:p-10 grid grid-cols-1 gap-3 auto-rows-auto">
                 <FormH1 label="Uploaded Documents" />
                 <TableContainer>
                     <Table>
