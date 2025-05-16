@@ -8,13 +8,15 @@ export default function DashboardDiv({
 }) {
     return (
         <div
-            className={`size-auto border-2 border-secondary-color p-5 flex flex-col gap-3 ${className}`}
+            className={`h-full border-2 border-secondary-color p-3 sm:p-4 md:p-5 flex flex-col gap-2 md:gap-3 ${className}`}
         >
-            <Icon className="w-10 h-10 text-secondary-color" />
-            <h1 className="text-primary-color font-bold text-2xl font-poppins">
+            <Icon className="w-8 h-8 md:w-10 md:h-10 text-secondary-color" />
+            <h1 className="text-primary-color font-bold text-xl md:text-2xl font-poppins">
                 {title}
             </h1>
-            <p className="text-black/70 text-sm">{description}</p>
+            <p className="text-black/70 text-xs sm:text-sm">
+                {description}
+            </p>
         </div>
     );
 }
