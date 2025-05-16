@@ -1,9 +1,14 @@
-import React, { useRef } from "react";
-import Logo from "../../../images/apiLogo.png";
+import React, { useRef, useState } from "react";
 import { Button } from "@/Components/ui/button";
-import BANDWDOH from "../../../images/doh.png";
-import BANDWLOGO from "../../../images/mainLogo.jpg";
-import { CheckIcon, Mail, Phone, MapPin } from "lucide-react";
+import {
+    CheckIcon,
+    Mail,
+    Phone,
+    MapPin,
+    Menu,
+    X,
+    ArrowRight,
+} from "lucide-react";
 import CodeContainer from "@/Components/code-container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -17,11 +22,13 @@ const LandingPage = () => {
     const aboutRef = useRef(null);
     const pricingRef = useRef(null);
     const documentationRef = useRef(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     // Smooth scroll function
     const scrollToSection = (ref) => {
         if (ref && ref.current) {
             ref.current.scrollIntoView({ behavior: "smooth" });
+            setMobileMenuOpen(false);
         }
     };
 
@@ -29,19 +36,31 @@ const LandingPage = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 3000,
         responsive: [
             {
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 4,
+                },
+            },
+            {
                 breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                 },
             },
             {
-                breakpoint: 600,
+                breakpoint: 640,
                 settings: {
                     slidesToShow: 1,
                 },
@@ -49,321 +68,665 @@ const LandingPage = () => {
         ],
     };
 
+    const features = [
+        {
+            title: "Fast Verification",
+            description:
+                "Verify PWD IDs in seconds with our high-performance API",
+        },
+        {
+            title: "Secure & Compliant",
+            description:
+                "Enterprise-grade security with full regulatory compliance",
+        },
+        {
+            title: "Easy Integration",
+            description:
+                "Simple API integration with comprehensive documentation",
+        },
+        {
+            title: "Scalable Solution",
+            description:
+                "Scale from hundreds to millions of verifications seamlessly",
+        },
+        {
+            title: "24/7 Support",
+            description:
+                "Round-the-clock technical support for your business needs",
+        },
+    ];
+
     const partners = [
-        { id: 1, logo: BANDWDOH, alt: "DOH Logo" },
-        { id: 2, logo: BANDWLOGO, alt: "Main Logo" },
-        { id: 3, logo: BANDWDOH, alt: "DOH Logo" },
-        { id: 4, logo: BANDWLOGO, alt: "Main Logo" },
-        { id: 5, logo: BANDWDOH, alt: "DOH Logo" },
-        { id: 6, logo: BANDWLOGO, alt: "Main Logo" },
+        { id: 1, name: "Department of Health" },
+        { id: 2, name: "National Council on Disability Affairs" },
+        { id: 3, name: "Department of Social Welfare" },
+        { id: 4, name: "Philippine Health Insurance" },
+        { id: 5, name: "Department of Transportation" },
+        { id: 6, name: "Local Government Units" },
     ];
 
     return (
-        <div className="px-4 md:px-32 py-5 min-h-screen font-monteserat bg-gradient-to-b from-white to-blue-50">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-                <img src={Logo} className="h-14" alt="Company Logo" />
+        <div className="font-sans bg-gradient-to-b from-white to-blue-50">
+            {/* Header - Fixed for better UX */}
+            <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 px-4 md:px-8 lg:px-16 xl:px-32 py-4 shadow-sm">
+                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                    <Link href="/" className="flex items-center space-x-2">
+                        <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span className="text-white font-bold text-xl">
+                                P
+                            </span>
+                        </div>
+                        <span className="font-bold text-primary text-lg hidden sm:block">
+                            PWD Verify
+                        </span>
+                    </Link>
 
-                <div className="hidden md:flex items-center justify-between gap-10">
-                    <span
-                        onClick={() => scrollToSection(homeRef)}
-                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
-                    >
-                        Home
-                    </span>
-                    <span
-                        onClick={() => scrollToSection(aboutRef)}
-                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
-                    >
-                        About Us
-                    </span>
-                    <span
-                        onClick={() => scrollToSection(pricingRef)}
-                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
-                    >
-                        Pricing
-                    </span>
-                    <span
-                        onClick={() => scrollToSection(documentationRef)}
-                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
-                    >
-                        Documentation
-                    </span>
-                </div>
-
-                <Link
-                    href="/api/login"
-                    className="rounded-full bg-primary text-sm px-6 py-2 text-white font-bold hover:bg-primary-dark transition-colors"
-                >
-                    Login
-                </Link>
-            </div>
-
-            {/* Home */}
-            <div
-                ref={homeRef}
-                className="mt-20 md:mt-40 w-full flex items-center justify-center"
-            >
-                <div className="flex flex-col gap-5 items-center">
-                    <h1 className="font-bold text-3xl md:text-5xl max-w-[900px] text-center text-primary">
-                        The fastest and most powerful platform for PWD ID
-                        verification
-                    </h1>
-                    <p className="text-gray-600 text-center max-w-[600px]">
-                        Build transformative AI experiences powered by
-                        industry-leading models and tools.
-                    </p>
-
-                    <div className="flex items-center gap-3 flex-wrap justify-center">
-                        <Button className="rounded-full px-8 md:px-10 py-3 md:py-5 bg-primary hover:bg-primary-dark text-white">
-                            Get Started
-                        </Button>
-                        <Button
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex items-center space-x-8">
+                        <button
+                            onClick={() => scrollToSection(homeRef)}
+                            className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                        >
+                            Home
+                        </button>
+                        <button
+                            onClick={() => scrollToSection(aboutRef)}
+                            className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                        >
+                            Features
+                        </button>
+                        <button
                             onClick={() => scrollToSection(pricingRef)}
-                            className="rounded-full px-8 md:px-10 py-3 md:py-5 bg-white text-primary border border-primary hover:bg-gray-50"
+                            className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
                         >
-                            View API Pricing
-                        </Button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Partners Carousel */}
-            <div className="mt-16">
-                <Slider {...carouselSettings}>
-                    {partners.map((partner) => (
-                        <div key={partner.id} className="px-2">
-                            <div className="flex items-center justify-center h-24">
-                                <img
-                                    src={partner.logo}
-                                    alt={partner.alt}
-                                    className="max-h-full max-w-full object-contain h-24"
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </Slider>
-            </div>
-
-            {/* About us */}
-            <div
-                ref={aboutRef}
-                className="mt-16 pt-10 flex items-center flex-col justify-center gap-7"
-                id="about"
-            >
-                <h1 className="font-bold text-2xl md:text-3xl max-w-[900px] text-center text-primary">
-                    API Verification Solutions
-                </h1>
-                <p className="max-w-[700px] text-center text-gray-600">
-                    Streamline PWD ID verification with our secure, reliable API
-                    solutions designed for businesses of all sizes. Fast,
-                    compliant, and integration-ready.
-                </p>
-
-                <div className="flex flex-col md:flex-row items-center justify-between gap-7 w-full">
-                    <div className="p-5 rounded-lg border w-full h-fit space-y-5 bg-white shadow-sm hover:shadow-md transition-shadow">
-                        <h1 className="text-2xl md:text-3xl font-bold text-primary">
-                            Basic Verification
-                        </h1>
-                        <p className="text-gray-600">
-                            Essential verification solution for businesses
-                            starting to implement accessibility compliance
-                        </p>
-
-                        <div className="space-y-2">
-                            {[1, 2, 3, 4, 5].map((item) => (
-                                <p
-                                    key={item}
-                                    className="flex gap-2 items-center text-sm text-gray-700"
-                                >
-                                    <CheckIcon className="size-5 text-green-500" />
-                                    Fast Verification
-                                </p>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="p-5 rounded-lg border w-full h-fit space-y-5 bg-white shadow-sm hover:shadow-md transition-shadow">
-                        <h1 className="text-2xl md:text-3xl font-bold text-primary">
-                            Business Plus
-                        </h1>
-                        <p className="text-gray-600">
-                            Advanced solution balancing comprehensive
-                            verification with operational efficiency
-                        </p>
-
-                        <div className="space-y-2">
-                            {[1, 2, 3, 4, 5].map((item) => (
-                                <p
-                                    key={item}
-                                    className="flex gap-2 items-center text-sm text-gray-700"
-                                >
-                                    <CheckIcon className="size-5 text-green-500" />
-                                    Fast Verification
-                                </p>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Pricing */}
-            <div ref={pricingRef} className="pt-10" id="pricing">
-                <Plans />
-            </div>
-
-            {/* Documentation */}
-            <div
-                ref={documentationRef}
-                className="px-0 bg-white w-full mt-20 pt-10 py-10"
-                id="documentation"
-            >
-                <h1 className="text-2xl md:text-3xl font-bold text-primary text-center">
-                    Access the power of our API
-                </h1>
-
-                <div className="mt-10 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-10 w-full p-4">
-                    <CodeContainer />
-                    <div className="flex flex-col gap-5 max-w-[500px]">
-                        <h1 className="text-2xl md:text-3xl font-bold text-primary">
-                            Web Search
-                        </h1>
-                        <p className="text-gray-600">
-                            Enhance model responses with up-to-date and clearly
-                            cited answers from the web using the same
-                            capabilities as ChatGPT search.
-                        </p>
-                        <a
-                            href="#"
-                            className="text-blue-600 hover:underline flex items-center gap-1"
+                            Pricing
+                        </button>
+                        <button
+                            onClick={() => scrollToSection(documentationRef)}
+                            className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
                         >
-                            Learn more <span className="text-lg">→</span>
-                        </a>
+                            Documentation
+                        </button>
+                    </nav>
+
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/api/login"
+                            className="hidden sm:inline-flex rounded-full bg-primary px-4 py-2 text-sm text-white font-medium hover:bg-primary-dark transition-colors"
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            href="/api/register"
+                            className="hidden sm:inline-flex rounded-full bg-white px-4 py-2 text-sm text-primary font-medium border border-primary hover:bg-blue-50 transition-colors"
+                        >
+                            Register
+                        </Link>
+
+                        {/* Mobile menu button */}
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden flex items-center"
+                        >
+                            {mobileMenuOpen ? (
+                                <X className="h-6 w-6 text-primary" />
+                            ) : (
+                                <Menu className="h-6 w-6 text-primary" />
+                            )}
+                        </button>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            {/* Footer */}
-            <footer className="bg-primary-color text-white mt-20 py-10 px-4 md:px-32">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div>
-                        <img
-                            src={Logo}
-                            className="h-8 mb-4"
-                            alt="Company Logo"
-                        />
-                        <p className="text-sm text-white/80">
-                            The fastest and most powerful platform for PWD ID
+            {/* Mobile Navigation Menu */}
+            {mobileMenuOpen && (
+                <div className="fixed inset-0 z-40 bg-white pt-20 px-4 md:hidden">
+                    <nav className="flex flex-col space-y-6 text-center py-8">
+                        <button
+                            onClick={() => scrollToSection(homeRef)}
+                            className="text-lg font-medium text-gray-800 hover:text-primary"
+                        >
+                            Home
+                        </button>
+                        <button
+                            onClick={() => scrollToSection(aboutRef)}
+                            className="text-lg font-medium text-gray-800 hover:text-primary"
+                        >
+                            Features
+                        </button>
+                        <button
+                            onClick={() => scrollToSection(pricingRef)}
+                            className="text-lg font-medium text-gray-800 hover:text-primary"
+                        >
+                            Pricing
+                        </button>
+                        <button
+                            onClick={() => scrollToSection(documentationRef)}
+                            className="text-lg font-medium text-gray-800 hover:text-primary"
+                        >
+                            Documentation
+                        </button>
+                        <div className="pt-4 flex flex-col gap-4">
+                            <Link
+                                href="/api/login"
+                                className="w-full rounded-full bg-primary py-3 text-white font-medium"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                href="/api/register"
+                                className="w-full rounded-full bg-white py-3 text-primary font-medium border border-primary"
+                            >
+                                Register
+                            </Link>
+                        </div>
+                    </nav>
+                </div>
+            )}
+
+            {/* Content with padding to account for fixed header */}
+            <div className="pt-16">
+                {/* Hero Section */}
+                <section
+                    ref={homeRef}
+                    className="px-4 md:px-8 lg:px-16 xl:px-32 py-16 md:py-24 flex flex-col items-center justify-center min-h-[85vh] max-w-7xl mx-auto"
+                >
+                    <div className="flex flex-col items-center text-center">
+                        <span className="bg-blue-100 text-primary px-4 py-1 rounded-full text-sm font-medium mb-6">
+                            Trusted by Government & Businesses
+                        </span>
+                        <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl text-gray-900 leading-tight">
+                            The <span className="text-primary">Fastest</span>{" "}
+                            PWD ID Verification Platform
+                        </h1>
+                        <p className="mt-6 text-gray-600 text-lg max-w-2xl">
+                            Streamline accessibility compliance with our secure,
+                            reliable API solutions for instant PWD ID
                             verification.
                         </p>
+
+                        <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
+                            <Button className="w-full sm:w-auto rounded-full px-8 py-6 bg-primary hover:bg-primary-dark text-white font-medium text-base">
+                                Get Started Free
+                            </Button>
+                            <Button
+                                onClick={() =>
+                                    scrollToSection(documentationRef)
+                                }
+                                className="w-full sm:w-auto rounded-full px-8 py-6 bg-white text-primary border border-primary hover:bg-blue-50 font-medium text-base flex items-center gap-2"
+                            >
+                                View Documentation <ArrowRight size={16} />
+                            </Button>
+                        </div>
+
+                        {/* <div className="mt-12 bg-blue-50 rounded-lg p-4 text-sm text-blue-700 max-w-md">
+                            <p className="font-medium">
+                                No credit card required to start
+                            </p>
+                            <p className="mt-1 text-blue-600">
+                                Get 100 free verifications every month
+                            </p>
+                        </div> */}
+                    </div>
+                </section>
+
+                {/* Trusted By Section */}
+                <section className="py-12 bg-white">
+                    <div className="px-4 md:px-8 lg:px-16 xl:px-32 max-w-7xl mx-auto">
+                        <h2 className="text-center text-sm font-medium text-gray-600 uppercase tracking-wide mb-8">
+                            Trusted by leading organizations
+                        </h2>
+                        <div className="py-4">
+                            <Slider {...carouselSettings}>
+                                {partners.map((partner) => (
+                                    <div key={partner.id} className="px-4">
+                                        <div className="h-12 flex items-center justify-center">
+                                            <div className="text-gray-500 font-medium">
+                                                {partner.name}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </Slider>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Features Section */}
+                <section
+                    ref={aboutRef}
+                    className="px-4 md:px-8 lg:px-16 xl:px-32 py-20 max-w-7xl mx-auto"
+                >
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                            Comprehensive Verification Solutions
+                        </h2>
+                        <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                            Our API delivers fast, secure, and compliant PWD ID
+                            verification for businesses of all sizes
+                        </p>
                     </div>
 
-                    <div>
-                        <h3 className="font-bold mb-4">Quick Links</h3>
-                        <ul className="space-y-2 text-sm text-white/80">
-                            <li>
-                                <a
-                                    onClick={() => scrollToSection(homeRef)}
-                                    className="hover:text-white transition-colors cursor-pointer"
-                                >
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    onClick={() => scrollToSection(pricingRef)}
-                                    className="hover:text-white transition-colors cursor-pointer"
-                                >
-                                    Pricing
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    onClick={() =>
-                                        scrollToSection(documentationRef)
-                                    }
-                                    className="hover:text-white transition-colors cursor-pointer"
-                                >
-                                    Documentation
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    onClick={() => scrollToSection(aboutRef)}
-                                    className="hover:text-white transition-colors cursor-pointer"
-                                >
-                                    About Us
-                                </a>
-                            </li>
-                        </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {features.map((feature, index) => (
+                            <div
+                                key={index}
+                                className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+                            >
+                                <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                    <CheckIcon className="h-6 w-6 text-primary" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-gray-600">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        ))}
                     </div>
+                </section>
 
-                    <div>
-                        <h3 className="font-bold mb-4">Resources</h3>
-                        <ul className="space-y-2 text-sm text-white/80">
-                            <li>
-                                <a
-                                    onClick={() =>
-                                        scrollToSection(documentationRef)
-                                    }
-                                    className="hover:text-white transition-colors cursor-pointer"
-                                >
-                                    API Documentation
-                                </a>
-                            </li>
-                            <li>
+                {/* Solutions Section */}
+                <section className="px-4 md:px-8 lg:px-16 xl:px-32 py-20 bg-gradient-to-br from-blue-50 to-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div>
+                                <span className="bg-blue-100 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                                    API Solutions
+                                </span>
+                                <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900">
+                                    Tailored verification solutions for every
+                                    business
+                                </h2>
+                                <p className="mt-4 text-lg text-gray-600">
+                                    Choose the plan that fits your
+                                    organization's needs and scale as you grow.
+                                    Our flexible API solutions adapt to your
+                                    business requirements.
+                                </p>
+
+                                <div className="space-y-4 mt-8">
+                                    {[
+                                        "Basic Verification",
+                                        "Premium Security",
+                                        "Advanced Analytics",
+                                        "Customizable Integration",
+                                    ].map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-start gap-3"
+                                        >
+                                            <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <CheckIcon className="h-4 w-4 text-green-600" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium text-gray-900">
+                                                    {item}
+                                                </h4>
+                                                <p className="text-sm text-gray-600 mt-1">
+                                                    {index === 0 &&
+                                                        "Quick verification for simple needs"}
+                                                    {index === 1 &&
+                                                        "Enhanced security protocols for sensitive data"}
+                                                    {index === 2 &&
+                                                        "Detailed verification analytics and reporting"}
+                                                    {index === 3 &&
+                                                        "Custom solutions for complex business requirements"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="p-6 rounded-xl bg-blue-50 flex flex-col">
+                                    <h3 className="font-bold text-xl text-primary mb-2">
+                                        Basic Verification
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mb-4">
+                                        Essential verification for accessibility
+                                        compliance
+                                    </p>
+                                    <div className="mt-auto">
+                                        <span className="text-3xl font-bold text-gray-900">
+                                            ₱600
+                                        </span>
+                                        <span className="text-gray-600">
+                                            /month
+                                        </span>
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            50 verifications included
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 rounded-xl bg-primary text-white flex flex-col">
+                                    <div className="bg-blue-700 text-white text-xs font-bold uppercase tracking-wider py-1 px-2 rounded inline-block w-fit mb-2">
+                                        Popular
+                                    </div>
+                                    <h3 className="font-bold text-xl mb-2">
+                                        Platinum Tier
+                                    </h3>
+                                    <p className="text-sm text-blue-100 mb-4">
+                                        Good for big businesses
+                                    </p>
+                                    <div className="mt-auto">
+                                        <span className="text-3xl font-bold">
+                                            ₱900.00
+                                        </span>
+                                        <span className="text-blue-100">
+                                            /month
+                                        </span>
+                                        <p className="text-xs text-blue-100 mt-1">
+                                            Unlimited verifications included
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="md:col-span-2 mt-4">
+                                    <Button
+                                        onClick={() =>
+                                            scrollToSection(pricingRef)
+                                        }
+                                        className="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-dark"
+                                    >
+                                        View All Pricing Options
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Pricing Section */}
+                <section
+                    ref={pricingRef}
+                    className="px-4 md:px-8 lg:px-16 xl:px-32 py-20"
+                >
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                                Simple, Transparent Pricing
+                            </h2>
+                            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                                Choose the perfect plan for your business needs
+                                with no hidden fees
+                            </p>
+                        </div>
+
+                        <Plans />
+                    </div>
+                </section>
+
+                {/* Documentation Section */}
+                <section
+                    ref={documentationRef}
+                    className="px-4 md:px-8 lg:px-16 xl:px-32 py-20 bg-white"
+                >
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                                Comprehensive API Documentation
+                            </h2>
+                            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                                Everything you need to integrate our
+                                verification services into your applications
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <CodeContainer />
+
+                            <div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                    Simple Integration
+                                </h3>
+                                <p className="text-gray-600 mb-6">
+                                    Our API is designed for developers, with
+                                    clear documentation and examples to get you
+                                    up and running quickly. Implement PWD ID
+                                    verification in minutes, not days.
+                                </p>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-start gap-3">
+                                        <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <CheckIcon className="h-4 w-4 text-primary" />
+                                        </div>
+                                        <p className="text-gray-700">
+                                            RESTful API with JSON responses
+                                        </p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <CheckIcon className="h-4 w-4 text-primary" />
+                                        </div>
+                                        <p className="text-gray-700">
+                                            Libraries for major programming
+                                            languages
+                                        </p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <CheckIcon className="h-4 w-4 text-primary" />
+                                        </div>
+                                        <p className="text-gray-700">
+                                            Detailed request and response
+                                            examples
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8">
+                                    <Button className="rounded-lg px-6 py-3 bg-primary hover:bg-primary-dark text-white">
+                                        View Full Documentation
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA Section */}
+                {/* <section className="px-4 md:px-8 lg:px-16 xl:px-32 py-16 bg-primary">
+                    <div className="max-w-7xl mx-auto text-center">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                            Ready to simplify PWD ID verification?
+                        </h2>
+                        <p className="text-blue-100 max-w-2xl mx-auto mb-8">
+                            Get started today with our secure, compliant, and
+                            easy-to-use API platform
+                        </p>
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Button className="w-full sm:w-auto rounded-lg px-8 py-3 bg-white text-primary hover:bg-gray-100">
+                                Start Free Trial
+                            </Button>
+                            <Button className="w-full sm:w-auto rounded-lg px-8 py-3 bg-transparent text-white border border-white hover:bg-blue-800">
+                                Contact Sales
+                            </Button>
+                        </div>
+                    </div>
+                </section> */}
+
+                {/* Footer */}
+                <footer className="px-4 md:px-8 lg:px-16 xl:px-32 py-12 bg-gray-900 text-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                            <div>
+                                <div className="flex items-center space-x-2 mb-6">
+                                    <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                                        <span className="text-white font-bold text-xl">
+                                            P
+                                        </span>
+                                    </div>
+                                    <span className="font-bold text-white text-lg">
+                                        PWD Verify
+                                    </span>
+                                </div>
+                                <p className="text-gray-400 mb-6">
+                                    The leading platform for PWD ID
+                                    verification, helping businesses meet
+                                    accessibility compliance requirements.
+                                </p>
+                                <div className="flex space-x-4">
+                                    {/* Social icons would go here */}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="font-semibold text-lg mb-4">
+                                    Quick Links
+                                </h3>
+                                <ul className="space-y-3">
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                scrollToSection(homeRef)
+                                            }
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Home
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                scrollToSection(aboutRef)
+                                            }
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Features
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                scrollToSection(pricingRef)
+                                            }
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Pricing
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                scrollToSection(
+                                                    documentationRef
+                                                )
+                                            }
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Documentation
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 className="font-semibold text-lg mb-4">
+                                    Resources
+                                </h3>
+                                <ul className="space-y-3">
+                                    <li>
+                                        <a
+                                            href="#"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            API Documentation
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="#"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Developer Guide
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="#"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Integration Examples
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="#"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            Support Center
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 className="font-semibold text-lg mb-4">
+                                    Contact Us
+                                </h3>
+                                <ul className="space-y-3">
+                                    <li className="flex items-center gap-2">
+                                        <Mail className="h-5 w-5 text-primary" />
+                                        <a
+                                            href="mailto:contact@pwdverify.com"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            contact@pwdverify.com
+                                        </a>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <Phone className="h-5 w-5 text-primary" />
+                                        <a
+                                            href="tel:+15551234567"
+                                            className="text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            +1 (555) 123-4567
+                                        </a>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <MapPin className="h-5 w-5 text-primary mt-1" />
+                                        <span className="text-gray-400">
+                                            123 Tech Street, Manila, Philippines
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                            <p className="text-gray-400 text-sm">
+                                © {new Date().getFullYear()} PWD Verification
+                                Platform. All rights reserved.
+                            </p>
+                            <div className="flex space-x-6 mt-4 md:mt-0">
                                 <a
                                     href="#"
-                                    className="hover:text-white transition-colors"
+                                    className="text-gray-400 hover:text-white text-sm"
                                 >
-                                    Developer Guides
+                                    Privacy Policy
                                 </a>
-                            </li>
-                            <li>
                                 <a
                                     href="#"
-                                    className="hover:text-white transition-colors"
+                                    className="text-gray-400 hover:text-white text-sm"
                                 >
-                                    Support
+                                    Terms of Service
                                 </a>
-                            </li>
-                            <li>
                                 <a
                                     href="#"
-                                    className="hover:text-white transition-colors"
+                                    className="text-gray-400 hover:text-white text-sm"
                                 >
-                                    Blog
+                                    Cookie Policy
                                 </a>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
-
-                    <div>
-                        <h3 className="font-bold mb-4">Contact Us</h3>
-                        <ul className="space-y-3 text-sm text-white/80">
-                            <li className="flex items-center gap-2">
-                                <Mail className="size-4" />
-                                contact@pwdverification.com
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <Phone className="size-4" />
-                                +1 (555) 123-4567
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <MapPin className="size-4" />
-                                123 Tech Street, Manila, Philippines
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="border-t border-white/20 mt-10 pt-6 text-sm text-white/60 text-center">
-                    <p>
-                        © {new Date().getFullYear()} PWD Verification Platform.
-                        All rights reserved.
-                    </p>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
     );
 };
