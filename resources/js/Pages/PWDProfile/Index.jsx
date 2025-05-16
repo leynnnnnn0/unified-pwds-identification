@@ -162,7 +162,7 @@ const Index = ({ application, image, qr }) => {
                 <TabsContent value="digital_id" className="mt-6">
                     <section className="flex flex-col md:flex-row items-center gap-6 justify-center">
                         {/* ID Card Front */}
-                        <div className="bg-white rounded-lg shadow-lg h-auto w-full max-w-sm p-4 mb-4 md:mb-0">
+                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 mb-4 md:mb-0">
                             <section className="flex items-center justify-between">
                                 <img
                                     src={MainLogo}
@@ -197,18 +197,16 @@ const Index = ({ application, image, qr }) => {
 
                                 <div className="flex-1 flex flex-col gap-2">
                                     <div className="flex flex-col justify-start">
-                                        <p className="text-[7px] sm:text-xs">
-                                            ID Number:
-                                        </p>
-                                        <p className="border-b border-spacing-1 text-[10px] sm:text-sm text-start">
+                                        <p className="text-[7px]">ID Number:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             PWD-1213456
                                         </p>
                                     </div>
                                     <div className="flex flex-col justify-start">
-                                        <p className="text-[7px] sm:text-xs">
+                                        <p className="text-[7px]">
                                             Card Holder:
                                         </p>
-                                        <p className="border-b border-spacing-1 text-[10px] sm:text-sm text-start">
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             {application.first_name +
                                                 " " +
                                                 application.middle_name +
@@ -217,19 +215,17 @@ const Index = ({ application, image, qr }) => {
                                         </p>
                                     </div>
                                     <div className="flex flex-col justify-start">
-                                        <p className="text-[7px] sm:text-xs">
+                                        <p className="text-[7px]">
                                             Type of Disabilities:
                                         </p>
-                                        <p className="border-b border-spacing-1 text-[10px] sm:text-sm text-start">
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             {application.disabilities_list}
                                         </p>
                                     </div>
 
                                     <div className="flex flex-col justify-start">
-                                        <p className="text-[7px] sm:text-xs">
-                                            Address:
-                                        </p>
-                                        <p className="border-b border-spacing-1 text-[10px] sm:text-sm text-start">
+                                        <p className="text-[7px]">Address:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             {application.house_no_and_street +
                                                 " " +
                                                 application.municipality +
@@ -242,7 +238,7 @@ const Index = ({ application, image, qr }) => {
                         </div>
 
                         {/* QR Code */}
-                        <div className="bg-white rounded-lg shadow-lg h-auto w-full max-w-sm p-4 flex justify-center">
+                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 flex justify-center">
                             <img
                                 src={qr}
                                 alt="QR Code"
