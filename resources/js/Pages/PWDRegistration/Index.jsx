@@ -8,6 +8,12 @@ import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
 import NoData from "../../../images/noApplicationToShow.png";
 import Pagination from "@/Components/pagination";
+import Table from "@/Components/table/table";
+import TableHead from "@/Components/table/table-head";
+import TH from "@/Components/table/th";
+import TableBody from "@/Components/table/table-body";
+import TD from "@/Components/table/td";
+import TableContainer from "@/Components/table/table-container";
 
 const Index = ({ applications, canCreateNew }) => {
     // Function to determine badge color based on status
@@ -52,38 +58,27 @@ const Index = ({ applications, canCreateNew }) => {
                 </div>
             )}
             {applications.data.length > 0 && (
-                <div className="overflow-hidden h-fit rounded-t-lg">
-                    <table className="w-full">
-                        <thead className="bg-primary-color text-white font-bold">
-                            <tr>
-                                <th className="text-start px-3 py-2">
-                                    Application Number
-                                </th>
-                                <th className="text-start px-3 py-2">
-                                    Application Date
-                                </th>
-                                <th className="text-start px-3 py-2">
-                                    Type of Registration
-                                </th>
-                                <th className="text-start px-3 py-2">Status</th>
-                                <th className="text-start px-3 py-2">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TH>Application Number</TH>
+                            <TH className="hidden md:table-cell">
+                                Application Date
+                            </TH>
+                            <TH className="hidden md:table-cell">
+                                Type of Registration
+                            </TH>
+                            <TH>Status</TH>
+                            <TH>Actions</TH>
+                        </TableHead>
+                        <TableBody>
                             {applications.data.map((item) => (
-                                <tr
-                                    className="border-b-primary-color border-b"
-                                    key={item.id}
-                                >
-                                    <td className="text-primary-color font-bold px-3 py-4">
-                                        {item.application_number}
-                                    </td>
-                                    <td className="text-primary-color font-bold px-3 py-4">
+                                <tr key={item.id}>
+                                    <TD>{item.application_number}</TD>
+                                    <TD className="hidden md:table-cell">
                                         {item.application_date}
-                                    </td>
-                                    <td>
+                                    </TD>
+                                    <TD className="hidden md:table-cell">
                                         <Badge
                                             className={getTypeColor(
                                                 item.type_of_registration
@@ -91,8 +86,8 @@ const Index = ({ applications, canCreateNew }) => {
                                         >
                                             {item.formatted_type_of_application}
                                         </Badge>
-                                    </td>
-                                    <td className="px-3 py-4">
+                                    </TD>
+                                    <TD>
                                         <Badge
                                             className={getBadgeColorByStatus(
                                                 item.status
@@ -100,8 +95,8 @@ const Index = ({ applications, canCreateNew }) => {
                                         >
                                             {item.formatted_status}
                                         </Badge>
-                                    </td>
-                                    <td className="text-primary-color font-bold px-3 py-4">
+                                    </TD>
+                                    <TD>
                                         <Link
                                             href={route(
                                                 "registration.show",
@@ -110,14 +105,14 @@ const Index = ({ applications, canCreateNew }) => {
                                         >
                                             <InfoIcon />
                                         </Link>
-                                    </td>
+                                    </TD>
                                 </tr>
                             ))}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
 
-                    <Pagination data={applications}/>
-                </div>
+                    <Pagination data={applications} />
+                </TableContainer>
             )}
         </>
     );

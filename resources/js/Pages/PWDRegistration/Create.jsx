@@ -338,9 +338,7 @@ const Create = () => {
                         </FormField>
                     </div>
                 </div>
-                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
-                    Personal Information
-                </h1>
+                <FormH1 label="Personal Information" />
 
                 <FormField label="Last Name" error={form.errors.last_name}>
                     <Input
