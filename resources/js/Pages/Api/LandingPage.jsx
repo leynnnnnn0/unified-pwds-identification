@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Logo from "../../../images/apiLogo.png";
 import { Button } from "@/Components/ui/button";
 import BANDWDOH from "../../../images/doh.png";
@@ -12,6 +12,19 @@ import { Link } from "@inertiajs/react";
 import Plans from "@/Components/plans";
 
 const LandingPage = () => {
+    // Refs for scrolling to each section
+    const homeRef = useRef(null);
+    const aboutRef = useRef(null);
+    const pricingRef = useRef(null);
+    const documentationRef = useRef(null);
+
+    // Smooth scroll function
+    const scrollToSection = (ref) => {
+        if (ref && ref.current) {
+            ref.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     const carouselSettings = {
         dots: true,
         infinite: true,
@@ -52,17 +65,29 @@ const LandingPage = () => {
                 <img src={Logo} className="h-14" alt="Company Logo" />
 
                 <div className="hidden md:flex items-center justify-between gap-10">
-                    <span className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors">
+                    <span
+                        onClick={() => scrollToSection(homeRef)}
+                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
+                    >
                         Home
                     </span>
-                    <span className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors">
+                    <span
+                        onClick={() => scrollToSection(aboutRef)}
+                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
+                    >
+                        About Us
+                    </span>
+                    <span
+                        onClick={() => scrollToSection(pricingRef)}
+                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
+                    >
                         Pricing
                     </span>
-                    <span className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors">
+                    <span
+                        onClick={() => scrollToSection(documentationRef)}
+                        className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors"
+                    >
                         Documentation
-                    </span>
-                    <span className="text-sm text-primary font-bold hover:text-primary-dark cursor-pointer transition-colors">
-                        About Us
                     </span>
                 </div>
 
@@ -74,8 +99,11 @@ const LandingPage = () => {
                 </Link>
             </div>
 
-            {/* Hero Section */}
-            <div className="mt-20 md:mt-40 w-full flex items-center justify-center">
+            {/* Home */}
+            <div
+                ref={homeRef}
+                className="mt-20 md:mt-40 w-full flex items-center justify-center"
+            >
                 <div className="flex flex-col gap-5 items-center">
                     <h1 className="font-bold text-3xl md:text-5xl max-w-[900px] text-center text-primary">
                         The fastest and most powerful platform for PWD ID
@@ -90,7 +118,10 @@ const LandingPage = () => {
                         <Button className="rounded-full px-8 md:px-10 py-3 md:py-5 bg-primary hover:bg-primary-dark text-white">
                             Get Started
                         </Button>
-                        <Button className="rounded-full px-8 md:px-10 py-3 md:py-5 bg-white text-primary border border-primary hover:bg-gray-50">
+                        <Button
+                            onClick={() => scrollToSection(pricingRef)}
+                            className="rounded-full px-8 md:px-10 py-3 md:py-5 bg-white text-primary border border-primary hover:bg-gray-50"
+                        >
                             View API Pricing
                         </Button>
                     </div>
@@ -114,8 +145,12 @@ const LandingPage = () => {
                 </Slider>
             </div>
 
-            {/* API Solutions */}
-            <div className="mt-16 flex items-center flex-col justify-center gap-7">
+            {/* About us */}
+            <div
+                ref={aboutRef}
+                className="mt-16 pt-10 flex items-center flex-col justify-center gap-7"
+                id="about"
+            >
                 <h1 className="font-bold text-2xl md:text-3xl max-w-[900px] text-center text-primary">
                     API Verification Solutions
                 </h1>
@@ -171,10 +206,18 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-            <Plans />
 
-            {/* API Power Section */}
-            <div className="px-0 bg-white w-full mt-20 py-10">
+            {/* Pricing */}
+            <div ref={pricingRef} className="pt-10" id="pricing">
+                <Plans />
+            </div>
+
+            {/* Documentation */}
+            <div
+                ref={documentationRef}
+                className="px-0 bg-white w-full mt-20 pt-10 py-10"
+                id="documentation"
+            >
                 <h1 className="text-2xl md:text-3xl font-bold text-primary text-center">
                     Access the power of our API
                 </h1>
@@ -220,32 +263,34 @@ const LandingPage = () => {
                         <ul className="space-y-2 text-sm text-white/80">
                             <li>
                                 <a
-                                    href="#"
-                                    className="hover:text-white transition-colors"
+                                    onClick={() => scrollToSection(homeRef)}
+                                    className="hover:text-white transition-colors cursor-pointer"
                                 >
                                     Home
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="#"
-                                    className="hover:text-white transition-colors"
+                                    onClick={() => scrollToSection(pricingRef)}
+                                    className="hover:text-white transition-colors cursor-pointer"
                                 >
                                     Pricing
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="#"
-                                    className="hover:text-white transition-colors"
+                                    onClick={() =>
+                                        scrollToSection(documentationRef)
+                                    }
+                                    className="hover:text-white transition-colors cursor-pointer"
                                 >
                                     Documentation
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="#"
-                                    className="hover:text-white transition-colors"
+                                    onClick={() => scrollToSection(aboutRef)}
+                                    className="hover:text-white transition-colors cursor-pointer"
                                 >
                                     About Us
                                 </a>
@@ -258,8 +303,10 @@ const LandingPage = () => {
                         <ul className="space-y-2 text-sm text-white/80">
                             <li>
                                 <a
-                                    href="#"
-                                    className="hover:text-white transition-colors"
+                                    onClick={() =>
+                                        scrollToSection(documentationRef)
+                                    }
+                                    className="hover:text-white transition-colors cursor-pointer"
                                 >
                                     API Documentation
                                 </a>
