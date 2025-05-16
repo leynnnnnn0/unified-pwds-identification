@@ -9,4 +9,3 @@ const H1 = ({ title }) => {
 };
 
 export default H1;
-3870667588;

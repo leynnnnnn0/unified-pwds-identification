@@ -11,12 +11,12 @@ import SpanValue from "@/Components/text/span-value";
 
 const GeneralInformationTab = ({ application }) => {
     return (
-        <>
+        <div className="w-full space-y-8">
             <section>
-                <span className="text-black/70 text-xs">
+                <span className="text-black/70 text-xs font-medium">
                     DISABILITY INFORMATION
                 </span>
-                <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-b pb-5 border-black/50">
                     <Span label="PWD Number:" />
                     <SpanValue text={application.pwd_number || "N/A"} />
                     <Span label="Cause of Disabilities:" />
@@ -29,10 +29,10 @@ const GeneralInformationTab = ({ application }) => {
             </section>
 
             <section>
-                <span className="text-black/70 text-xs">
+                <span className="text-black/70 text-xs font-medium">
                     CONTACT INFORMATION
                 </span>
-                <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-b pb-5 border-black/50">
                     <Span label="Mobile Number:" />
                     <SpanValue text={application.mobile_no || "N/A"} />
                     <Span label="Landline Number:" />
@@ -43,10 +43,10 @@ const GeneralInformationTab = ({ application }) => {
             </section>
 
             <section>
-                <span className="text-black/70 text-xs">
+                <span className="text-black/70 text-xs font-medium">
                     EDUCATIONAL & EMPLOYMENT DETAILS
                 </span>
-                <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-b pb-5 border-black/50">
                     <Span label="Educational Attainment:" />
                     <SpanValue
                         text={application.educational_attainment || "N/A"}
@@ -75,10 +75,10 @@ const GeneralInformationTab = ({ application }) => {
             </section>
 
             <section>
-                <span className="text-black/70 text-xs">
+                <span className="text-black/70 text-xs font-medium">
                     ORGANIZATION AFFILIATION
                 </span>
-                <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-b pb-5 border-black/50">
                     <Span label="Organization:" />
                     <SpanValue
                         text={application.organization_affiliated || "N/A"}
@@ -93,8 +93,10 @@ const GeneralInformationTab = ({ application }) => {
             </section>
 
             <section>
-                <span className="text-black/70 text-xs">ID NUMBERS</span>
-                <div className="mt-5 grid grid-cols-2 gap-1 border-b pb-5 max-w-[500px] border-black/50">
+                <span className="text-black/70 text-xs font-medium">
+                    ID NUMBERS
+                </span>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 border-b pb-5 border-black/50">
                     <Span label="SSS No:" />
                     <SpanValue text={application.sss_no || "N/A"} />
                     <Span label="GSIS No:" />
@@ -109,10 +111,10 @@ const GeneralInformationTab = ({ application }) => {
             </section>
 
             <section>
-                <span className="text-black/70 text-xs">
+                <span className="text-black/70 text-xs font-medium">
                     FAMILY INFORMATION
                 </span>
-                <div className="mt-5 grid grid-cols-2 gap-1 pb-5 max-w-[500px]">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 pb-5">
                     <Span label="Father's Name:" />
                     <SpanValue
                         text={
@@ -157,7 +159,7 @@ const GeneralInformationTab = ({ application }) => {
                     />
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 
