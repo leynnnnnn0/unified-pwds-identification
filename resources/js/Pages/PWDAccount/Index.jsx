@@ -1,17 +1,15 @@
 import FormContainer from "@/Components/div/form-container";
 import FormField from "@/Components/form/form-field";
 import H1 from "@/Components/text/h1";
-import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
-import { useToast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
 import FormH1 from "@/Components/text/form-h1";
+import { Button } from "@/Components/ui/button";
 
 const Index = ({ user }) => {
-    const { toast } = useToast();
-
     const [isAccountVerified, setIsAccountVerified] = useState(user.first_name);
     // Initialize the form with user data
     const { data, setData, put, processing, errors } = useForm({
@@ -34,13 +32,7 @@ const Index = ({ user }) => {
 
         put(route("my-account.update", user.id), {
             onSuccess: () => {
-                toast({
-                    title: "Success",
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white",
-                    description:
-                        "Your account details has been updated successfully.",
-                });
+                toast.success("Updated Successfully.");
                 setIsAccountVerified(true);
             },
         });
@@ -51,14 +43,8 @@ const Index = ({ user }) => {
 
         updateFormPassword.put(route("my-account.update-password", user.id), {
             onSuccess: () => {
-                toast({
-                    title: "Success",
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white",
-                    description: "Your password has been updated successfully.",
-                });
+                toast.success("Your password has been updated successfully.");
                 updateFormPassword.reset();
-                console.log("test");
             },
             onError: (e) => {
                 console.log(e);
@@ -87,8 +73,8 @@ const Index = ({ user }) => {
                     )}
                 </span>
             </div>
-            <FormContainer>
-                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-2">
+            <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 gap-3 md:grid md:col-span-2">
+                <h1 className="font-bold  md:text-lg text-sm text-primary-color border-b-2 pb-3 mb-5 md:col-span-2">
                     Personal Information
                 </h1>
                 <FormField label="Username" error={errors.username}>
@@ -136,14 +122,18 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button disabled={processing} onClick={handleSubmit}>
+                    <Button
+                        disabled={processing}
+                        onClick={handleSubmit}
+                        className="md:text-normal text-xs"
+                    >
                         {processing ? "Updating..." : "Update"}
                     </Button>
                 </section>
-            </FormContainer>
+            </div>
 
-            <FormContainer className="flex flex-col">
-                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5">
+            <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 gap-3 md:grid md:col-span-2">
+                <h1 className="font-bold md:text-lg text-sm text-primary-color border-b-2 pb-3 mb-5 md:col-span-2">
                     Account Security
                 </h1>
 
@@ -180,9 +170,14 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button  onClick={updatePassword}>Update</Button>
+                    <Button
+                        onClick={updatePassword}
+                        className="md:text-normal text-xs"
+                    >
+                        Update
+                    </Button>
                 </section>
-            </FormContainer>
+            </div>
         </>
     );
 };
