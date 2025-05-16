@@ -1,8 +1,13 @@
 import React from "react";
-
-const TD = ({ children }) => {
+import { cn } from "@/lib/utils";
+const TD = ({ children, className }) => {
     return (
-        <td className="text-sm py-3 font-normal min-w-fit text-gray-700">
+        <td
+            className={cn(
+                "text-xs sm:text-sm py-3 font-normal min-w-fit text-gray-700",
+                className
+            )}
+        >
             {children}
         </td>
     );

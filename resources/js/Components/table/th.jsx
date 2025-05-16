@@ -1,8 +1,13 @@
 import React from "react";
-
-const TH = ({ children }) => {
+import { cn } from "@/lib/utils";
+const TH = ({ children, className }) => {
     return (
-        <th className="text-start text-gray-800 font-medium text-xs pr-7 min-w-fit whitespace-nowrap mr-3">
+        <th
+            className={cn(
+                "text-start text-gray-800 font-medium text-xs pr-7 min-w-fit whitespace-nowrap mr-3",
+                className
+            )}
+        >
             {children}
         </th>
     );

@@ -124,6 +124,7 @@ export function APISidebar() {
         </div>
     );
 }
+;
 
 {
     /* <SidebarMenu>

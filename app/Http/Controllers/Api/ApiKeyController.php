@@ -42,20 +42,23 @@ class ApiKeyController extends Controller
         return back();
     }
 
-    public function maskApiKey(string $apiKey, int $prefixChars = 8, int $suffixChars = 5): string
+    public function maskApiKey(string $apiKey, int $visiblePrefix = 8, int $visibleSuffix = 5): string
     {
         $length = strlen($apiKey);
+        $maxVisible = $visiblePrefix + $visibleSuffix;
 
-
-        if ($length <= $prefixChars + $suffixChars) {
-            return str_repeat('*', $length);
+        // If the key is shorter than our desired display length, mask everything
+        if ($length <= $maxVisible) {
+            return str_repeat('*', min(18, $length));
         }
 
-        $prefix = substr($apiKey, 0, $prefixChars);
-        $suffix = substr($apiKey, -$suffixChars);
-        $maskedLength = $length - $prefixChars - $suffixChars;
+        $prefix = substr($apiKey, 0, $visiblePrefix);
+        $suffix = substr($apiKey, -$visibleSuffix);
 
-        return $prefix . str_repeat('*', $maskedLength) . $suffix;
+        // Calculate how many asterisks we need to reach exactly 18 characters
+        $maskLength = 18 - ($visiblePrefix + $visibleSuffix);
+
+        return $prefix . str_repeat('*', $maskLength) . $suffix;
     }
 
 
