@@ -339,8 +339,8 @@ const Index = ({ keys: initialKeys }) => {
                     <TableHead>
                         <TH>Name</TH>
                         <TH>Secret Key</TH>
-                        <TH className="sm:visible hidden">Last Used</TH>
-                        <TH className="sm:visible hidden">Created By</TH>
+                        <TH className="sm:table-cell hidden">Last Used</TH>
+                        <TH className="sm:table-cell hidden">Created By</TH>
                         <TH>Actions</TH>
                     </TableHead>
                     <TableBody>
@@ -349,10 +349,10 @@ const Index = ({ keys: initialKeys }) => {
                                 <tr key={item.secret_key + "-" + index}>
                                     <TD>{item.name}</TD>
                                     <TD>{item.secret_key}</TD>
-                                    <TD className="sm:visible hidden">
+                                    <TD className="sm:table-cell hidden">
                                         {item.last_used}
                                     </TD>
-                                    <TD className="sm:visible hidden">
+                                    <TD className="sm:table-cell hidden">
                                         {item.created_by}
                                     </TD>
                                     <TD>
