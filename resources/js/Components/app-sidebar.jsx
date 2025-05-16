@@ -6,24 +6,13 @@ import {
     UserRound,
     LogOut,
 } from "lucide-react";
-import MainLago from "../../images/mainLogo.jpg";
-import { router, usePage } from "@inertiajs/react";
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
-    SidebarHeader,
-} from "@/components/ui/sidebar";
-import { SidebarLink } from "./sidebar-link";
-
+import MainLogo from "../../images/mainLogo.jpg";
+import { Link, router, usePage } from "@inertiajs/react";
 import React from "react";
 
-const AppSidebar = () => {
+const AppSidebar = ({ onItemClick }) => {
     const { auth } = usePage().props;
+    const { url: currentUrl } = usePage();
 
     const items = [
         {
@@ -64,58 +53,83 @@ const AppSidebar = () => {
         });
     };
 
-    return (
-        <div className="min-h-screen">
-            <Sidebar>
-                <SidebarHeader>
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <SidebarMenuButton
-                                asChild
-                                className="data-[slot=sidebar-menu-button]:!p-1.5"
-                            >
-                                <a href="#">
-                                    <span className="text-base font-semibold">
-                                        <img
-                                            src={MainLago}
-                                            alt=""
-                                            className="h-7"
-                                        />
-                                    </span>
-                                </a>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
-                </SidebarHeader>
+    const isCurrentPage = (url) => {
+        // Check if the current URL matches or starts with the item URL
+        // (for multi-level paths)
+        return (
+            currentUrl === url || (url !== "/" && currentUrl.startsWith(url))
+        );
+    };
 
-                <SidebarContent>
-                    <SidebarGroup>
-                        <SidebarGroupContent>
-                            <SidebarMenu>
-                                {items.map((item) => (
-                                    <SidebarLink
-                                        key={item.title}
-                                        href={item.url}
-                                        icon={item.icon}
-                                        isLocked={item.isLocked}
-                                        requiredStep={item.requiredStep}
+    return (
+        <div className="flex flex-col h-full">
+            {/* Logo Header */}
+            <div className="py-4 px-2 border-b">
+                <a href="#" className="flex items-center">
+                    <img src={MainLogo} alt="Logo" className="h-7" />
+                </a>
+            </div>
+
+            {/* Navigation Items */}
+            <nav className="flex-1 pt-4">
+                <ul className="space-y-1">
+                    {items.map((item) => (
+                        <li key={item.title}>
+                            {item.isLocked ? (
+                                <div className="relative group">
+                                    <button
+                                        className="w-full flex items-center px-3 py-2 text-gray-400 rounded-md cursor-not-allowed"
+                                        disabled
                                     >
+                                        <item.icon className="w-4 h-4 mr-3" />
                                         <span>{item.title}</span>
-                                    </SidebarLink>
-                                ))}
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton onClick={logout}>
-                                        <div className="flex items-center gap-2">
-                                            <LogOut className="w-4 h-4" />
-                                            <span>Logout</span>
+                                        <CircleAlertIcon className="w-4 h-4 ml-auto text-amber-500" />
+                                    </button>
+                                    {item.requiredStep && (
+                                        <div className="hidden group-hover:block absolute left-full ml-2 top-0 z-50 p-2 bg-gray-800 text-white text-xs rounded shadow-lg w-64">
+                                            {item.requiredStep}
                                         </div>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                </SidebarContent>
-            </Sidebar>
+                                    )}
+                                </div>
+                            ) : (
+                                <Link
+                                    href={item.url}
+                                    className={`flex items-center px-3 py-2 rounded-md transition-colors relative
+                                              ${
+                                                  isCurrentPage(item.url)
+                                                      ? "bg-blue-50 text-blue-600 font-medium"
+                                                      : "text-gray-700 hover:bg-gray-100"
+                                              }`}
+                                    onClick={() => onItemClick && onItemClick()}
+                                >
+                                    {isCurrentPage(item.url) && (
+                                        <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-blue-600 rounded-r-full"></div>
+                                    )}
+                                    <item.icon
+                                        className={`w-4 h-4 mr-3 ${
+                                            isCurrentPage(item.url)
+                                                ? "text-blue-600"
+                                                : ""
+                                        }`}
+                                    />
+                                    <span>{item.title}</span>
+                                </Link>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+
+            {/* Logout Section */}
+            <div className="mt-auto pb-4 pt-2 border-t">
+                <button
+                    onClick={logout}
+                    className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    <span>Logout</span>
+                </button>
+            </div>
         </div>
     );
 };
