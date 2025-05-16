@@ -146,7 +146,11 @@ const Index = ({ usageStats, transactions }) => {
                             {transactions.data.map((item) => (
                                 <tr key={item.id}>
                                     <TD>{item.id}</TD>
-                                    <TD>{item.method}</TD>
+                                    <TD>
+                                        <span className="border border-green-700 text-white bg-green-400 text-xs rounded-lg px-2 py-1">
+                                            {item.method}
+                                        </span>
+                                    </TD>
                                     <TD>{item.secret_key}</TD>
                                     <TD>
                                         {item.is_successfull ? "True" : "False"}

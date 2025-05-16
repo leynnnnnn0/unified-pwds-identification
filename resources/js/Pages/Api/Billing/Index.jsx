@@ -160,7 +160,11 @@ const Index = ({ subscription, invoices }) => {
                                             <TD>{item.invoice_id}</TD>
                                             <TD>{item.amount_formatted}</TD>
                                             <TD>{item.date}</TD>
-                                            <TD>{item.status}</TD>
+                                            <TD>
+                                                <span className="border border-green-700 text-white bg-green-400 text-xs rounded-lg px-2 py-1">
+                                                    {item.status.toUpperCase()}
+                                                </span>
+                                            </TD>
                                             <TD>
                                                 <a
                                                     className="text-green-500 flex items-center gap-1 hover:underline"
