@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApiKey;
+use App\Models\ApiRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,16 +17,17 @@ class ApiKeyController extends Controller
 {
     public function index()
     {
-        $keys = ApiKey::where('user_id', Auth::id())
+        $keys = ApiKey::with('user')->where('user_id', Auth::id())
             ->latest()
             ->paginate(10)
             ->through(function ($item) {
+                $result = ApiRequest::where('api_key_id', $item->id)->first()?->created_at->format('F d, Y H:i:a');
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
                     'secret_key' => $this->maskApiKey($item->secret_key),
-                    'last_used' => 'Never',
-                    'created_by' => Auth::user()?->full_name ?? 'test'
+                    'last_used' =>  $result ?: "Never",
+                    'created_by' => $item->user->username
                 ];
             });
 

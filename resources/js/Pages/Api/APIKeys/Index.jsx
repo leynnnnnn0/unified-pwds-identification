@@ -25,7 +25,7 @@ import {
 import FormField from "@/Components/form/form-field";
 import { Input } from "@/Components/ui/input";
 import axios from "axios";
-import { router, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import toast from "react-hot-toast";
 
 const Index = ({ keys: initialKeys }) => {
@@ -271,7 +271,7 @@ const Index = ({ keys: initialKeys }) => {
                             </DialogDescription>
                         </DialogHeader>
 
-                        <FormField label="Name" isRequired={false}>
+                        <FormField label="Name (Optional)" isRequired={false}>
                             <Input
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -309,9 +309,12 @@ const Index = ({ keys: initialKeys }) => {
 
                 <p className="text-gray-600 text-sm">
                     View usage per API key on the{" "}
-                    <span className="text-black cursor-pointer hover:opacity-70">
+                    <Link
+                        href="/api/usage"
+                        className="text-black cursor-pointer hover:opacity-70"
+                    >
                         Usage page
-                    </span>{" "}
+                    </Link>{" "}
                     .
                 </p>
             </div>
