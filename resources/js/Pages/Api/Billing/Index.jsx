@@ -7,6 +7,16 @@ import TD from "@/Components/table/td";
 import TH from "@/Components/table/th";
 import { Button } from "@/Components/ui/button";
 import { Progress } from "@/Components/ui/progress";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/Components/ui/alert-dialog";
 import { router } from "@inertiajs/react";
 import { Download } from "lucide-react";
 import React, { useState } from "react";
@@ -18,6 +28,11 @@ const Index = ({ subscription, invoices }) => {
     const [isCancelled, setIsCancelled] = useState(
         subscription ? subscription["is_cancelled"] : false
     );
+
+    // State for dialog controls
+    const [showCancelDialog, setShowCancelDialog] = useState(false);
+    const [showRenewDialog, setShowRenewDialog] = useState(false);
+
     if (subscription) {
         progressPercentage =
             (parseInt(subscription["api_requests"]) /
@@ -33,11 +48,13 @@ const Index = ({ subscription, invoices }) => {
                 onSuccess: () => {
                     toast.success("Subscription cancelled.");
                     setIsCancelled(true);
+                    setShowCancelDialog(false);
                 },
                 onError: (e) => {
                     toast.error(
                         "Something went wrong while trying to cancel the subscription."
                     );
+                    setShowCancelDialog(false);
                 },
             }
         );
@@ -51,11 +68,13 @@ const Index = ({ subscription, invoices }) => {
                 onSuccess: () => {
                     toast.success("Subscription renewed.");
                     setIsCancelled(false);
+                    setShowRenewDialog(false);
                 },
                 onError: (e) => {
                     toast.error(
                         "Something went wrong while trying to renew the subscription."
                     );
+                    setShowRenewDialog(false);
                 },
             }
         );
@@ -119,13 +138,13 @@ const Index = ({ subscription, invoices }) => {
                             {isCancelled ? (
                                 <Button
                                     className="bg-green-500 text-xs sm:text-sm"
-                                    onClick={renewSubscription}
+                                    onClick={() => setShowRenewDialog(true)}
                                 >
                                     Renew subscription
                                 </Button>
                             ) : (
                                 <Button
-                                    onClick={cancelSubscription}
+                                    onClick={() => setShowCancelDialog(true)}
                                     variant="destructive"
                                     className="text-xs sm:text-sm"
                                 >
@@ -134,6 +153,62 @@ const Index = ({ subscription, invoices }) => {
                             )}
                         </div>
                     </div>
+
+                    {/* Cancel Subscription Dialog */}
+                    <AlertDialog
+                        open={showCancelDialog}
+                        onOpenChange={setShowCancelDialog}
+                    >
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Cancel Subscription
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Are you sure you want to cancel your
+                                    subscription? You will lose access to paid
+                                    features at the end of your billing period.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Nevermind</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={cancelSubscription}
+                                    className="bg-red-500 hover:bg-red-600 text-white"
+                                >
+                                    Yes, Cancel
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+
+                    {/* Renew Subscription Dialog */}
+                    <AlertDialog
+                        open={showRenewDialog}
+                        onOpenChange={setShowRenewDialog}
+                    >
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Renew Subscription
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Are you sure you want to renew your
+                                    subscription? Your account will be billed on
+                                    the next billing cycle.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Nevermind</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={renewSubscription}
+                                    className="bg-green-500 hover:bg-green-600 text-white"
+                                >
+                                    Yes, Renew
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
 
                     <TableContainer>
                         <div className="mb-4">

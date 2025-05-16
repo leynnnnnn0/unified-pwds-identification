@@ -66,7 +66,6 @@ const APILayout = ({ children }) => {
                     {/* Content area */}
                     <div className="flex-1 overflow-auto p-4 md:p-6 flex flex-col gap-5 w-full">
                         <Toaster
-                            position="top-right"
                             toastOptions={{
                                 duration: 2000,
                             }}
