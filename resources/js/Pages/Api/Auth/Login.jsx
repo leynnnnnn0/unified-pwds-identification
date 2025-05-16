@@ -6,6 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import Logo from "../../../../images/apiLogo.png";
+import { Button } from "@/Components/ui/button";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -115,13 +116,13 @@ export default function Login({ status, canResetPassword }) {
                     </div>
 
                     <div className="mt-6">
-                        <button
+                        <Button
                             type="submit"
                             disabled={processing}
-                            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors font-poppins"
+                            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors font-poppins"
                         >
                             {processing ? "Processing..." : "Sign In"}
-                        </button>
+                        </Button>
                     </div>
 
                     <div className="mt-6 text-center">

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ApiKey;
 use App\Models\ApiRequest;
 use App\Models\PWDIdentificationCard;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +43,30 @@ class ApiRequestController extends Controller
                 'message' => 'Please subscribe to one of our subscriptions to be able to send a request.'
             ], 403);
         }
+
+        // Check if user can still send request 
+
+        $user = User::with('subscriptions')->find($api_key->user_id);
+        $plan = $user->subscriptions->where('stripe_status', 'active')->first();
+
+        $request_count = $user->api_requests
+            ->where('is_successfull', true)
+            ->whereBetween('created_at', [$plan->created_at, Carbon::parse($plan->created_at)->addMonth()])
+            ->count();
+
+        $is_max_request_reached = $request_count == $subscriptions[$plan->type]['request_limit'];
+
+        if ($is_max_request_reached) {
+
+            return response()->json([
+                'success' => false,
+                'is_found' => null,
+                'message' => 'Max request limit reached.'
+            ], 403);
+        }
+
+
+
 
         $result = PWDIdentificationCard::with('application_form')
             ->where('rfid_card_number', $card_uid)
