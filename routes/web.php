@@ -32,7 +32,7 @@ Route::middleware(['auth'])->prefix('api/billing')->group(function () {
     Route::put('/billing/renew-subscription/{plan}', [BillingController::class, 'renewSubscription'])->name('billing.renew-subscription');
 });
 
-Route::get('/', [APILandingPage::class, 'index'])->name('landing-page');
+Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
 
 Route::middleware('auth')->group(function () {
 

@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "@inertiajs/react";
 import Plans from "@/Components/plans";
+import LOGO from "../../../images/apiLogo.png";
 
 const LandingPage = () => {
     // Refs for scrolling to each section
@@ -111,14 +112,7 @@ const LandingPage = () => {
             <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 px-4 md:px-8 lg:px-16 xl:px-32 py-4 shadow-sm">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
-                        <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">
-                                P
-                            </span>
-                        </div>
-                        <span className="font-bold text-primary text-lg hidden sm:block">
-                            PWD Verify
-                        </span>
+                        <img src={LOGO} alt="Logo" className="h-12" />
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -307,7 +301,7 @@ const LandingPage = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
                         {features.map((feature, index) => (
                             <div
                                 key={index}
@@ -556,14 +550,11 @@ const LandingPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                             <div>
                                 <div className="flex items-center space-x-2 mb-6">
-                                    <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                                        <span className="text-white font-bold text-xl">
-                                            P
-                                        </span>
-                                    </div>
-                                    <span className="font-bold text-white text-lg">
-                                        PWD Verify
-                                    </span>
+                                    <img
+                                        src={LOGO}
+                                        alt="Logo"
+                                        className="h-12"
+                                    />
                                 </div>
                                 <p className="text-gray-400 mb-6">
                                     The leading platform for PWD ID
