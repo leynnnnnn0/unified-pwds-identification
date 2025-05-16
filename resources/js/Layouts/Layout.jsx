@@ -32,21 +32,21 @@ export default function Layout({ children }) {
                 {/* Mobile sidebar overlay */}
                 {isMobileMenuOpen && (
                     <div
-                        className="fixed inset-0 z-40 bg-black/50 md:hidden"
+                        className="fixed inset-0 z-40 bg-black/50 lg:hidden"
                         onClick={closeMobileMenu}
                     />
                 )}
 
                 {/* Sidebar container */}
                 <div
-                    className={`fixed md:relative inset-y-0 left-0 z-50 w-64 bg-white
+                    className={`fixed lg:relative inset-y-0 left-0 z-50 w-64 bg-white 
                                transition-transform duration-300 ease-in-out transform p-5
                                ${
                                    isMobileMenuOpen
                                        ? "translate-x-0"
                                        : "-translate-x-full"
                                } 
-                               md:translate-x-0 border-r`}
+                               lg:translate-x-0 border-r`}
                     onClick={(e) => e.stopPropagation()} // Prevent click propagation
                 >
                     <AppSidebar />
@@ -55,7 +55,7 @@ export default function Layout({ children }) {
                 {/* Main content area */}
                 <main className="flex-1 flex flex-col w-full overflow-hidden bg-gray-50">
                     {/* Mobile header */}
-                    <div className="md:hidden flex h-16 items-center border-b px-4 bg-white sticky top-0 z-30">
+                    <div className="lg:hidden flex h-16 items-center border-b px-4 bg-white sticky top-0 z-30">
                         <button
                             onClick={toggleMobileMenu}
                             className="p-2"
