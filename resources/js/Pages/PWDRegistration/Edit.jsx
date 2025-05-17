@@ -57,6 +57,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
+import Infolist from "@/Components/infolist";
 
 const Edit = ({ application, image }) => {
     const isInitialMount = useRef(true);
@@ -293,83 +294,107 @@ const Edit = ({ application, image }) => {
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Application Form Details" />
-                <Button
-                    onClick={
-                        isShowMode
-                            ? () => setIsShowMode(false)
-                            : () => setIsShowMode(true)
-                    }
-                >
-                    {isShowMode ? "Edit Details" : "Cancel Edit"}
-                </Button>
+                {application.status != "approved" && (
+                    <Button
+                        onClick={
+                            isShowMode
+                                ? () => setIsShowMode(false)
+                                : () => setIsShowMode(true)
+                        }
+                    >
+                        {isShowMode ? "Edit Details" : "Cancel Edit"}
+                    </Button>
+                )}
+            </div>
+
+            <div className="p-5 rounded-lg shadow-xl border grid gap-1 sm:grid-cols-2 lg:grid-cols-4">
+                <Infolist
+                    title="Application Date"
+                    value={application.formatted_application_date}
+                />
+                <Infolist
+                    title="Status"
+                    value={application.status.toUpperCase()}
+                />
+                <Infolist
+                    title="Application Number"
+                    value={application.application_number}
+                />
+                <Infolist
+                    title="Remarks"
+                    value={application.remarks ?? "None"}
+                />
             </div>
             <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 lg:grid lg:grid-cols-4   gap-3 auto-rows-auto space-y-2">
                 <div className="w-full space-y-2 md:grid md:grid-cols-3 gap-3 lg:grid-cols-5 lg:col-span-4">
                     <FormField
-                        className="col-span-3"
-                        label="Type of Registration"
-                        error={form.errors.type_of_registration}
+                        label='1"x1" Photo'
+                        className="row-span-3"
+                        error={form.errors.photo}
                     >
-                        <RadioGroup
-                            disabled={isShowMode}
-                            value={form.data.type_of_registration}
-                            onValueChange={(value) =>
-                                form.setData("type_of_registration", value)
-                            }
-                            className="flex w-full"
+                        <div
+                            className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
+                            onClick={handleImageClick}
                         >
-                            <div className="flex space-x-2 items-center h-fit flex-1">
-                                <RadioGroupItem
-                                    value="new_applicant"
-                                    id="new_applicant"
+                            {previewImage ? (
+                                <img
+                                    src={previewImage}
+                                    alt="Selected photo"
+                                    className="w-full h-full object-cover"
                                 />
-                                <Span
-                                    label="New Applicant"
-                                    htmlFor="new_applicant"
-                                />
+                            ) : (
+                                <div className="text-center text-gray-500 text-sm">
+                                    Click to select photo
+                                </div>
+                            )}
+                        </div>
+                        <input
+                            disabled={isShowMode}
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handlePhotoChange}
+                            className="hidden"
+                            accept="image/*"
+                        />
+                        {previewImage && (
+                            <div className="text-xs text-gray-500">
+                                Click image to change
                             </div>
-                            <div className="flex space-x-2 items-center h-fit flex-1">
-                                <RadioGroupItem value="renewal" id="renewal" />
-                                <Span label="Renewal" htmlFor="renewal" />
-                            </div>
-                        </RadioGroup>
+                        )}
                     </FormField>
 
                     <div className="md:col-span-2 lg:col-span-4">
                         <FormField
-                            label='1"x1" Photo'
-                            className="row-span-3"
-                            error={form.errors.photo}
+                            className="col-span-3"
+                            label="Type of Registration"
+                            error={form.errors.type_of_registration}
                         >
-                            <div
-                                className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
-                                onClick={handleImageClick}
-                            >
-                                {previewImage ? (
-                                    <img
-                                        src={previewImage}
-                                        alt="Selected photo"
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <div className="text-center text-gray-500 text-sm">
-                                        Click to select photo
-                                    </div>
-                                )}
-                            </div>
-                            <input
+                            <RadioGroup
                                 disabled={isShowMode}
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handlePhotoChange}
-                                className="hidden"
-                                accept="image/*"
-                            />
-                            {previewImage && (
-                                <div className="text-xs text-gray-500">
-                                    Click image to change
+                                value={form.data.type_of_registration}
+                                onValueChange={(value) =>
+                                    form.setData("type_of_registration", value)
+                                }
+                                className="flex w-full"
+                            >
+                                <div className="flex space-x-2 items-center h-fit flex-1">
+                                    <RadioGroupItem
+                                        value="new_applicant"
+                                        id="new_applicant"
+                                    />
+                                    <Span
+                                        label="New Applicant"
+                                        htmlFor="new_applicant"
+                                    />
                                 </div>
-                            )}
+                                <div className="flex space-x-2 items-center h-fit flex-1">
+                                    <RadioGroupItem
+                                        value="renewal"
+                                        id="renewal"
+                                    />
+                                    <Span label="Renewal" htmlFor="renewal" />
+                                </div>
+                            </RadioGroup>
                         </FormField>
 
                         <FormField

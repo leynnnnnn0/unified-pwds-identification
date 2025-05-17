@@ -52,6 +52,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import Infolist from "@/Components/infolist";
 
 const Create = () => {
     const { toast } = useToast();
@@ -258,6 +259,8 @@ const Create = () => {
     return (
         <>
             <H1 title="Registration Form" />
+
+         
             <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 lg:grid lg:grid-cols-4   gap-3 auto-rows-auto space-y-2">
                 <div className="w-full space-y-2 md:grid md:grid-cols-3 gap-3 lg:grid-cols-5 lg:col-span-4">
                     <FormField label='1"x1" Photo' error={form.errors.photo}>
