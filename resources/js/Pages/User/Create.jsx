@@ -125,10 +125,8 @@ const Create = ({ provinces, municipalities, auth }) => {
         <>
             <H1 title="Create New User" />
             <form onSubmit={handleSubmit}>
-                <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-2 gap-3 auto-rows-auto">
-                    <FormH1 label="User Details" />
-
-                    <div className="col-span-2 grid grid-cols-2 gap-4">
+                <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 grid md:grid-cols-2 gap-3 auto-rows-auto">
+                    <div className="col-span-2 grid md:grid-cols-2 gap-4">
                         <FormField
                             label="First Name"
                             error={form.errors.first_name}
