@@ -39,8 +39,8 @@ const Index = ({ users }) => {
                 <Table>
                     <TableHead>
                         <TH>Username</TH>
-                        <TH>Full Name</TH>
-                        <TH>Email</TH>
+                        <TH className="hidden md:table-cell">Full Name</TH>
+                        <TH className="hidden md:table-cell">Email</TH>
                         <TH>Roles</TH>
                         <TH>Actions</TH>
                     </TableHead>
@@ -48,41 +48,56 @@ const Index = ({ users }) => {
                         {users.data.map((item) => (
                             <tr key={item.id}>
                                 <TD>{item.username}</TD>
-                                <TD>{item.full_name}</TD>
-                                <TD>{item.email}</TD>
+                                <TD className="hidden md:table-cell">
+                                    {item.full_name}
+                                </TD>
+                                <TD className="hidden md:table-cell">
+                                    {item.email}
+                                </TD>
                                 <TD>{item.role}</TD>
-                                <TD> 
+                                <TD>
                                     <div className="w-fit flex gap-3 items-center">
-                                     <Link
-                                    href={route("admin.users.show", item.id)}
-                                > 
-                                    <EyeIcon/> 
-                                    </Link>
-                                    
-                                    <Link
-                                    href={route("admin.users.edit", item.id)}
-                                > 
-                                    <EditIcon className="text-blue-500"/> 
-                                    </Link>
-                                    
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Trash2Icon className="text-red-500"/>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>
-                                                    Are you absolutely sure you want to delete this application?
-                                                </AlertDialogTitle>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogAction>Yes</AlertDialogAction>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>   
-                                    </div>
+                                        <Link
+                                            href={route(
+                                                "admin.users.show",
+                                                item.id
+                                            )}
+                                        >
+                                            <EyeIcon className="size-4 md:size-6" />
+                                        </Link>
 
+                                        <Link
+                                            href={route(
+                                                "admin.users.edit",
+                                                item.id
+                                            )}
+                                        >
+                                            <EditIcon className="text-blue-500 size-4 md:size-6" />
+                                        </Link>
+
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Trash2Icon className="text-red-500 size-4 md:size-6" />
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>
+                                                        Are you absolutely sure
+                                                        you want to delete this
+                                                        application?
+                                                    </AlertDialogTitle>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogAction>
+                                                        Yes
+                                                    </AlertDialogAction>
+                                                    <AlertDialogCancel>
+                                                        Cancel
+                                                    </AlertDialogCancel>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    </div>
                                 </TD>
                             </tr>
                         ))}
