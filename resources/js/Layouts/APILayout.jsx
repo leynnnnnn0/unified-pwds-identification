@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Toaster } from "react-hot-toast";
 import { APISidebar } from "@/Components/api-sidebar";
-import { SidebarProvider } from "@/Components/ui/sidebar";
-import { Menu } from "lucide-react";
+import { Toaster } from "react-hot-toast";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
-const APILayout = ({ children }) => {
+export default function APILayout({ children }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Close mobile menu when screen size changes to desktop
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 768) {
+            if (window.innerWidth >= 1024) {
                 setIsMobileMenuOpen(false);
             }
         };
@@ -18,6 +17,24 @@ const APILayout = ({ children }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    // Close sidebar when clicking outside on mobile
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            const handleClickOutside = (e) => {
+                if (
+                    !e.target.closest(".sidebar-container") &&
+                    !e.target.closest(".sidebar-trigger")
+                ) {
+                    setIsMobileMenuOpen(false);
+                }
+            };
+
+            document.addEventListener("mousedown", handleClickOutside);
+            return () =>
+                document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [isMobileMenuOpen]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -28,54 +45,61 @@ const APILayout = ({ children }) => {
     };
 
     return (
-        <SidebarProvider>
-            <div className="flex h-screen w-full overflow-hidden">
-                {/* Mobile sidebar overlay */}
-                {isMobileMenuOpen && (
-                    <div
-                        className="fixed inset-0 z-40 bg-black/50 md:hidden"
-                        onClick={closeMobileMenu}
-                    />
-                )}
-
-                {/* Sidebar container */}
+        <div className="flex h-screen w-full overflow-hidden">
+            {/* Mobile backdrop overlay */}
+            {isMobileMenuOpen && (
                 <div
-                    className={`fixed md:relative inset-y-0 left-0 z-50 w-64 bg-white
-                    transition-transform duration-300 ease-in-out transform p-5
-                    ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} 
-                    md:translate-x-0 border-r`}
-                    onClick={(e) => e.stopPropagation()} // Prevent click propagation
-                >
-                    <APISidebar />
+                    className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+                    aria-hidden="true"
+                />
+            )}
+
+            {/* Sidebar container */}
+            <div
+                className={`fixed lg:relative inset-y-0 left-0 z-50 w-64 bg-white 
+                          transition-transform duration-300 ease-in-out sidebar-container
+                          ${
+                              isMobileMenuOpen
+                                  ? "translate-x-0"
+                                  : "-translate-x-full"
+                          } 
+                          lg:translate-x-0 border-r shadow-lg lg:shadow-none`}
+            >
+                <APISidebar onItemClick={closeMobileMenu} />
+            </div>
+
+            {/* Main content area */}
+            <main className="flex-1 flex flex-col w-full overflow-hidden bg-gray-50">
+                {/* Mobile header */}
+                <div className="lg:hidden flex h-16 items-center justify-between border-b px-4 bg-white sticky top-0 z-30">
+                    <button
+                        onClick={toggleMobileMenu}
+                        className="p-2 rounded-md hover:bg-gray-100 sidebar-trigger"
+                        aria-label="Toggle menu"
+                    >
+                        {isMobileMenuOpen ? (
+                            <X className="h-5 w-5" />
+                        ) : (
+                            <Menu className="h-5 w-5" />
+                        )}
+                    </button>
+                    <div className="flex-1 flex justify-center">
+                        {/* API Dashboard title or logo could go here */}
+                    </div>
+                    <div className="w-10"></div>{" "}
+                    {/* Space balance for the layout */}
                 </div>
 
-                {/* Main content area */}
-                <main className="flex-1 flex flex-col w-full overflow-hidden bg-gray-50">
-                    {/* Mobile header */}
-                    <div className="md:hidden flex h-16 items-center border-b px-4 bg-white sticky top-0 z-30">
-                        <button
-                            onClick={toggleMobileMenu}
-                            className="p-2"
-                            aria-label="Toggle menu"
-                        >
-                            <Menu className="h-6 w-6" />
-                        </button>
-                        <span className="font-semibold ml-2"></span>
-                    </div>
-
-                    {/* Content area */}
-                    <div className="flex-1 overflow-auto p-4 md:p-6 flex flex-col gap-5 w-full">
-                        <Toaster
-                            toastOptions={{
-                                duration: 2000,
-                            }}
-                        />
-                        {children}
-                    </div>
-                </main>
-            </div>
-        </SidebarProvider>
+                {/* Content area */}
+                <div className="flex-1 overflow-auto p-4 md:p-6 flex flex-col gap-5 w-full">
+                    <Toaster
+                        toastOptions={{
+                            duration: 2000,
+                        }}
+                    />
+                    {children}
+                </div>
+            </main>
+        </div>
     );
-};
-
-export default APILayout;
+}
