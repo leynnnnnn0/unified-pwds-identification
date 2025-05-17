@@ -1,9 +1,6 @@
 import {
     Calendar,
     Home,
-    Inbox,
-    Search,
-    Settings,
     FileUser,
     UserCircle,
     Users,
@@ -11,59 +8,42 @@ import {
     CircleAlertIcon,
     ShieldCheck,
 } from "lucide-react";
-import { router } from "@inertiajs/react";
-import MainLago from "../../images/mainLogo.jpg";
-import { Link, usePage } from "@inertiajs/react";
+import { router, Link, usePage } from "@inertiajs/react";
+import MainLogo from "../../images/mainLogo.jpg";
+import React from "react";
 
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuSub,
-    SidebarMenuSubItem,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarHeader,
-} from "@/components/ui/sidebar";
-import { SidebarLink } from "./sidebar-link";
-
-const logout = () => {
-    router.post("/logout", {
-        onFinish: () => {
-            console.log("Logged out");
-        },
-    });
-};
-
-export function AdminSidebar() {
+export function AdminSidebar({ onItemClick }) {
     const { auth } = usePage().props;
+    const { url: currentUrl } = usePage();
+
     const items = [
         {
             title: "Dashboard",
             url: "/admin/dashboard",
             icon: Home,
+            isLocked: false,
             isVisible: true,
         },
         {
             title: "Applications",
             url: "/admin/applications",
             icon: FileUser,
+            isLocked: false,
             isVisible: true,
         },
         {
             title: "Verification",
             url: "/admin/verification",
             icon: ShieldCheck,
+            isLocked: false,
             isVisible: true,
         },
         {
             title: "Users",
             url: "/admin/users",
             icon: Users,
-            isVisible: auth.role == "admin" || auth.role == "sub_admin",
+            isLocked: false,
+            isVisible: auth.role === "admin" || auth.role === "sub_admin",
         },
         {
             title: "My Account",
@@ -73,85 +53,97 @@ export function AdminSidebar() {
             isVisible: true,
         },
     ];
+
+    const logout = () => {
+        router.post("/logout", {
+            onFinish: () => {
+                console.log("Logged out");
+            },
+        });
+    };
+
+    const isCurrentPage = (url) => {
+        return (
+            currentUrl === url || (url !== "/" && currentUrl.startsWith(url))
+        );
+    };
+
     return (
-        <div className="min-h-screen">
-            <Sidebar>
-                <SidebarHeader>
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <SidebarMenuButton
-                                asChild
-                                className="data-[slot=sidebar-menu-button]:!p-1.5"
-                            >
-                                <a href="#">
-                                    <span className="text-base font-semibold">
-                                        <img
-                                            src={MainLago}
-                                            alt=""
-                                            className="h-7"
-                                        />
-                                    </span>
-                                </a>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
-                </SidebarHeader>
+        <div className="flex flex-col h-full min-h-screen">
+            {/* Logo Header */}
+            <div className="py-4 px-2 border-b">
+                <a href="#" className="flex items-center">
+                    <img src={MainLogo} alt="Logo" className="h-7" />
+                </a>
+            </div>
 
-                <SidebarContent>
-                    <SidebarGroup>
-                        {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
-                        <SidebarGroupContent>
-                            <SidebarMenu>
-                                {items.map(
-                                    (item) =>
-                                        item.isVisible && (
-                                            <SidebarMenuItem key={item.title}>
-                                                <SidebarMenuButton asChild>
-                                                    <SidebarLink
-                                                        href={item.url}
-                                                        icon={item.icon}
-                                                    >
-                                                        {item.title}
-                                                    </SidebarLink>
-                                                </SidebarMenuButton>
-                                            </SidebarMenuItem>
-                                        )
-                                )}
-
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton onClick={logout}>
-                                        <div className="flex items-center gap-2">
-                                            <LogOut className="w-4 h-4" />
-                                            <span>Logout</span>
+            {/* Navigation Items */}
+            <nav className="flex-1 pt-4">
+                <ul className="space-y-1">
+                    {items.map(
+                        (item) =>
+                            item.isVisible && (
+                                <li key={item.title}>
+                                    {item.isLocked ? (
+                                        <div className="relative group">
+                                            <button
+                                                className="w-full flex items-center px-3 py-2 text-gray-400 rounded-md cursor-not-allowed"
+                                                disabled
+                                            >
+                                                <item.icon className="w-4 h-4 mr-3" />
+                                                <span>{item.title}</span>
+                                                {item.requiredStep && (
+                                                    <CircleAlertIcon className="w-4 h-4 ml-auto text-amber-500" />
+                                                )}
+                                            </button>
+                                            {item.requiredStep && (
+                                                <div className="hidden group-hover:block absolute left-full ml-2 top-0 z-50 p-2 bg-gray-800 text-white text-xs rounded shadow-lg w-64">
+                                                    {item.requiredStep}
+                                                </div>
+                                            )}
                                         </div>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                </SidebarContent>
-            </Sidebar>
+                                    ) : (
+                                        <Link
+                                            href={item.url}
+                                            className={`flex items-center px-3 py-2 rounded-md transition-colors relative
+                                                  ${
+                                                      isCurrentPage(item.url)
+                                                          ? "bg-blue-50 text-blue-600 font-medium"
+                                                          : "text-gray-700 hover:bg-gray-100"
+                                                  }`}
+                                            onClick={() =>
+                                                onItemClick && onItemClick()
+                                            }
+                                        >
+                                            {isCurrentPage(item.url) && (
+                                                <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-blue-600 rounded-r-full"></div>
+                                            )}
+                                            <item.icon
+                                                className={`w-4 h-4 mr-3 ${
+                                                    isCurrentPage(item.url)
+                                                        ? "text-blue-600"
+                                                        : ""
+                                                }`}
+                                            />
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    )}
+                                </li>
+                            )
+                    )}
+                </ul>
+            </nav>
+
+            {/* Logout Section */}
+            <div className="mt-auto pb-4 pt-2 border-t">
+                <button
+                    onClick={logout}
+                    className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    <span>Logout</span>
+                </button>
+            </div>
         </div>
     );
-}
-
-{
-    /* <SidebarMenu>
-    <Collapsible defaultOpen className="group/collapsible">
-        <SidebarMenuItem>
-            <CollapsibleTrigger asChild>
-                <SidebarMenuButton>
-
-                    <Home className="w-4 h-4" />
-                    <span>Main Menu</span>
-                </SidebarMenuButton>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-                <SidebarMenuSub>
-                    <SidebarMenuSubItem>test</SidebarMenuSubItem>
-                </SidebarMenuSub>
-            </CollapsibleContent>
-        </SidebarMenuItem>
-    </Collapsible>
-</SidebarMenu>; */
 }
