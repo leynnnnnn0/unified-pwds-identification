@@ -6,7 +6,7 @@ import React from "react";
 const Index = () => {
     return (
         <>
-            <div className="flex items center justify-bewtween gap-5">
+            <div className="grid md:grid md:grid-cols-3 gap-5">
                 <DashboardContainer
                     title="Pending Applications"
                     value="1,240"
