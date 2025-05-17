@@ -433,131 +433,165 @@ const Show = ({ application, image }) => {
                     </Badge>
                 )}
             </div>
-            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-2 gap-3 auto-rows-auto">
-                <Infolist
-                    title="Application Number"
-                    value={application.application_number}
-                />
-                <Infolist
-                    title="Application Date"
-                    value={application.formatted_application_date}
-                />
-                <FormField label="Status" className="col-span-2">
-                    <Select
-                        value={updateForm.data.status}
-                        onValueChange={(value) =>
-                            updateForm.setData("status", value)
-                        }
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Options" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="incomplete">
-                                Incomplete
-                            </SelectItem>
-                            <SelectItem value="rejected">Rejected</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </FormField>
-                <FormField label="Remarks" className="col-span-2">
-                    <Textarea
-                        value={updateForm.data.remarks}
-                        onChange={(e) =>
-                            updateForm.setData("remarks", e.target.value)
-                        }
-                    />
-                </FormField>
-                <div className="col-span-2 flex items-center justify-end">
-                    <Button onClick={updateApplicationStatus}>Update</Button>
-                </div>
-            </div>
-            <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-4 gap-3 auto-rows-auto">
-                <FormField
-                    className="col-span-3"
-                    label="Type of Registration"
-                    error={form.errors.type_of_registration}
-                >
-                    <RadioGroup
-                        disabled={isShowMode}
-                        value={form.data.type_of_registration}
-                        onValueChange={(value) =>
-                            form.setData("type_of_registration", value)
-                        }
-                        className="flex w-full"
-                    >
-                        <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem
-                                value="new_applicant"
-                                id="new_applicant"
-                            />
-                            <Span
-                                label="New Applicant"
-                                htmlFor="new_applicant"
-                            />
-                        </div>
-                        <div className="flex space-x-2 items-center h-fit flex-1">
-                            <RadioGroupItem value="renewal" id="renewal" />
-                            <Span label="Renewal" htmlFor="renewal" />
-                        </div>
-                    </RadioGroup>
-                </FormField>
 
-                <FormField
-                    label='1"x1" Photo'
-                    className="row-span-3"
-                    error={form.errors.photo}
-                >
-                    <div
-                        className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
-                        onClick={handleImageClick}
+            {application.status == "approved" ? (
+                <div className="p-5 rounded-lg shadow-xl border grid gap-1 sm:grid-cols-2 lg:grid-cols-4">
+                    <Infolist
+                        title="Application Date"
+                        value={application.formatted_application_date}
+                    />
+                    <Infolist
+                        title="Status"
+                        value={application.status.toUpperCase()}
+                    />
+                    <Infolist
+                        title="Application Number"
+                        value={application.application_number}
+                    />
+                    <Infolist
+                        title="Remarks"
+                        value={application.remarks ?? "None"}
+                    />
+                </div>
+            ) : (
+                <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 grid grid-cols-2 gap-3 auto-rows-auto">
+                    <Infolist
+                        title="Application Number"
+                        value={application.application_number}
+                    />
+                    <Infolist
+                        title="Application Date"
+                        value={application.formatted_application_date}
+                    />
+                    <FormField label="Status" className="col-span-2">
+                        <Select
+                            value={updateForm.data.status}
+                            onValueChange={(value) =>
+                                updateForm.setData("status", value)
+                            }
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Options" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="incomplete">
+                                    Incomplete
+                                </SelectItem>
+                                <SelectItem value="rejected">
+                                    Rejected
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </FormField>
+                    <FormField label="Remarks" className="col-span-2">
+                        <Textarea
+                            value={updateForm.data.remarks}
+                            onChange={(e) =>
+                                updateForm.setData("remarks", e.target.value)
+                            }
+                        />
+                    </FormField>
+                    <div className="col-span-2 flex items-center justify-end">
+                        <Button onClick={updateApplicationStatus}>
+                            Update
+                        </Button>
+                    </div>
+                </div>
+            )}
+
+            <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 lg:grid lg:grid-cols-4   gap-3 auto-rows-auto space-y-2">
+                <div className="w-full space-y-2 md:grid md:grid-cols-3 gap-3 lg:grid-cols-5 lg:col-span-4">
+                    <FormField
+                        label='1"x1" Photo'
+                        className="row-span-3"
+                        error={form.errors.photo}
                     >
-                        {previewImage ? (
-                            <img
-                                src={previewImage}
-                                alt="Selected photo"
-                                className="w-full h-full object-cover"
-                            />
-                        ) : (
-                            <div className="text-center text-gray-500 text-sm">
-                                Click to select photo
+                        <div
+                            className="w-32 h-32 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer mb-2 overflow-hidden"
+                            onClick={handleImageClick}
+                        >
+                            {previewImage ? (
+                                <img
+                                    src={previewImage}
+                                    alt="Selected photo"
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="text-center text-gray-500 text-sm">
+                                    Click to select photo
+                                </div>
+                            )}
+                        </div>
+                        <input
+                            disabled={isShowMode}
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handlePhotoChange}
+                            className="hidden"
+                            accept="image/*"
+                        />
+                        {previewImage && (
+                            <div className="text-xs text-gray-500">
+                                Click image to change
                             </div>
                         )}
+                    </FormField>
+
+                    <div className="md:col-span-2 lg:col-span-4">
+                        <FormField
+                            className="col-span-3"
+                            label="Type of Registration"
+                            error={form.errors.type_of_registration}
+                        >
+                            <RadioGroup
+                                disabled={isShowMode}
+                                value={form.data.type_of_registration}
+                                onValueChange={(value) =>
+                                    form.setData("type_of_registration", value)
+                                }
+                                className="flex w-full"
+                            >
+                                <div className="flex space-x-2 items-center h-fit flex-1">
+                                    <RadioGroupItem
+                                        value="new_applicant"
+                                        id="new_applicant"
+                                    />
+                                    <Span
+                                        label="New Applicant"
+                                        htmlFor="new_applicant"
+                                    />
+                                </div>
+                                <div className="flex space-x-2 items-center h-fit flex-1">
+                                    <RadioGroupItem
+                                        value="renewal"
+                                        id="renewal"
+                                    />
+                                    <Span label="Renewal" htmlFor="renewal" />
+                                </div>
+                            </RadioGroup>
+                        </FormField>
+
+                        <FormField
+                            className="col-span-3"
+                            label="Person with disability number"
+                            isRequired={!isPWDNumberInputDisabled}
+                            error={form.errors.pwd_number}
+                        >
+                            <Input
+                                disabled={
+                                    isPWDNumberInputDisabled || isShowMode
+                                }
+                                value={form.data.pwd_number || ""}
+                                onChange={(e) =>
+                                    form.setData("pwd_number", e.target.value)
+                                }
+                            />
+                        </FormField>
                     </div>
-                    <input
-                        disabled={isShowMode}
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handlePhotoChange}
-                        className="hidden"
-                        accept="image/*"
-                    />
-                    {previewImage && (
-                        <div className="text-xs text-gray-500">
-                            Click image to change
-                        </div>
-                    )}
-                </FormField>
+                </div>
 
-                <FormField
-                    className="col-span-3"
-                    label="Person with disability number"
-                    isRequired={!isPWDNumberInputDisabled}
-                    error={form.errors.pwd_number}
-                >
-                    <Input
-                        disabled={isPWDNumberInputDisabled || isShowMode}
-                        value={form.data.pwd_number || ""}
-                        onChange={(e) =>
-                            form.setData("pwd_number", e.target.value)
-                        }
-                    />
-                </FormField>
-
-                <h1 className="font-bold text-lg text-primary-color border-b-2 pb-3 mb-5 col-span-4">
-                    Personal Information
-                </h1>
+                <FormH1 label="Personal Information" />
 
                 <FormField label="Last Name" error={form.errors.last_name}>
                     <Input
@@ -663,9 +697,9 @@ const Show = ({ application, image }) => {
 
                 <FormField
                     label="Types of Disability"
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid grid-cols-4"
                 >
-                    <div className="col-span-4 grid grid-cols-3 gap-2">
+                    <div className="col-span-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 space-y-1 gap-2">
                         {typeOfDisabilities.map((item) => (
                             <div
                                 key={item.value}
@@ -909,7 +943,7 @@ const Show = ({ application, image }) => {
 
                 <FormH1 label="Contact Details" />
 
-                <div className="col-span-4 grid grid-cols-3 gap-3">
+                <div className="col-span-4 grid md:grid-cols-3 gap-3">
                     <FormField
                         label="Landline No."
                         error={form.errors.landline_no}
@@ -953,7 +987,7 @@ const Show = ({ application, image }) => {
 
                 <FormField
                     label="Educational Attainment"
-                    className="col-span-4"
+                    className="md:col-span-4"
                     error={form.errors.educational_attainment}
                 />
 
@@ -963,7 +997,7 @@ const Show = ({ application, image }) => {
                     onValueChange={(value) =>
                         form.setData("educational_attainment", value)
                     }
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid md:grid-cols-4"
                 >
                     {educationalAttainment.map((item) => (
                         <div
@@ -981,7 +1015,7 @@ const Show = ({ application, image }) => {
 
                 <FormH1 label="Employment Details" />
 
-                <div className="col-span-4 grid grid-cols-3">
+                <div className="md:col-span-4 md:grid md:grid-cols-3 space-y-2">
                     <FormField
                         label="Status of Employment"
                         error={form.errors.status_of_employment}
@@ -1086,7 +1120,7 @@ const Show = ({ application, image }) => {
 
                 <FormField
                     label="Work Field"
-                    className="col-span-4"
+                    className="md:col-span-4"
                     error={form.errors.work_field}
                     isRequired={form.data.status_of_employment != "unemployed"}
                 />
@@ -1098,7 +1132,7 @@ const Show = ({ application, image }) => {
                         form.data.status_of_employment == "unemployed" ||
                         isShowMode
                     }
-                    className="col-span-4 grid grid-cols-4"
+                    className="md:col-span-4 md:grid md:grid-cols-4"
                 >
                     {occupations.map((item) => (
                         <div
@@ -1364,7 +1398,9 @@ const Show = ({ application, image }) => {
                             <TH>File Name</TH>
                             <TH>Status</TH>
                             <TH>Remarks</TH>
-                            <TH>Actions</TH>
+                            {application.status != "approved" && (
+                                <TH>Actions</TH>
+                            )}
                         </TableHead>
                         <TableBody>
                             {visibleDocuments.map((item) => (
@@ -1379,108 +1415,117 @@ const Show = ({ application, image }) => {
                                     </TD>
                                     <TD>{item.status.toUpperCase()}</TD>
                                     <TD>{item.remarks ?? "None"}</TD>
-                                    <TD className="flex items-center space-x-2">
-                                        <Dialog
-                                            open={isEditDialogOpen}
-                                            onOpenChange={setIsEditDialogOpen}
-                                        >
-                                            <DialogTrigger asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    onClick={() => {
-                                                        setDocumentToEdit({
-                                                            id: item.id,
-                                                            status: item.status,
-                                                            remarks:
-                                                                item.remarks,
-                                                        });
-                                                        setIsEditDialogOpen(
-                                                            true
-                                                        );
-                                                    }}
-                                                >
-                                                    Edit Details
-                                                </Button>
-                                            </DialogTrigger>
-                                            <DialogContent className="sm:max-w-[425px]">
-                                                <DialogHeader>
-                                                    <DialogTitle>
-                                                        Edit Document Details
-                                                    </DialogTitle>
-                                                    <DialogDescription>
-                                                        Update the status and
-                                                        remarks for this
-                                                        document.
-                                                    </DialogDescription>
-                                                </DialogHeader>
-                                                <div className="grid gap-4 py-4">
-                                                    <FormField label="Status">
-                                                        <Select
-                                                            value={
-                                                                documentToEdit.status
-                                                            }
-                                                            onValueChange={(
-                                                                value
-                                                            ) =>
-                                                                setDocumentToEdit(
-                                                                    (prev) => ({
-                                                                        ...prev,
-                                                                        status: value,
-                                                                    })
-                                                                )
-                                                            }
-                                                        >
-                                                            <SelectTrigger>
-                                                                <SelectValue placeholder="Options" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectItem value="pending">
-                                                                    Pending
-                                                                </SelectItem>
-                                                                <SelectItem value="approved">
-                                                                    Approved
-                                                                </SelectItem>
-                                                                <SelectItem value="rejected">
-                                                                    Rejected
-                                                                </SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </FormField>
-                                                    <FormField label="Remarks">
-                                                        <Textarea
-                                                            value={
-                                                                documentToEdit.remarks ??
-                                                                ""
-                                                            }
-                                                            onChange={(e) =>
-                                                                setDocumentToEdit(
-                                                                    (prev) => ({
-                                                                        ...prev,
-                                                                        remarks:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                    })
-                                                                )
-                                                            }
-                                                        />
-                                                    </FormField>
-                                                </div>
-                                                <DialogFooter>
+                                    {application.status != "approved" && (
+                                        <TD className="flex items-center space-x-2">
+                                            <Dialog
+                                                open={isEditDialogOpen}
+                                                onOpenChange={
+                                                    setIsEditDialogOpen
+                                                }
+                                            >
+                                                <DialogTrigger asChild>
                                                     <Button
+                                                        variant="outline"
                                                         onClick={() => {
-                                                            updateDocumentDetails();
+                                                            setDocumentToEdit({
+                                                                id: item.id,
+                                                                status: item.status,
+                                                                remarks:
+                                                                    item.remarks,
+                                                            });
                                                             setIsEditDialogOpen(
-                                                                false
+                                                                true
                                                             );
                                                         }}
                                                     >
-                                                        Save Changes
+                                                        Edit Details
                                                     </Button>
-                                                </DialogFooter>
-                                            </DialogContent>
-                                        </Dialog>
-                                    </TD>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-[425px]">
+                                                    <DialogHeader>
+                                                        <DialogTitle>
+                                                            Edit Document
+                                                            Details
+                                                        </DialogTitle>
+                                                        <DialogDescription>
+                                                            Update the status
+                                                            and remarks for this
+                                                            document.
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    <div className="grid gap-4 py-4">
+                                                        <FormField label="Status">
+                                                            <Select
+                                                                value={
+                                                                    documentToEdit.status
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) =>
+                                                                    setDocumentToEdit(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            status: value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue placeholder="Options" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="pending">
+                                                                        Pending
+                                                                    </SelectItem>
+                                                                    <SelectItem value="approved">
+                                                                        Approved
+                                                                    </SelectItem>
+                                                                    <SelectItem value="rejected">
+                                                                        Rejected
+                                                                    </SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormField>
+                                                        <FormField label="Remarks">
+                                                            <Textarea
+                                                                value={
+                                                                    documentToEdit.remarks ??
+                                                                    ""
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setDocumentToEdit(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            remarks:
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                            />
+                                                        </FormField>
+                                                    </div>
+                                                    <DialogFooter>
+                                                        <Button
+                                                            onClick={() => {
+                                                                updateDocumentDetails();
+                                                                setIsEditDialogOpen(
+                                                                    false
+                                                                );
+                                                            }}
+                                                        >
+                                                            Save Changes
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </TD>
+                                    )}
                                 </tr>
                             ))}
                         </TableBody>
