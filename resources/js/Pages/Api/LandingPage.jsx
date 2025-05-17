@@ -517,12 +517,13 @@ const LandingPage = () => {
                                 </div>
 
                                 <div className="mt-8">
-                                    <Link
+                                    <a
+                                        target="_blank"
                                         href="/api/documentation"
                                         className="rounded-lg px-6 py-3 bg-primary hover:bg-primary-dark text-white"
                                     >
                                         View Full Documentation
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         </div>

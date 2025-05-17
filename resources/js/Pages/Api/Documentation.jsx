@@ -65,7 +65,8 @@ const Documentation = () => {
                                     </div>
                                 </div>
                                 <div className="mt-4">
-                                    <Link
+                                    <a
+                                        target="_blank"
                                         href="/api"
                                         className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium flex items-center hover:bg-blue-700 transition w-fit"
                                     >
@@ -74,7 +75,7 @@ const Documentation = () => {
                                             className="mr-2"
                                         />
                                         View Subscription Plans
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -112,13 +113,14 @@ const Documentation = () => {
                                     className="rounded-lg border border-gray-200 w-full max-w-lg mb-4"
                                 />
                                 <div className="mt-4">
-                                    <Link
+                                    <a
+                                        target="_blank"
                                         href="/api/api-keys"
                                         className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium flex items-center hover:bg-blue-700 transition w-fit"
                                     >
                                         <Key size={18} className="mr-2" />
                                         Generate API Key
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -182,11 +184,11 @@ const Documentation = () => {
                                         {`{
   "status": "success",
   "data": {
-    "is_valid": true,
+    "is_found": true,
     "card_details": {
-      "uid": "1434534645654346545",
-      "type": "standard",
-      "expiry_date": "2025-12-31"
+      "card_holder": "Juan Dela Cruz",
+      "effective_date": "2024-02-09",
+      "expiry_date": "2029-02-09"
     }
   }
 }`}

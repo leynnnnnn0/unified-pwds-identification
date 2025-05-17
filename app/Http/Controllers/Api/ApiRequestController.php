@@ -27,7 +27,9 @@ class ApiRequestController extends Controller
         if (!$api_key) {
             return response()->json([
                 'success' => false,
-                'is_found' => null,
+                'data' => [
+                    'is_found' => null,
+                ],
                 'message' => 'Unknown API key'
             ], 403);
         }
@@ -39,7 +41,9 @@ class ApiRequestController extends Controller
         if (!$user_subscription) {
             return response()->json([
                 'success' => false,
-                'is_found' => null,
+                'data' => [
+                    'is_found' => null,
+                ],
                 'message' => 'Please subscribe to one of our subscriptions to be able to send a request.'
             ], 403);
         }
@@ -60,7 +64,9 @@ class ApiRequestController extends Controller
 
             return response()->json([
                 'success' => false,
-                'is_found' => null,
+                'data' => [
+                    'is_found' => null,
+                ],
                 'message' => 'Max request limit reached.'
             ], 403);
         }
@@ -88,8 +94,9 @@ class ApiRequestController extends Controller
             DB::commit();
             return response()->json([
                 'success' => true,
-                'is_found' => false,
-                'data' => []
+                'data' => [
+                    'is_found' => false,
+                ]
             ]);
         }
 
@@ -106,13 +113,14 @@ class ApiRequestController extends Controller
 
         DB::commit();
         return response()->json([
-            'api_key' => $api_key,
             'success' => true,
-            'is_found' => false,
             'data' => [
-                'card_holder' => $result->application_form->first_name . ' ' . $result->application_form->last_name,
-                'effective_date' => $result->effective_date,
-                'expiry_date' => $result->expiry_date,
+                'is_found' => false,
+                'card_details' => [
+                    'card_holder' => $result->application_form->first_name . ' ' . $result->application_form->last_name,
+                    'effective_date' => $result->effective_date,
+                    'expiry_date' => $result->expiry_date,
+                ]
             ]
         ]);
     }
