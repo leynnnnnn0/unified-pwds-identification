@@ -8,7 +8,7 @@ const CodeContainer = () => {
     const codeExamples = {
         javascript: `import axios from 'axios';
             
-const result = await axios.get('http://unified-pwds-identification/api/verification', {
+const result = await axios.get('http://leyn19-001-site1.otempurl.com/api/verification', {
   params: {
     secret_key: process.env.secret_key,
     card_uid: 1434534645654346545
@@ -23,7 +23,7 @@ use GuzzleHttp\\Client;
 $client = new Client();
 
 try {
-    $response = $client->request('GET', 'http://unified-pwds-identification/api/verification', [
+    $response = $client->request('GET', 'http://leyn19-001-site1.otempurl.com/api/verification', [
         'query' => [
             'secret_key' => getenv('secret_key'),
             'card_uid' => 1434534645654346545
@@ -50,7 +50,7 @@ class Program
             try
             {
                 var response = await client.GetAsync(
-                    $"http://unified-pwds-identification/api/verification?secret_key={Environment.GetEnvironmentVariable("secret_key")}&card_uid=1434534645654346545");
+                    $"http://leyn19-001-site1.otempurl.com/api/verification?secret_key={Environment.GetEnvironmentVariable("secret_key")}&card_uid=1434534645654346545");
                 
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
@@ -75,7 +75,7 @@ public class ApiClient {
         HttpClient client = HttpClient.newHttpClient();
         
         String secret_key = System.getenv("secret_key");
-        String url = "http://unified-pwds-identification/api/verification?secret_key=" + secret_key + "&card_uid=1434534645654346545";
+        String url = "http://leyn19-001-site1.otempurl.com/api/verification?secret_key=" + secret_key + "&card_uid=1434534645654346545";
         
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
