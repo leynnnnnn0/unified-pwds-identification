@@ -9,7 +9,7 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-import { format } from "date-fns";
+import { format, parseISO, isValid } from "date-fns";
 import Table from "@/Components/table/table";
 import TableHead from "@/Components/table/table-head";
 import TH from "@/Components/table/th";
@@ -18,21 +18,62 @@ import TD from "@/Components/table/td";
 import TableContainer from "@/Components/table/table-container";
 import Pagination from "@/Components/pagination";
 
-const Index = ({ usageStats, transactions }) => {
-    const chartData = usageStats
-        ? usageStats.map((day) => ({
-              name: format(new Date(day.date), "MMM dd"),
-              success: day.success,
-              failed: day.failed,
-          }))
-        : [];
+const Index = ({
+    usageStats = [],
+    transactions = { data: [], from: 0, to: 0, total: 0 },
+}) => {
+    // Safely format dates with error handling
+    const safeFormatDate = (dateString, formatPattern) => {
+        if (!dateString) return "Invalid date";
+
+        try {
+            // Try to parse the date string into a Date object
+            const date =
+                typeof dateString === "string"
+                    ? parseISO(dateString)
+                    : new Date(dateString);
+
+            // Check if the resulting date is valid
+            if (!isValid(date)) return "Invalid date";
+
+            // Format the date if it's valid
+            return format(date, formatPattern);
+        } catch (error) {
+            console.error("Error formatting date:", error, dateString);
+            return "Invalid date";
+        }
+    };
+
+    // Process chart data with safety checks
+    const chartData =
+        usageStats && Array.isArray(usageStats)
+            ? usageStats
+                  .filter((day) => day && day.date)
+                  .map((day) => ({
+                      name: safeFormatDate(day.date, "MMM dd"),
+                      success: day.success || 0,
+                      failed: day.failed || 0,
+                  }))
+            : [];
 
     // If no data, show placeholder
-    const noData = chartData.length === 0;
+    const noData = !chartData || chartData.length === 0;
 
-    // Calculate totals for summary
-    const totalSuccess = chartData.reduce((sum, day) => sum + day.success, 0);
-    const totalFailed = chartData.reduce((sum, day) => sum + day.failed, 0);
+    // Calculate totals for summary with safety checks
+    const totalSuccess = chartData.reduce(
+        (sum, day) => sum + (day.success || 0),
+        0
+    );
+    const totalFailed = chartData.reduce(
+        (sum, day) => sum + (day.failed || 0),
+        0
+    );
+
+    // Ensure transactions data is properly initialized to prevent errors
+    const transactionData = transactions?.data || [];
+    const transactionFrom = transactions?.from || 0;
+    const transactionTo = transactions?.to || 0;
+    const transactionTotal = transactions?.total || 0;
 
     return (
         <div className="w-full p-4 md:p-6">
@@ -174,8 +215,8 @@ const Index = ({ usageStats, transactions }) => {
                         Transactions Details
                     </h2>
                     <div className="text-xs sm:text-sm text-gray-500">
-                        Showing {transactions.from}-{transactions.to} of{" "}
-                        {transactions.total} transactions
+                        Showing {transactionFrom}-{transactionTo} of{" "}
+                        {transactionTotal} transactions
                     </div>
                 </div>
 
@@ -193,12 +234,19 @@ const Index = ({ usageStats, transactions }) => {
                                 <TH className="">Date</TH>
                             </TableHead>
                             <TableBody>
-                                {transactions.data.map((item) => (
+                                {transactionData.map((item) => (
                                     <tr
-                                        key={item.id}
+                                        key={
+                                            item.id ||
+                                            Math.random()
+                                                .toString(36)
+                                                .substr(2, 9)
+                                        }
                                         className="hover:bg-gray-50"
                                     >
-                                        <TD className="">#{item.id}</TD>
+                                        <TD className="">
+                                            #{item.id || "N/A"}
+                                        </TD>
                                         <TD className="md:table-cell hidden">
                                             <span
                                                 className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
@@ -209,12 +257,18 @@ const Index = ({ usageStats, transactions }) => {
                                                         : "bg-gray-100 text-gray-800"
                                                 }`}
                                             >
-                                                {item.method}
+                                                {item.method || "UNKNOWN"}
                                             </span>
                                         </TD>
                                         <TD className="md:table-cell hidden">
-                                            {item.secret_key.substring(0, 8)}...
-                                            {item.secret_key.slice(-4)}
+                                            {item.secret_key
+                                                ? `${item.secret_key.substring(
+                                                      0,
+                                                      8
+                                                  )}...${item.secret_key.slice(
+                                                      -4
+                                                  )}`
+                                                : "N/A"}
                                         </TD>
                                         <TD>
                                             <span
@@ -237,25 +291,42 @@ const Index = ({ usageStats, transactions }) => {
                                                 )}
                                             </span>
                                         </TD>
-                                        <TD className="">{item.ip_address}</TD>
                                         <TD className="">
-                                            {format(
-                                                new Date(item.created_at),
-                                                "MMM dd, HH:mm"
-                                            )}
+                                            {item.ip_address || "N/A"}
+                                        </TD>
+                                        <TD className="">
+                                            {item.created_at
+                                                ? safeFormatDate(
+                                                      item.created_at,
+                                                      "MMM dd, HH:mm"
+                                                  )
+                                                : "N/A"}
                                         </TD>
                                     </tr>
                                 ))}
+
+                                {transactionData.length === 0 && (
+                                    <tr>
+                                        <TD
+                                            colSpan="6"
+                                            className="text-center py-6"
+                                        >
+                                            No transaction data available
+                                        </TD>
+                                    </tr>
+                                )}
                             </TableBody>
                         </Table>
                     </div>
 
-                    <div className="mt-4">
-                        <Pagination
-                            data={transactions}
-                            className="text-xs sm:text-sm"
-                        />
-                    </div>
+                    {transactionData.length > 0 && (
+                        <div className="mt-4">
+                            <Pagination
+                                data={transactions}
+                                className="text-xs sm:text-sm"
+                            />
+                        </div>
+                    )}
                 </TableContainer>
             </div>
         </div>
