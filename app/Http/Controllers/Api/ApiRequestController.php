@@ -76,7 +76,7 @@ class ApiRequestController extends Controller
 
         $result = PWDIdentificationCard::with('application_form')
             ->where('rfid_card_number', $card_uid)
-            ->where('pwd_card_number', $card_uid)
+            ->orWhere('pwd_card_number', $card_uid)
             ->first();
 
         // If pwd id exists
