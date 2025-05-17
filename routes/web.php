@@ -43,13 +43,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
         Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
         Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
-
-
         Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
     });
 
 
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('admin')->middleware('role:admin')->name('admin.')->group(function () {
         Route::resource('dashboard', AdminDashboardController::class);
         Route::resource('applications', AdminApplicationController::class);
         Route::resource('verification', IDVerification::class);
@@ -68,19 +66,18 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::resource('my-account', PWDAccountController::class);
-    Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('my-profile', PWDProfileController::class);
-
-    Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');
-    Route::resource('registration', PWDRegistrationController::class);
-
-    Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
+    // How can i add a middleware so only user with role of 'user' can access this pages
+    Route::middleware(['role:user'])->group(function () {
+        Route::resource('my-account', PWDAccountController::class);
+        Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('my-profile', PWDProfileController::class);
+        Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');
+        Route::resource('registration', PWDRegistrationController::class);
+        Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
+    });
 });
 
 Route::get('/api/municipalities/{province}', [UserController::class, 'getMunicipalities']);
-
-
 Route::controller(LocationController::class)->group(function () {
     Route::get('/api/municipalities', 'getMunicipalities');
     Route::get('/api/regions', 'getRegions');
