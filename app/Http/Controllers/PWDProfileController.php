@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Rootscratch\PSGC\PSGC;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PWDProfileController extends Controller
@@ -37,9 +38,22 @@ class PWDProfileController extends Controller
                 ->generate($application->pwd_identification_card->rfid_card_number)
         );
 
+        $psgcApi = new PSGC();
+
+        $region = $psgcApi->Regions($application->region)[0]->name;
+        $province = $psgcApi->Provinces($application->province)[0]->name;
+        $municipality = $psgcApi->MunicipalAndCities($application->municipality)[0]->name;
+
+        $applicationWithLocations = $application->toArray();
+        $applicationWithLocations['region'] = $region;
+        $applicationWithLocations['province'] = $province;
+        $applicationWithLocations['municipality'] = $municipality;
+
+
+
 
         return Inertia::render('PWDProfile/Index', [
-            'application' => $application,
+            'application' => collect($applicationWithLocations),
             'image' => $image,
             'qr' => $qr
         ]);
