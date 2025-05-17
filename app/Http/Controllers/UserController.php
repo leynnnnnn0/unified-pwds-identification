@@ -78,8 +78,24 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load(["municipalities", "provinces"]);
+
+        $psgcApi = new PSGC();
+        $provinces = collect($psgcApi->Provinces())->pluck('name', 'psgc_id');
+
+        $municipalities = [];
+        if ($user->role === 'processer' && $user->municipalities->isNotEmpty()) {
+            $firstMunicipality = $user->municipalities->first()->municipality;
+            $municipalities = collect($psgcApi->MunicipalAndCities($firstMunicipality))
+                ->pluck('name', 'psgc_id');
+        }
+
         return Inertia::render('User/Edit', [
             'user' => $user,
+            'provinces' => $provinces,
+            'municipalities' => $municipalities,
+            'auth' => [
+                'role' => auth()->user()->role
+            ]
         ]);
     }
 
@@ -140,5 +156,60 @@ class UserController extends Controller
         DB::commit();
 
         return to_route('admin.users.index');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'first_name' => ['required'],
+            'middle_name' => ['nullable'],
+            'last_name' => ['required'],
+            'phone_number' => ['required'],
+            'email' => ['required', Rule::unique('users')->ignore($user->id)],
+            'role' => ['required'],
+            'remarks' => ['nullable'],
+            'assignedProvinces' => [
+                'nullable',
+                'array',
+                Rule::requiredIf(function () use ($request) {
+                    return $request->role === 'sub_admin';
+                }),
+            ],
+            'assignedMunicipalities' => [
+                'nullable',
+                'array',
+                Rule::requiredIf(function () use ($request) {
+                    return $request->role === 'processer';
+                }),
+            ],
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $user->update(Arr::except($validated, ['assignedProvinces', 'assignedMunicipalities']));
+
+            // Sync provinces for sub_admin
+            if ($user->role == 'sub_admin') {
+                $user->provinces()->delete(); // Remove existing
+                foreach ($validated['assignedProvinces'] as $province) {
+                    $user->provinces()->create(['province' => $province]);
+                }
+            }
+
+            // Sync municipalities for processer
+            if ($user->role == 'processer') {
+                $user->municipalities()->delete(); // Remove existing
+                foreach ($validated['assignedMunicipalities'] as $municipality) {
+                    $user->municipalities()->create(['municipality' => $municipality]);
+                }
+            }
+
+            DB::commit();
+            return to_route('admin.users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Failed to update user']);
+        }
     }
 }
