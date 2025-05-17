@@ -125,7 +125,7 @@ const Index = ({ applications, filters }) => {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search..."
-                            class="pl-10 rounded-lg w-72"
+                            class="pl-10 rounded-lg md:first-letter:w-72 md:h-12 h-8"
                         />
                     </SearchBar>
 
@@ -201,9 +201,13 @@ const Index = ({ applications, filters }) => {
                 <Table>
                     <TableHead>
                         <TH>Application Number</TH>
-                        <TH>Application Date</TH>
-                        <TH>Encoder</TH>
-                        <TH>Type Of Registration</TH>
+                        <TH className="hidden md:table-cell">
+                            Application Date
+                        </TH>
+                        <TH className="hidden md:table-cell">Encoder</TH>
+                        <TH className="hidden md:table-cell">
+                            Type Of Registration
+                        </TH>
                         <TH>Status</TH>
                         <TH>Actions</TH>
                     </TableHead>
@@ -212,9 +216,13 @@ const Index = ({ applications, filters }) => {
                             return (
                                 <tr key={item.id}>
                                     <TD>{item.application_number}</TD>
-                                    <TD>{item.application_date}</TD>
-                                    <TD>{item.encoder}</TD>
-                                    <TD>
+                                    <TD className="hidden md:table-cell">
+                                        {item.application_date}
+                                    </TD>
+                                    <TD className="hidden md:table-cell">
+                                        {item.encoder}
+                                    </TD>
+                                    <TD className="hidden md:table-cell">
                                         <Badge
                                             className={getTypeColor(
                                                 item.type_of_application
