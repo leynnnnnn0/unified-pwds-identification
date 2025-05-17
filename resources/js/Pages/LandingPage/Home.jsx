@@ -125,6 +125,10 @@ const Home = () => {
                                     {item.label}
                                 </li>
                             ))}
+
+                            <li className="cursor-pointer transition-colors duration-300 hover:text-primary-color">
+                                <a href="/api">API</a>
+                            </li>
                         </ul>
 
                         <div className="hidden md:flex items-center justify-center gap-3 lg:gap-5">

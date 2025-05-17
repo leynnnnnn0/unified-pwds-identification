@@ -240,9 +240,12 @@ const LandingPage = () => {
                         </p>
 
                         <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-                            <Button className="w-full sm:w-auto rounded-full px-8 py-6 bg-primary hover:bg-primary-dark text-white font-medium text-base">
-                                Get Started Free
-                            </Button>
+                            <Link
+                                href="/api/login"
+                                className="w-full sm:w-auto rounded-full px-8 py-4 bg-primary hover:bg-primary-dark text-white font-medium text-base"
+                            >
+                                Get Started
+                            </Link>
                             <Button
                                 onClick={() =>
                                     scrollToSection(documentationRef)

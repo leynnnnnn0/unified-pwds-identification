@@ -25,25 +25,29 @@ Route::resource('', LandingPageController::class);
 
 
 
-Route::middleware(['auth'])->prefix('api/billing')->group(function () {
-    Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
-    Route::get('/checkout', CheckoutController::class)->name('billing.checkout');
-    Route::put('/billing/cancel-subscription/{plan}', [BillingController::class, 'cancelSubscription'])->name('billing.cancel-subscription');
-    Route::put('/billing/renew-subscription/{plan}', [BillingController::class, 'renewSubscription'])->name('billing.renew-subscription');
-});
+
 
 Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
 
 Route::middleware('auth')->group(function () {
 
+    Route::middleware('role:api-user')->group(function () {
+        Route::prefix('api/billing')->group(function () {
+            Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
+            Route::get('/checkout', CheckoutController::class)->name('billing.checkout');
+            Route::put('/billing/cancel-subscription/{plan}', [BillingController::class, 'cancelSubscription'])->name('billing.cancel-subscription');
+            Route::put('/billing/renew-subscription/{plan}', [BillingController::class, 'renewSubscription'])->name('billing.renew-subscription');
+        });
 
-    Route::prefix('api')->group(function () {
 
-        Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
-        Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
-        Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
-        Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
-        Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
+        Route::prefix('api')->group(function () {
+
+            Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
+            Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
+            Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
+            Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+            Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
+        });
     });
 
 
