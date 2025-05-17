@@ -1,99 +1,50 @@
 import { useForm } from "@inertiajs/react";
-import FormField from '@/Components/form/form-field'
-import H1 from '@/Components/text/h1'
-import React from 'react'
-import InfoLabel from '@/Components/text/info-label'
+import FormField from "@/Components/form/form-field";
+import H1 from "@/Components/text/h1";
+import React from "react";
+import InfoLabel from "@/Components/text/info-label";
 import { Button } from "@/Components/ui/button";
+import Infolist from "@/Components/infolist";
 
-const Show = ({user}) => {
-    const form = useForm({
-        first_name: user.first_name,
-        middle_name: user.middle_name,
-        last_name: user.last_name,
-        phone_number: user.phone_number,
-        email: user.email,
-        role: user.role,
-        remarks: user.remarks,
-        assigned_provinces: user.provinces.map((item) => item.province + "\n"),
-        assigned_municipalities: user.municipalities.map((item) => item.municipality + "\n"), 
-    });
+const Show = ({ user, municipalities, provinces }) => {
+    return (
+        <>
+            <H1 title="User Details" />
 
-    console.log(form.data);
-    console.log(user.provinces);
+            <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 grid grid-cols-2 auto-rows-auto gap-2">
+                <Infolist title="First Name" value={user.first_name ?? "N/a"} />
 
-  return (
-    <>
-    <H1 title="User Details"/>
+                <Infolist
+                    title="Midle Name"
+                    value={user.middle_name ?? "N/a"}
+                />
 
-    <div className="w-full rounded-lg shadow-xl border p-10 grid grid-cols-2 auto-rows-auto">
+                <Infolist title="Last Name" value={user.last_name ?? "N/a"} />
 
-      <FormField label="First Name">
-        <InfoLabel
-        label={form.data.first_name}
-        />
-      </FormField>
+                <Infolist title="Email" value={user.email ?? "N/a"} />
 
-      <FormField label="Middle Name"
-        isRequired={false}
-      >
-        <InfoLabel 
-          label={form.data.middle_name}
-        />
-      </FormField>
+                <Infolist
+                    title="Phone Number"
+                    value={user.phone_number ?? "N/a"}
+                />
 
+                <Infolist title="Remarks" value={user.remarks ?? "N/a"} />
 
-      <FormField label="Last Name">
-        <InfoLabel 
-        label={form.data.last_name}
-        />
-      </FormField>
+                <Infolist title="Role" value={user.role ?? "N/a"} />
 
-      <FormField label="Phone Number">
-        <InfoLabel 
-        label={form.data.phone_number}
-        />
-      </FormField>
+                {user.role === "sub_admin" && (
+                    <Infolist title="Provinces Assigned" value={provinces} />
+                )}
 
-      <FormField label="Email">
-        <InfoLabel 
-        label={form.data.email}
-        />
-      </FormField>
+                {user.role === "processer" && (
+                    <Infolist
+                        title="Municipalities Assigned"
+                        value={municipalities}
+                    />
+                )}
+            </div>
+        </>
+    );
+};
 
-      <FormField label="Roles">
-        <InfoLabel 
-        label={form.data.role}
-        />
-      </FormField>
-
-      <FormField label="Remarks"
-        isRequired={false}
-      >
-        <InfoLabel 
-        label={form.data.remarks}
-        />
-      </FormField>
-
-      {form.data.role === 'sub_admin' && (
-        <FormField label="Assigned Provinces">
-          <InfoLabel 
-            label={form.data.assigned_provinces}
-          />
-        </FormField>
-      )}
-
-      {form.data.role === 'processer' && (
-        <FormField label="Assigned Municipalities">
-          <InfoLabel 
-            label={form.data.assigned_municipalities}
-          />
-        </FormField>
-      )}
-
-    </div>
-    <Button>Back</Button>
-    </>
-  )
-}
-
-export default Show
+export default Show;

@@ -141,6 +141,7 @@ const Create = ({ provinces, municipalities, auth }) => {
                         <FormField
                             label="Middle Name"
                             error={form.errors.middle_name}
+                            isRequired={false}
                         >
                             <Input
                                 value={form.data.middle_name}
@@ -205,7 +206,11 @@ const Create = ({ provinces, municipalities, auth }) => {
                                 </SelectContent>
                             </Select>
                         </FormField>
-                        <FormField label="Remarks" error={form.errors.remarks}>
+                        <FormField
+                            label="Remarks"
+                            error={form.errors.remarks}
+                            isRequired={false}
+                        >
                             <Input
                                 value={form.data.remarks}
                                 onChange={(e) =>

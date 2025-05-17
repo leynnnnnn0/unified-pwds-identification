@@ -24,10 +24,34 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        
         $user->load(["municipalities", "provinces"]);
+
+        $psgc = new PSGC();
+        $provinces = [];
+        $municipalities = [];
+
+        if ($user->role == 'sub_admin') {
+            $index = 0;
+            foreach ($user->provinces->pluck('province') as $province) {
+                $selections = collect($psgc->Provinces($province));
+                $provinces[$index] = $selections->where('psgc_id', $province)->first()->name;
+                $index++;
+            }
+        }
+
+        if ($user->role == 'proccesser') {
+            $index = 0;
+            foreach ($user->municipalities->pluck('municipality') as $muncipality) {
+                $selections = collect($psgc->MunicipalAndCities($muncipality));
+                $municipalities[$index] = $selections->where('psgc_id', $muncipality)->first()->name;
+                $index++;
+            }
+        }
+
         return Inertia::render('User/Show', [
             'user' => $user,
+            'provinces' => implode(', ', $provinces),
+            'municipalities' => implode(', ', $municipalities),
         ]);
     }
 
