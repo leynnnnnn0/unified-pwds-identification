@@ -115,7 +115,7 @@ class ApiRequestController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'is_found' => false,
+                'is_found' => true,
                 'card_details' => [
                     'card_holder' => $result->application_form->first_name . ' ' . $result->application_form->last_name,
                     'effective_date' => $result->effective_date,
