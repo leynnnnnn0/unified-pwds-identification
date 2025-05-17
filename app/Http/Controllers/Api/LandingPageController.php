@@ -12,4 +12,9 @@ class LandingPageController extends Controller
     {
         return Inertia::render('Api/LandingPage');
     }
+
+    public function show()
+    {
+        return Inertia::render('Api/Documentation');
+    }
 }

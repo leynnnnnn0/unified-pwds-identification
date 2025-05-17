@@ -23,8 +23,7 @@ use App\Http\Controllers\Api\UsageController;
 
 Route::resource('', LandingPageController::class);
 
-
-
+Route::get('api/documentation', [APILandingPage::class, 'show']);
 
 
 Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
