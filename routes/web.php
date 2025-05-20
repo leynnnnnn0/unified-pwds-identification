@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Api\DashboardController as ApiDashboardController;
 use App\Http\Controllers\Api\UsageController;
+use App\Http\Controllers\CardPrintingController;
 
 Route::resource('', LandingPageController::class);
 
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('verification', IDVerification::class);
         Route::resource('users', UserController::class);
         Route::resource('my-account', PWDAccountController::class);
-
+        Route::resource('card-printing', CardPrintingController::class);
 
         Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
             Route::get('applications/{id}/process', 'process')->name('process');

@@ -32,6 +32,13 @@ export function AdminSidebar({ onItemClick }) {
             isVisible: true,
         },
         {
+            title: "Card Printing",
+            url: "/admin/card-printing",
+            icon: FileUser,
+            isLocked: false,
+            isVisible: true,
+        },
+        {
             title: "Verification",
             url: "/admin/verification",
             icon: ShieldCheck,
