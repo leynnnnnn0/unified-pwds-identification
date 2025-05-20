@@ -19,7 +19,6 @@ class CardPrintingController extends Controller
                 'pwd_card_number' => $item->pwd_card_number,
                 'card_holder' => $application_form->full_name,
                 'effective_date' => $item->effective_date
-
             ];
         });
 
