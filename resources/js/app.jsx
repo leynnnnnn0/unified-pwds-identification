@@ -25,18 +25,21 @@ createInertiaApp({
         page.default.layout = (page) => {
             const path = window.location.pathname;
 
-            if (path.startsWith("/admin")) {
-                return <AdminLayout>{page}</AdminLayout>;
-            } else if (
+            if (
                 path.startsWith("/login") ||
                 path === "/" ||
                 path.startsWith("/register") ||
                 path == "/api" ||
                 path == "/api/login" ||
                 path == "/api/register" ||
-                path == "/api/documentation"
+                path == "/api/documentation" ||
+                path.startsWith("/admin/card-printing/print") ||
+                path.startsWith("/admin/card-printing/batch-print")
             ) {
                 return page;
+            }
+            if (path.startsWith("/admin")) {
+                return <AdminLayout>{page}</AdminLayout>;
             } else if (path.startsWith("/api")) {
                 return <APILayout>{page}</APILayout>;
             } else {

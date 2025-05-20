@@ -5,6 +5,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+  @page {
+    size: auto;
+    margin: 0;
+  }
+  
+  body {
+    margin: 1cm;
+  }
+  
+  .print-hidden,
+  .print-hidden * {
+    display: none !important;
+  }
+  
+  .print-page-break {
+    page-break-after: always;
+  }
+  
+  .print-clean {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+  }
+}
+
 html, body, #root {
     height: 100%;
     margin: 0;

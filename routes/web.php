@@ -59,6 +59,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('my-account', PWDAccountController::class);
         Route::resource('card-printing', CardPrintingController::class);
 
+        Route::controller(CardPrintingController::class)->group(function () {
+            Route::get('/card-printing/pdf/{id}', 'generateIdCardPdf');
+            Route::get('/card-printing/print/{id}', 'printCard');
+            Route::post('/card-printing/batch-print', 'batchPrint');
+        });
+
         Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {
             Route::get('applications/{id}/process', 'process')->name('process');
             Route::get('applications/{id}', 'show')->name('applications.show');
