@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Rootscratch\PSGC\PSGC;
 
 class PWDApplicationForm extends Model
 {
@@ -83,7 +84,8 @@ class PWDApplicationForm extends Model
         'formatted_type_of_application',
         'disabilities_list',
         'cause_of_disabilities_list',
-        'full_name'
+        'full_name',
+        'address'
     ];
 
 
@@ -155,5 +157,16 @@ class PWDApplicationForm extends Model
     public function getFullNameAttribute()
     {
         return $this->first_name . " " . $this->last_name;
+    }
+
+    public function getAddressAttribute()
+    {
+        $psgcApi = new PSGC();
+
+        $region = $psgcApi->Regions($this->region)[0]->name;
+        $province = $psgcApi->Provinces($this->province)[0]->name;
+        $municipality = $psgcApi->MunicipalAndCities($this->municipality)[0]->name;
+
+        return $this->house_no_and_street . " " . $municipality . ", " . $province;
     }
 }

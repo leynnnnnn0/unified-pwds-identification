@@ -11,6 +11,7 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 import { Download, PrinterIcon } from "lucide-react";
+import MainLogo from "../../../images/mainLogo.jpg";
 
 const Index = ({ cards }) => {
     const [selectedCards, setSelectedCards] = useState([]);

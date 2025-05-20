@@ -3,7 +3,8 @@ import { Button } from "@/Components/ui/button";
 import { ArrowLeft, PrinterIcon } from "lucide-react";
 import { router } from "@inertiajs/react";
 import H1 from "@/Components/text/h1";
-
+import MainLogo from "../../../images/mainLogo.jpg";
+import Flag from "../../../images/philippines.jpg";
 const PrintCard = ({ cardData }) => {
     const printRef = useRef();
 
@@ -33,164 +34,98 @@ const PrintCard = ({ cardData }) => {
             </div>
 
             {/* Card Preview Container */}
-            <div className="bg-white p-6 mb-6 print:p-0 print:shadow-none">
+            <div className="bg-white p-6 mb-6 print:p-0 print:shadow-none space-y-3 flex ">
                 <div ref={printRef} className="mx-auto max-w-xl">
-                    <div className="flex flex-col gap-6">
-                        {/* Card Front */}
-                        <div className="border border-gray-800 rounded-lg p-5 bg-white w-full h-56 relative print:scale-100 print:break-after-page">
-                            <div className="border-b-2 border-blue-700 pb-2 mb-3 text-center">
-                                <div>
-                                    <h2 className="text-base font-bold m-0">
-                                        Republic of the Philippines
-                                    </h2>
-                                    <h3 className="text-lg font-bold text-blue-700 mt-1 mb-0">
-                                        PWD IDENTIFICATION CARD
-                                    </h3>
-                                </div>
-                            </div>
+                    <section className="flex flex-col md:flex-row items-center gap-6 justify-center">
+                        {/* ID Card Front */}
+                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 mb-4 md:mb-0">
+                            <section className="flex items-center justify-between">
+                                <img
+                                    src={MainLogo}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                                <span className="text-gray-700 font-bold text-xs">
+                                    Republic of the Philippines{" "}
+                                </span>
+                                <img
+                                    src={Flag}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                            </section>
 
-                            <div className="flex gap-4">
-                                <div className="w-24 h-24 border border-gray-300 overflow-hidden bg-gray-100 flex items-center justify-center">
-                                    {cardData.photo_path ? (
-                                        <img
-                                            src={`/storage/${cardData.photo_path}`}
-                                            alt="PWD Photo"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    ) : (
-                                        <div className="text-xs text-gray-500 text-center">
-                                            No Photo
-                                        </div>
-                                    )}
-                                </div>
+                            <section className="flex gap-4 h-full items-center mt-2">
+                                <div className="flex flex-col gap-1">
+                                    <img
+                                        src={cardData["photo"]}
+                                        alt="User photo"
+                                        className="size-16 sm:size-24 object-cover"
+                                    />
 
-                                <div className="flex-1">
-                                    <div className="flex mb-1 text-xs">
-                                        <span className="font-bold w-24">
-                                            PWD ID No:
-                                        </span>
-                                        <span className="flex-1">
-                                            {cardData.pwd_card_number}
+                                    <div className="flex flex-col w-16 sm:w-24">
+                                        <div className="border-b border-gray-500 h-auto mt-3 sm:mt-5"></div>
+                                        <span className="text-center text-[9px]">
+                                            Signature
                                         </span>
                                     </div>
-                                    <div className="flex mb-1 text-xs">
-                                        <span className="font-bold w-24">
-                                            Name:
-                                        </span>
-                                        <span className="flex-1">
+                                </div>
+
+                                <div className="flex-1 flex flex-col gap-2">
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">ID Number:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            PWD-1213456
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Card Holder:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             {cardData.card_holder}
-                                        </span>
+                                        </p>
                                     </div>
-                                    <div className="flex mb-1 text-xs">
-                                        <span className="font-bold w-24">
-                                            Address:
-                                        </span>
-                                        <span className="flex-1 truncate">
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Type of Disabilities:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            {cardData.disabilities}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">Address:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
                                             {cardData.address}
-                                        </span>
-                                    </div>
-                                    <div className="flex mb-1 text-xs">
-                                        <span className="font-bold w-24">
-                                            Date of Birth:
-                                        </span>
-                                        <span className="flex-1">
-                                            {cardData.birthdate}
-                                        </span>
-                                    </div>
-                                    <div className="flex gap-2 mb-1">
-                                        <div className="flex text-xs w-1/2">
-                                            <span className="font-bold w-16">
-                                                Gender:
-                                            </span>
-                                            <span className="flex-1">
-                                                {cardData.gender}
-                                            </span>
-                                        </div>
-                                        <div className="flex text-xs w-1/2">
-                                            <span className="font-bold w-20">
-                                                Blood Type:
-                                            </span>
-                                            <span className="flex-1">
-                                                {cardData.blood_type}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="flex mb-1 text-xs">
-                                        <span className="font-bold w-24">
-                                            Disability:
-                                        </span>
-                                        <span className="flex-1">
-                                            {cardData.disability_type}
-                                        </span>
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="border-t border-gray-200 pt-2 mt-2 text-xs">
-                                <div className="flex">
-                                    <span className="font-bold">
-                                        Date Issued:
-                                    </span>
-                                    <span className="ml-2">
-                                        {cardData.effective_date}
-                                    </span>
-                                </div>
-                            </div>
+                            </section>
                         </div>
+                    </section>
 
-                        {/* Card Back */}
-                        <div className="border border-gray-800 rounded-lg p-5 bg-white w-full h-56 relative flex flex-col">
-                            <div className="bg-gray-100 p-3 rounded mb-3">
-                                <h3 className="text-sm font-bold mb-1 text-blue-700">
-                                    EMERGENCY CONTACT
-                                </h3>
-                                <div className="flex mb-1 text-xs">
-                                    <span className="font-bold w-24">
-                                        Contact Person:
-                                    </span>
-                                    <span className="flex-1">
-                                        {cardData.emergency_contact_person}
-                                    </span>
-                                </div>
-                                <div className="flex text-xs">
-                                    <span className="font-bold w-24">
-                                        Contact Number:
-                                    </span>
-                                    <span className="flex-1">
-                                        {cardData.emergency_contact_number}
-                                    </span>
-                                </div>
-                            </div>
+                    <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 flex items-center flex-col justify-center">
+                        <img
+                            src={cardData.qr}
+                            alt="QR Code"
+                            className="size-32 sm:size-30"
+                        />
 
-                            <div className="text-xs text-gray-600 mb-3">
-                                <p className="m-0 mb-1">
-                                    This card is non-transferable. Unauthorized
-                                    use will be penalized.
-                                </p>
-                                <p className="m-0 mb-1">
-                                    If found, please return to the nearest DSWD
-                                    office or local government unit.
-                                </p>
-                                <p className="m-0">
-                                    Application Form #:{" "}
-                                    {cardData.application_form_number}
-                                </p>
-                            </div>
-
-                            <div className="flex justify-between mt-auto">
-                                <div className="w-2/5 text-center">
-                                    <div className="border-t border-black mb-1"></div>
-                                    <p className="text-xs m-0">
-                                        Cardholder's Signature
-                                    </p>
-                                </div>
-                                <div className="w-2/5 text-center">
-                                    <div className="border-t border-black mb-1"></div>
-                                    <p className="text-xs m-0">
-                                        Issuing Officer
-                                    </p>
-                                </div>
-                            </div>
+                        <div className="text-xs text-gray-600 mb-3 text-center">
+                            <p className="m-0 mb-1">
+                                This card is non-transferable. Unauthorized use
+                                will be penalized.
+                            </p>
+                            <p className="m-0 mb-1">
+                                If found, please return to the nearest local
+                                government unit.
+                            </p>
+                            <p className="m-0">
+                                Application Form #:{" "}
+                                {cardData.application_form_number}
+                            </p>
                         </div>
                     </div>
                 </div>
