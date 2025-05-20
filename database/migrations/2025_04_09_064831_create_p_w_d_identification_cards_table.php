@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('pwd_card_number')->unique();
             $table->date('effective_date');
             $table->date('expiry_date');
+            $table->boolean('is_printed')->default(false);
             $table->timestamps();
         });
     }

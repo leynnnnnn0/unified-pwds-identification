@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class AdminApplicationController extends Controller
 {
@@ -125,7 +126,7 @@ class AdminApplicationController extends Controller
     {
         $cardDetails = [
             'application_form_id' => $id,
-            'pwd_card_number' => Uuid::uuid4()->toString(),
+            'pwd_card_number' => "pwd-" . Str::random(8),
             'effective_date' => now()->format('Y-m-d'),
             'expiry_date' => now()->addYears(5)->format('Y-m-d'),
 

@@ -19,6 +19,7 @@ class PWDIdentificationCard extends Model
         'pwd_card_number',
         'effective_date',
         'expiry_date',
+        'is_printed'
     ];
 
     protected $appends = [

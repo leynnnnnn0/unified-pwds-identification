@@ -82,7 +82,8 @@ class PWDApplicationForm extends Model
         'formatted_status',
         'formatted_type_of_application',
         'disabilities_list',
-        'cause_of_disabilities_list'
+        'cause_of_disabilities_list',
+        'full_name'
     ];
 
 
@@ -149,5 +150,10 @@ class PWDApplicationForm extends Model
     public function getFormattedTypeOfApplicationAttribute()
     {
         return strtoupper(str_replace('_', ' ', $this->type_of_registration));
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . " " . $this->last_name;
     }
 }
