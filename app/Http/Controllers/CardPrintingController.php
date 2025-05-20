@@ -125,14 +125,22 @@ class CardPrintingController extends Controller
                     'pwd_card_number' => $card->pwd_card_number,
                     'card_holder' => $application_form->full_name,
                     'effective_date' => $card->effective_date,
-                    'photo_path' => $application_form->photo_path,
+                    'photo' => Storage::url($application_form->photo),
                     'address' => $application_form->address ?? 'N/A',
                     'birthdate' => $application_form->birthdate ?? 'N/A',
                     'gender' => $application_form->gender ?? 'N/A',
-                    'disability_type' => $application_form->disability_type ?? 'N/A',
+                    'disabilities' => $application_form->disabilities_list,
                     'blood_type' => $application_form->blood_type ?? 'N/A',
                     'emergency_contact_person' => $application_form->emergency_contact_person ?? 'N/A',
                     'emergency_contact_number' => $application_form->emergency_contact_number ?? 'N/A',
+                    'qr' => 'data:image/svg+xml;base64,' . base64_encode(
+                        QrCode::format('svg')
+                            ->size(300)
+                            ->color(10, 10, 10)
+                            ->backgroundColor(255, 255, 255)
+                            ->margin(1)
+                            ->generate($card->rfid_card_number)
+                    )
                 ];
             });
 
