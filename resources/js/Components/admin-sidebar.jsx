@@ -7,6 +7,7 @@ import {
     LogOut,
     CircleAlertIcon,
     ShieldCheck,
+    Printer,
 } from "lucide-react";
 import { router, Link, usePage } from "@inertiajs/react";
 import MainLogo from "../../images/mainLogo.jpg";
@@ -34,7 +35,7 @@ export function AdminSidebar({ onItemClick }) {
         {
             title: "Card Printing",
             url: "/admin/card-printing",
-            icon: FileUser,
+            icon: Printer,
             isLocked: false,
             isVisible: true,
         },
