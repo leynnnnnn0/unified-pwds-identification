@@ -260,7 +260,6 @@ const Create = () => {
         <>
             <H1 title="Registration Form" />
 
-         
             <div className="w-full rounded-lg shadow-xl border md:p-10 p-5 lg:grid lg:grid-cols-4   gap-3 auto-rows-auto space-y-2">
                 <div className="w-full space-y-2 md:grid md:grid-cols-3 gap-3 lg:grid-cols-5 lg:col-span-4">
                     <FormField label='1"x1" Photo' error={form.errors.photo}>
@@ -696,9 +695,14 @@ const Create = () => {
                     <FormField label="Mobile No." error={form.errors.mobile_no}>
                         <Input
                             value={form.data.mobile_no || ""}
-                            onChange={(e) =>
-                                form.setData("mobile_no", e.target.value)
-                            }
+                            type="number"
+                            maxLength={11}
+                            onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
+                                if (value.length <= 11) {
+                                    form.setData("mobile_no", value);
+                                }
+                            }}
                         />
                     </FormField>
 
