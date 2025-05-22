@@ -69,7 +69,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 import { useToast } from "@/hooks/use-toast";
-
+import toast from "react-hot-toast";
 import {
     Popover,
     PopoverContent,
@@ -84,7 +84,6 @@ const Show = ({ application, image }) => {
 
     const [isShowMode, setIsShowMode] = useState(true);
 
-    const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(image);
 
     const fileInputRef = useRef(null);
@@ -210,20 +209,10 @@ const Show = ({ application, image }) => {
             onSuccess: () => {
                 setPreviewImage(null);
                 form.reset();
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    description: "Your message has been sent.",
-                });
+                toast.success("Updated Successfully.");
             },
             onError: (errors) => {
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    variant: "destructive",
-                    title: "Uh oh! Something went wrong.",
-                    description: "There was a problem with your request.",
-                });
+                toast.error("Something went wrong.");
             },
             onFinish: () => {
                 setIsConfirmationModalOpen(false);
@@ -284,25 +273,10 @@ const Show = ({ application, image }) => {
                     visibleDocuments[index].status = documentToEdit.status;
                     visibleDocuments[index].remarks = documentToEdit.remarks;
 
-                    toast({
-                        className:
-                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                        variant: "success",
-                        title: "Success",
-                        description: "Updated Successfully.",
-                    });
-
-                    // We don't need this anymore since the Dialog has a built-in close mechanism
-                    // in the onClick handler through document.querySelector('[role="dialog"]').close();
+                    toast.success("Updated Successfully.");
                 },
                 onError: (errors) => {
-                    toast({
-                        className:
-                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                        variant: "destructive",
-                        title: "Uh oh! Something went wrong.",
-                        description: "There was a problem with your request.",
-                    });
+                    toast.error("Something went wrong.");
                 },
             }
         );
@@ -321,23 +295,10 @@ const Show = ({ application, image }) => {
             ),
             {
                 onSuccess: () => {
-                    toast({
-                        className:
-                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                        variant: "success",
-                        title: "Success",
-                        description: "Status Updated Successfully.",
-                    });
+                    toast.success("Updated Successfully.");
                 },
                 onError: (errors) => {
-                    toast({
-                        className:
-                            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                        variant: "destructive",
-                        title: "Uh oh! Something went wrong.",
-                        description:
-                            "Something went wrong while trying to update the status.",
-                    });
+                    toast.error("Something went wrong.");
                 },
             }
         );
@@ -348,14 +309,10 @@ const Show = ({ application, image }) => {
             (item) => item.status === "pending"
         );
         if (result.length > 0) {
-            toast({
-                className:
-                    "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                variant: "destructive",
-                title: "Uh oh! Something went wrong.",
-                description:
-                    "Uploaded documents must be verified and approved first before processing the appliction.",
-            });
+            toast.error(
+                "Uploaded documents must be verified and approved first before processing the appliction."
+            );
+
             return;
         }
 
