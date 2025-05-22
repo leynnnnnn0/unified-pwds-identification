@@ -238,12 +238,27 @@ const Index = ({ application, image, qr }) => {
                         </div>
 
                         {/* QR Code */}
-                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 flex justify-center">
+                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 flex flex-col items-center justify-center">
                             <img
                                 src={qr}
                                 alt="QR Code"
                                 className="size-32 sm:size-40"
                             />
+
+                            <div className="text-xs text-gray-600 mb-3 text-center">
+                                <p className="m-0 mb-1">
+                                    This card is non-transferable. Unauthorized
+                                    use will be penalized.
+                                </p>
+                                <p className="m-0 mb-1">
+                                    If found, please return to the nearest local
+                                    government unit.
+                                </p>
+                                <p className="m-0">
+                                    Application Form #:{" "}
+                                    {application.application_number}
+                                </p>
+                            </div>
                         </div>
                     </section>
                 </TabsContent>
