@@ -7,14 +7,11 @@ import MainLogo from "../../../images/mainLogo.jpg";
 import Flag from "../../../images/philippines.jpg";
 
 const BatchPrint = ({ cards }) => {
-    // Handle print functionality
     const handlePrint = () => {
         window.print();
     };
 
-    // Auto-print after the component has mounted
     useEffect(() => {
-        // Give time for images to load
         const timer = setTimeout(() => {
             window.print();
         }, 1000);
@@ -41,83 +38,82 @@ const BatchPrint = ({ cards }) => {
                 </div>
             </div>
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 print:gap-0">
                 {cards.map((cardData) => (
-                    <div key={cardData.id} className="mx-auto max-w-xl">
-                        <section className="flex flex-col md:flex-row items-center gap-6 justify-center">
-                            {/* ID Card Front */}
-                            <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 mb-4 md:mb-0">
-                                <section className="flex items-center justify-between">
-                                    <img
-                                        src={MainLogo}
-                                        alt="upid logo"
-                                        className="h-3"
-                                    />
-                                    <span className="text-gray-700 font-bold text-xs">
-                                        Republic of the Philippines{" "}
-                                    </span>
-                                    <img
-                                        src={Flag}
-                                        alt="upid logo"
-                                        className="h-3"
-                                    />
-                                </section>
+                    <div
+                        key={cardData.id}
+                        className="mx-auto max-w-xl print:break-after-page print:min-h-[calc(100vh-1px)] print:py-8"
+                    >
+                        {/* Front of the Card */}
+                        <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 mb-4">
+                            <section className="flex items-center justify-between">
+                                <img
+                                    src={MainLogo}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                                <span className="text-gray-700 font-bold text-xs">
+                                    Republic of the Philippines{" "}
+                                </span>
+                                <img
+                                    src={Flag}
+                                    alt="upid logo"
+                                    className="h-3"
+                                />
+                            </section>
 
-                                <section className="flex gap-4 h-full items-center mt-2">
-                                    <div className="flex flex-col gap-1">
-                                        <img
-                                            src={cardData["photo"]}
-                                            alt="User photo"
-                                            className="size-16 sm:size-24 object-cover"
-                                        />
+                            <section className="flex gap-4 h-full items-center mt-2">
+                                <div className="flex flex-col gap-1">
+                                    <img
+                                        src={cardData["photo"]}
+                                        alt="User photo"
+                                        className="size-16 sm:size-24 object-cover"
+                                    />
 
-                                        <div className="flex flex-col w-16 sm:w-24">
-                                            <div className="border-b border-gray-500 h-auto mt-3 sm:mt-5"></div>
-                                            <span className="text-center text-[9px]">
-                                                Signature
-                                            </span>
-                                        </div>
+                                    <div className="flex flex-col w-16 sm:w-24">
+                                        <div className="border-b border-gray-500 h-auto mt-3 sm:mt-5"></div>
+                                        <span className="text-center text-[9px]">
+                                            Signature
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 flex flex-col gap-2">
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">ID Number:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            {cardData.pwd_card_number ||
+                                                "PWD-1213456"}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Card Holder:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            {cardData.card_holder}
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">
+                                            Type of Disabilities:
+                                        </p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            {cardData.disabilities}
+                                        </p>
                                     </div>
 
-                                    <div className="flex-1 flex flex-col gap-2">
-                                        <div className="flex flex-col justify-start">
-                                            <p className="text-[7px]">
-                                                ID Number:
-                                            </p>
-                                            <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
-                                                PWD-1213456
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col justify-start">
-                                            <p className="text-[7px]">
-                                                Card Holder:
-                                            </p>
-                                            <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
-                                                {cardData.card_holder}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col justify-start">
-                                            <p className="text-[7px]">
-                                                Type of Disabilities:
-                                            </p>
-                                            <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
-                                                {cardData.disabilities}
-                                            </p>
-                                        </div>
-
-                                        <div className="flex flex-col justify-start">
-                                            <p className="text-[7px]">
-                                                Address:
-                                            </p>
-                                            <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
-                                                {cardData.address}
-                                            </p>
-                                        </div>
+                                    <div className="flex flex-col justify-start">
+                                        <p className="text-[7px]">Address:</p>
+                                        <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
+                                            {cardData.address}
+                                        </p>
                                     </div>
-                                </section>
-                            </div>
-                        </section>
+                                </div>
+                            </section>
+                        </div>
 
+                        {/* Back of the Card */}
                         <div className="bg-white rounded-lg shadow-lg h-60 w-[450px] p-4 flex items-center flex-col justify-center">
                             <img
                                 src={cardData.qr}
@@ -143,6 +139,34 @@ const BatchPrint = ({ cards }) => {
                     </div>
                 ))}
             </div>
+
+            {/* Print-specific styles */}
+            <style jsx global>{`
+                @media print {
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        background: white;
+                    }
+                    @page {
+                        size: A4 portrait;
+                        margin: 10mm;
+                    }
+                    .print\\:break-after-page {
+                        page-break-after: always;
+                    }
+                    .print\\:min-h-\\[calc\\(100vh-1px\\)\\] {
+                        min-height: calc(100vh - 1px);
+                    }
+                    .print\\:py-8 {
+                        padding-top: 2rem;
+                        padding-bottom: 2rem;
+                    }
+                    .print\\:gap-0 {
+                        gap: 0;
+                    }
+                }
+            `}</style>
         </>
     );
 };
