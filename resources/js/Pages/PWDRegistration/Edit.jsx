@@ -56,15 +56,14 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-import { useToast } from "@/hooks/use-toast";
 import Infolist from "@/Components/infolist";
+import toast from "react-hot-toast";
 
 const Edit = ({ application, image }) => {
     const isInitialMount = useRef(true);
 
     const [isShowMode, setIsShowMode] = useState(true);
 
-    const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(image);
 
     const fileInputRef = useRef(null);
@@ -189,21 +188,11 @@ const Edit = ({ application, image }) => {
             onSuccess: () => {
                 setPreviewImage(null);
                 form.reset();
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    description: "Your message has been sent.",
-                });
+                toast.success("Updated Successfully");
+                setIsShowMode(true);
             },
             onError: (errors) => {
-                console.error(errors);
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    variant: "destructive",
-                    title: "Uh oh! Something went wrong.",
-                    description: "There was a problem with your request.",
-                });
+                toast.error("There was a problem with your request.");
             },
             onFinish: () => {
                 setIsConfirmationModalOpen(false);
@@ -788,9 +777,13 @@ const Edit = ({ application, image }) => {
                         <Input
                             disabled={isShowMode}
                             value={form.data.mobile_no || ""}
-                            onChange={(e) =>
-                                form.setData("mobile_no", e.target.value)
-                            }
+                            type="number"
+                            onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
+                                if (value.length <= 11) {
+                                    form.setData("mobile_no", value);
+                                }
+                            }}
                         />
                     </FormField>
 
@@ -1128,73 +1121,125 @@ const Edit = ({ application, image }) => {
                 <FormField label="Middle Name" />
 
                 <Span label="Father's Name:"></Span>
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.father_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.father_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.father_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_middle_name", e.target.value)
-                    }
-                />
+                <FormField
+                    error={form.errors.father_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.father_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+                <FormField
+                    error={form.errors.father_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.father_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.father_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.father_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
 
                 <Span label="Mother's Name:"></Span>
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.mother_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.mother_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.mother_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_middle_name", e.target.value)
-                    }
-                />
+
+                <FormField
+                    error={form.errors.mother_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.mother_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.mother_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.mother_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.mother_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.mother_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
 
                 <Span label="Guardian's Name:"></Span>
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.guardian_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.guardian_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    disabled={isShowMode}
-                    value={form.data.guardian_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_middle_name", e.target.value)
-                    }
-                />
+
+                <FormField
+                    error={form.errors.guardian_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.guardian_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.guardian_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.guardian_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.guardian_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        disabled={isShowMode}
+                        value={form.data.guardian_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
             </div>
 
             {isShowMode ? null : (

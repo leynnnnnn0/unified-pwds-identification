@@ -22,11 +22,11 @@ class UpdatePWDRegistrationFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supporting_documents' => ['required', 'array'],
+            'removed_documents' => ['nullable', 'array'],
+            'supporting_documents' => ['nullable', 'array'],
             'type_of_registration' => 'required|string|in:new_applicant,renewal',
             'pwd_number' => 'nullable|required_if:type_of_registration,renewal|string|max:50',
-            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             // Personal Information
             'first_name' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
             'middle_name' => 'nullable|string|max:100|regex:/^[a-zA-Z\s]+$/',
@@ -88,7 +88,6 @@ class UpdatePWDRegistrationFormRequest extends FormRequest
             'guardian_middle_name' => 'nullable|string|max:100|regex:/^[a-zA-Z\s]+$/',
         ];
     }
-
 
     public function messages(): array
     {

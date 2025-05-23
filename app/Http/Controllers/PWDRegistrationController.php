@@ -143,7 +143,7 @@ class PWDRegistrationController extends Controller
         DB::commit();
 
 
-        return to_route('registration.index');
+        return to_route('registration.edit', $id);
     }
 
     public function store(StorePWDRegistrationFormRequest $request)
