@@ -10,10 +10,12 @@ const FormField = ({
 }) => {
     return (
         <div className={cn("flex flex-col gap-2 w-full", className)}>
-            <span className="md:text-xs text-[10px] text-gray-700 font-bold">
-                {label}
-                {isRequired && <span className="text-red-500">*</span>}
-            </span>
+            {label && (
+                <span className="md:text-xs text-[10px] text-gray-700 font-bold">
+                    {label}
+                    {isRequired && <span className="text-red-500">*</span>}
+                </span>
+            )}
             {children}
             <span className="text-xs text-red-500">{error}</span>
         </div>

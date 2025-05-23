@@ -1023,64 +1023,116 @@ const Create = () => {
                 <FormField label="Middle Name" />
 
                 <Span label="Father's Name:"></Span>
-                <Input
-                    value={form.data.father_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.father_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.father_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("father_middle_name", e.target.value)
-                    }
-                />
+                <FormField
+                    error={form.errors.father_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.father_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+                <FormField
+                    error={form.errors.father_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.father_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.father_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.father_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("father_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
 
                 <Span label="Mother's Name:"></Span>
-                <Input
-                    value={form.data.mother_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.mother_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.mother_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("mother_middle_name", e.target.value)
-                    }
-                />
+
+                <FormField
+                    error={form.errors.mother_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.mother_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.mother_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.mother_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.mother_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.mother_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("mother_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
 
                 <Span label="Guardian's Name:"></Span>
-                <Input
-                    value={form.data.guardian_last_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_last_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.guardian_first_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_first_name", e.target.value)
-                    }
-                />
-                <Input
-                    value={form.data.guardian_middle_name || ""}
-                    onChange={(e) =>
-                        form.setData("guardian_middle_name", e.target.value)
-                    }
-                />
+
+                <FormField
+                    error={form.errors.guardian_last_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.guardian_last_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_last_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.guardian_first_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.guardian_first_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_first_name", e.target.value)
+                        }
+                    />
+                </FormField>
+
+                <FormField
+                    error={form.errors.guardian_middle_name}
+                    isRequired={false}
+                >
+                    <Input
+                        value={form.data.guardian_middle_name || ""}
+                        onChange={(e) =>
+                            form.setData("guardian_middle_name", e.target.value)
+                        }
+                    />
+                </FormField>
             </div>
 
             <div className="w-full rounded-lg shadow-xl border p-5 md:p-10 grid grid-cols-1 gap-3 auto-rows-auto">
