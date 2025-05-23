@@ -29,7 +29,6 @@ import { Link, router, useForm } from "@inertiajs/react";
 import toast from "react-hot-toast";
 
 const Index = ({ keys: initialKeys }) => {
-    // Convert initial keys to a state so we can update it
     const [keys, setKeys] = useState(initialKeys);
     const [isAPIKeyModalOpen, setIsAPIKeyModalOpen] = useState(false);
     const [isCreateApiModalOpen, setIsCreateApiModalOpen] = useState(false);

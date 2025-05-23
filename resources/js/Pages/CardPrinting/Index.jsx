@@ -12,8 +12,11 @@ import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 import { Download, PrinterIcon } from "lucide-react";
 import MainLogo from "../../../images/mainLogo.jpg";
+import SearchBar from "@/Components/table/search-bar";
+import { Input } from "@/Components/ui/input";
+import { useEffect } from "react";
 
-const Index = ({ cards }) => {
+const Index = ({ cards, filters }) => {
     const [selectedCards, setSelectedCards] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
@@ -58,6 +61,20 @@ const Index = ({ cards }) => {
         });
     };
 
+    const [search, setSearch] = useState(filters.search || null);
+
+    useEffect(() => {
+        if (search == null) return;
+        router.get(
+            route("admin.card-printing.index"),
+            { search },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }, [search]);
+
     return (
         <>
             <div className="flex items-center justify-between mb-6">
@@ -73,6 +90,16 @@ const Index = ({ cards }) => {
                 </div>
             </div>
             <TableContainer>
+                <div className="flex items-center justify-between">
+                    <SearchBar>
+                        <Input
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search..."
+                            class="pl-10 rounded-lg md:first-letter:w-72 md:h-12 h-8"
+                        />
+                    </SearchBar>
+                </div>
                 <Table>
                     <TableHead>
                         <TH>

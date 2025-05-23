@@ -379,7 +379,7 @@ const Show = ({ application, image }) => {
         <>
             <div className="flex items-center justify-between">
                 <H1 title="Application Form Details" />
-                {application.status == "pending" && (
+                {application.status != "approved" && (
                     <Button onClick={processApplication}>
                         Process Application
                     </Button>

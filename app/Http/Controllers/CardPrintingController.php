@@ -14,7 +14,19 @@ class CardPrintingController extends Controller
 {
     public function index()
     {
-        $cards = PWDIdentificationCard::with('application_form')->paginate(10);
+
+        $search = request('search');
+        $cards = PWDIdentificationCard::with('application_form')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('pwd_card_number', 'like', "%$search%")
+                        ->orWhereHas('application_form', function ($q) use ($search) {
+                            $q->where('application_number', 'like', "%$search%");
+                        });
+                });
+            })
+            ->paginate(10);
+
         $cards = $cards->through(function ($item) {
             $application_form = $item->application_form;
             return [
@@ -27,7 +39,8 @@ class CardPrintingController extends Controller
         });
 
         return Inertia::render('CardPrinting/Index', [
-            'cards' => $cards
+            'cards' => $cards,
+            'filters' => request()->only(['search'])
         ]);
     }
 
