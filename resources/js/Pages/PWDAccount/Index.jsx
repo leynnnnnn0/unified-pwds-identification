@@ -29,11 +29,14 @@ const Index = ({ user }) => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        put(route("my-account.update", user.id), {
+        console.log(data);
+        put(route("admin.my-account.update", user.id), {
             onSuccess: () => {
                 toast.success("Updated Successfully.");
                 setIsAccountVerified(true);
+            },
+            onError: () => {
+                toast.error("Something went wrong");
             },
         });
     };
@@ -41,15 +44,20 @@ const Index = ({ user }) => {
     const updatePassword = (e) => {
         e.preventDefault();
 
-        updateFormPassword.put(route("my-account.update-password", user.id), {
-            onSuccess: () => {
-                toast.success("Your password has been updated successfully.");
-                updateFormPassword.reset();
-            },
-            onError: (e) => {
-                console.log(e);
-            },
-        });
+        updateFormPassword.put(
+            route("admin.my-account.update-password", user.id),
+            {
+                onSuccess: () => {
+                    toast.success(
+                        "Your password has been updated successfully."
+                    );
+                    updateFormPassword.reset();
+                },
+                onError: (e) => {
+                    console.log(e);
+                },
+            }
+        );
     };
     return (
         <>
