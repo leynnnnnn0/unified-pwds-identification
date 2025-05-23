@@ -31,6 +31,10 @@ Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
 
 Route::middleware('auth')->group(function () {
 
+    Route::put('/my-account/update/{id}', [PWDAccountController::class, 'update'])->name('my-account.update');
+    Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
+
+
     Route::middleware('role:api-user')->group(function () {
         Route::prefix('api/billing')->group(function () {
             Route::get('/', [App\Http\Controllers\Api\BillingController::class, 'index'])->name('billing.index');
@@ -78,7 +82,7 @@ Route::middleware('auth')->group(function () {
 
     // How can i add a middleware so only user with role of 'user' can access this pages
     Route::middleware(['role:user'])->group(function () {
-        Route::resource('my-account', PWDAccountController::class);
+        Route::get('/my-account', [PWDAccountController::class, 'index'])->name('my-account.index');
         Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
         Route::resource('my-profile', PWDProfileController::class);
         Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');

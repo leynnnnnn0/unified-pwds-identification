@@ -30,7 +30,7 @@ const Index = ({ user }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(data);
-        put(route("admin.my-account.update", user.id), {
+        put(route("my-account.update", user.id), {
             onSuccess: () => {
                 toast.success("Updated Successfully.");
                 setIsAccountVerified(true);
@@ -44,20 +44,15 @@ const Index = ({ user }) => {
     const updatePassword = (e) => {
         e.preventDefault();
 
-        updateFormPassword.put(
-            route("admin.my-account.update-password", user.id),
-            {
-                onSuccess: () => {
-                    toast.success(
-                        "Your password has been updated successfully."
-                    );
-                    updateFormPassword.reset();
-                },
-                onError: (e) => {
-                    console.log(e);
-                },
-            }
-        );
+        updateFormPassword.put(route("my-account.update-password", user.id), {
+            onSuccess: () => {
+                toast.success("Your password has been updated successfully.");
+                updateFormPassword.reset();
+            },
+            onError: (e) => {
+                console.log(e);
+            },
+        });
     };
     return (
         <>
@@ -122,10 +117,14 @@ const Index = ({ user }) => {
                 </FormField>
                 <FormField label="Phone Number" error={errors.phone_number}>
                     <Input
+                        type="number"
                         value={data.phone_number}
-                        onChange={(e) =>
-                            setData("phone_number", e.target.value)
-                        }
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, "");
+                            if (value.length <= 11) {
+                                setData("phone_number", e.target.value);
+                            }
+                        }}
                     />
                 </FormField>
 
