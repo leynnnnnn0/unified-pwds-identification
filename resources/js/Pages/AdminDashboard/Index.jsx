@@ -3,7 +3,7 @@ import PieChartComponent from "@/Components/charts/pie-chart";
 import DashboardContainer from "@/Components/dashboard-container";
 import React from "react";
 
-const Index = ({ counts }) => {
+const Index = ({ counts, chartData }) => {
     console.log("Counts:", counts);
     return (
         <>
@@ -26,7 +26,11 @@ const Index = ({ counts }) => {
                 />
             </div>
 
-            <LineChartComponent />
+            <LineChartComponent
+                chartData={chartData}
+                title="PWD Applications Overview"
+                description="Daily application submissions for the last 3 months"
+            />
         </>
     );
 };
