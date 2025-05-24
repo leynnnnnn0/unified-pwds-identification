@@ -144,13 +144,29 @@ export function AdminSidebar({ onItemClick }) {
 
             {/* Logout Section */}
             <div className="mt-auto pb-4 pt-2 border-t">
-                <button
-                    onClick={logout}
-                    className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-                >
-                    <LogOut className="w-4 h-4 mr-3" />
-                    <span>Logout</span>
-                </button>
+                    <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <button
+                        className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                        >
+                        <LogOut className="w-4 h-4 mr-3" />
+                        <span>Logout</span>
+                        </button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Logging out will end your current session. Are you sure you want to proceed?
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={logout}>Yes, I wantLogout</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
             </div>
         </div>
     );

@@ -284,15 +284,35 @@ const Edit = ({ application, image }) => {
             <div className="flex items-center justify-between">
                 <H1 title="Application Form Details" />
                 {application.status != "approved" && (
-                    <Button
-                        onClick={
-                            isShowMode
-                                ? () => setIsShowMode(false)
-                                : () => setIsShowMode(true)
-                        }
-                    >
-                        {isShowMode ? "Edit Details" : "Cancel Edit"}
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button>
+                            {isShowMode ? "Edit Details" : "Cancel Edit"}
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                {isShowMode
+                                ? "Do you want to edit your details?"
+                                : "Do you want to cancel editing your details?"}
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction                         onClick={
+                                                isShowMode
+                                                    ? () => setIsShowMode(false)
+                                                    : () => setIsShowMode(true)
+                                            }>
+                                Yes, {isShowMode ? "Edit" : "Cancel Edit"}
+                            </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                        </AlertDialog>
+
+                    
                 )}
             </div>
 

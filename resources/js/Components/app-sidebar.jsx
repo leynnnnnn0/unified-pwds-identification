@@ -10,6 +10,19 @@ import MainLogo from "../../images/mainLogo.jpg";
 import { Link, router, usePage } from "@inertiajs/react";
 import React from "react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
 const AppSidebar = ({ onItemClick }) => {
     const { auth } = usePage().props;
     const { url: currentUrl } = usePage();
@@ -122,13 +135,28 @@ const AppSidebar = ({ onItemClick }) => {
 
             {/* Logout Section */}
             <div className="mt-auto pb-4 pt-2 border-t">
-                <button
-                    onClick={logout}
-                    className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-                >
-                    <LogOut className="w-4 h-4 mr-3" />
-                    <span>Logout</span>
-                </button>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <button
+                        className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                        >
+                        <LogOut className="w-4 h-4 mr-3" />
+                        <span>Logout</span>
+                        </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Logging out will end your current session. Do you want to proceed?
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={logout}>Yes, I want to Logout</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
             </div>
         </div>
     );

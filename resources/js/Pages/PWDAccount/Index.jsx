@@ -8,6 +8,18 @@ import toast from "react-hot-toast";
 import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
 import FormH1 from "@/Components/text/form-h1";
 import { Button } from "@/Components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 const Index = ({ user }) => {
     const [isAccountVerified, setIsAccountVerified] = useState(user.first_name);
@@ -129,13 +141,27 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button
-                        disabled={processing}
-                        onClick={handleSubmit}
-                        className="md:text-normal text-xs"
-                    >
-                        {processing ? "Updating..." : "Update"}
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button disabled={processing} className="md:text-normal text-xs">
+                            {processing ? "Updating..." : "Update"}
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action will update the data. Do you want to proceed?
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={handleSubmit}>
+                                {processing ? "Updating..." : "Yes, Update"}
+                            </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                        </AlertDialog>
                 </section>
             </div>
 
@@ -177,12 +203,27 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <Button
-                        onClick={updatePassword}
-                        className="md:text-normal text-xs"
-                    >
+                    <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button className="md:text-normal text-xs">
                         Update
-                    </Button>
+                        </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Confirm Password Update</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Are you sure you want to update the password? This action cannot be undone.
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={updatePassword}>
+                            {processing ? "Updating..." : "Yes, Update"}
+                        </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
                 </section>
             </div>
         </>
