@@ -25,6 +25,7 @@ class CardPrintingController extends Controller
                         });
                 });
             })
+            ->latest()
             ->paginate(10);
 
         $cards = $cards->through(function ($item) {

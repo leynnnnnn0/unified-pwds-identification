@@ -3,21 +3,26 @@ import PieChartComponent from "@/Components/charts/pie-chart";
 import DashboardContainer from "@/Components/dashboard-container";
 import React from "react";
 
-const Index = () => {
+const Index = ({ counts }) => {
+    console.log("Counts:", counts);
     return (
         <>
-            <div className="grid md:grid md:grid-cols-3 gap-5">
+            <div className="grid md:grid md:grid-cols-4 gap-5">
                 <DashboardContainer
                     title="Pending Applications"
-                    value="1,240"
+                    value={counts.pending}
+                />
+                <DashboardContainer
+                    title="Approved Applications"
+                    value={counts.approved}
                 />
                 <DashboardContainer
                     title="Incomplete Applications"
-                    value="1,240"
+                    value={counts.incomplete}
                 />
                 <DashboardContainer
                     title="Rejected Applications"
-                    value="1,240"
+                    value={counts.rejected}
                 />
             </div>
 
