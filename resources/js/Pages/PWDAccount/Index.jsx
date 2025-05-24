@@ -23,6 +23,8 @@ import {
 
 const Index = ({ user }) => {
     const [isAccountVerified, setIsAccountVerified] = useState(user.first_name);
+    const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     // Initialize the form with user data
     const { data, setData, put, processing, errors } = useForm({
         username: user?.username || "",
@@ -141,27 +143,32 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button disabled={processing} className="md:text-normal text-xs">
-                            {processing ? "Updating..." : "Update"}
-                            </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action will update the data. Do you want to proceed?
-                            </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleSubmit}>
-                                {processing ? "Updating..." : "Yes, Update"}
-                            </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                        </AlertDialog>
+                    <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <AlertDialogTrigger asChild>
+                        <Button disabled={processing} className="md:text-normal text-xs">
+                        {processing ? "Updating..." : "Update"}
+                        </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action will update the data. Do you want to proceed?
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={(e) => {
+                            handleSubmit(e);
+                            setIsDialogOpen(false);
+                            }}
+                        >
+                            {processing ? "Updating..." : "Yes, Update"}
+                        </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
                 </section>
             </div>
 
@@ -203,7 +210,7 @@ const Index = ({ user }) => {
                 </FormField>
 
                 <section className="col-span-2 flex items-center justify-end">
-                    <AlertDialog>
+                    <AlertDialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
                     <AlertDialogTrigger asChild>
                         <Button className="md:text-normal text-xs">
                         Update
@@ -218,7 +225,12 @@ const Index = ({ user }) => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={updatePassword}>
+                        <AlertDialogAction
+                            onClick={(e) => {
+                            updatePassword(e);
+                            setIsPasswordDialogOpen(false);
+                            }}
+                        >
                             {processing ? "Updating..." : "Yes, Update"}
                         </AlertDialogAction>
                         </AlertDialogFooter>

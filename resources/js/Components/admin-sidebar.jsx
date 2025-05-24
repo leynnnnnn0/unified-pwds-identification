@@ -176,7 +176,7 @@ export function AdminSidebar({ onItemClick }) {
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction onClick={logout}>
-                                Yes, I wantLogout
+                                Yes, I want Logout
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
