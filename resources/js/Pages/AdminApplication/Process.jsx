@@ -5,6 +5,7 @@ import Span from "@/Components/text/span";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/components/ui/Input";
 import { useForm } from "@inertiajs/react";
+import toast from "react-hot-toast";
 const Process = ({ application, cardDetails }) => {
     const form = useForm({
         application_form_id: application.id,
@@ -24,9 +25,11 @@ const Process = ({ application, cardDetails }) => {
             {
                 onSuccess: () => {
                     form.reset("rfid_card_number");
+                    toast.success("Card Processed Successfully");
                 },
                 onError: (errors) => {
                     console.log(errors);
+                    toast.error("Error Processing Card");
                 },
             }
         );
@@ -35,10 +38,16 @@ const Process = ({ application, cardDetails }) => {
         <>
             <H1 title="Process Application" />
             <div className="border border-gray-300 rounded-lg p-5 grid grid-cols-2 gap-3">
-                <FormField label="PWD Card Number">
+                <FormField
+                    label="PWD Card Number"
+                    error={form.errors.pwd_card_number}
+                >
                     <Input value={form.data.pwd_card_number} readOnly />
                 </FormField>
-                <FormField label="RFID Card Number">
+                <FormField
+                    label="RFID Card Number"
+                    error={form.errors.rfid_card_number}
+                >
                     <Input
                         placeholder="Scan the RFID Card"
                         value={form.data.rfid_card_number}
