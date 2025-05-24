@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import H1 from "@/Components/text/h1";
 import Table from "@/Components/table/table";
 import TableBody from "@/Components/table/table-body";
@@ -9,6 +9,7 @@ import TH from "@/Components/table/th";
 import { EyeIcon, EditIcon, TrashIcon, Trash2Icon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 import {
     AlertDialog,
@@ -23,8 +24,23 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import Pagination from "@/Components/pagination";
+import SearchBar from "@/Components/table/search-bar";
+import { Input } from "@/Components/ui/input";
 
-const Index = ({ users }) => {
+const Index = ({ users, filters }) => {
+    const [search, setSearch] = useState(filters.search || null);
+
+    useEffect(() => {
+        if (search == null) return;
+        router.get(
+            route("admin.users.index"),
+            { search },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }, [search]);
     return (
         <>
             <div className="flex items-center justify-between">
@@ -36,6 +52,16 @@ const Index = ({ users }) => {
                 </Button>
             </div>
             <TableContainer>
+                <div className="flex items-center justify-between">
+                    <SearchBar>
+                        <Input
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search..."
+                            class="pl-10 rounded-lg md:first-letter:w-72 md:h-12 h-8"
+                        />
+                    </SearchBar>
+                </div>
                 <Table>
                     <TableHead>
                         <TH>Username</TH>
