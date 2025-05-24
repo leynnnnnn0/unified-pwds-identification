@@ -64,10 +64,10 @@ const Plans = () => {
     const plans = [
         {
             name: "Silver",
-            price: "$10",
+            price: "₱250",
             period: "month",
             features: [
-                "20 API Requests per day",
+                "100 API Requests per month",
                 "Basic Support",
                 "Standard Response Time",
             ],
@@ -80,10 +80,10 @@ const Plans = () => {
         },
         {
             name: "Gold",
-            price: "$15",
+            price: "₱310",
             period: "month",
             features: [
-                "50 API Requests per day",
+                "250 API Requests per month",
                 "Priority Support",
                 "Faster Response Time",
                 "Advanced Analytics",
@@ -97,7 +97,7 @@ const Plans = () => {
         },
         {
             name: "Platinum",
-            price: "$20",
+            price: "₱380",
             period: "month",
             features: [
                 "Unlimited API Requests",

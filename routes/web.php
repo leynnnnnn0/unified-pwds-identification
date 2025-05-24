@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/card-printing/pdf/{id}', 'generateIdCardPdf');
             Route::get('/card-printing/print/{id}', 'printCard');
             Route::post('/card-printing/batch-print', 'batchPrint');
+            Route::put('/card-printing/mark-as-printed/{id}', 'markAsPrinted')->name('card-printing.mark-as-printed');
+            Route::put('/card-printing/mark-all-as-printed/print', 'markAllAsPrinted')->name('card-printing.mark-all-as-printed');
         });
 
         Route::controller(AdminApplicationController::class)->name('applications.')->group(function () {

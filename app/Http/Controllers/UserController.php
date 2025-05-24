@@ -16,14 +16,22 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::when(request('search'), function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereAny(['user', 'first_name', 'middle_name', 'last_name'], 'like', "%{$search}%");
+            });
+        })
+            ->latest()
+            ->paginate(10);
         return Inertia::render('User/Index', [
-            'users' => $users
+            'users' => $users,
+            'filters' => request()->only(['search']),
         ]);
     }
 
     public function show(User $user)
     {
+
         $user->load(["municipalities", "provinces"]);
 
         $psgc = new PSGC();
@@ -52,6 +60,7 @@ class UserController extends Controller
             'user' => $user,
             'provinces' => implode(', ', $provinces),
             'municipalities' => implode(', ', $municipalities),
+
         ]);
     }
 

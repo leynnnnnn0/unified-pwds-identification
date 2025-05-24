@@ -43,11 +43,10 @@ const Index = ({ applications, filters }) => {
             case "pending":
                 return "bg-blue-500 hover:bg-blue-600";
             default:
-                return "bg-gray-500 hover:bg-gray-600"; // Default color
+                return "bg-gray-500 hover:bg-gray-600"; 
         }
     };
 
-    // Function to determine text color based on application type
     const getTypeColor = (type) => {
         switch (type) {
             case "new_applicant":
@@ -55,7 +54,7 @@ const Index = ({ applications, filters }) => {
             case "renewal":
                 return "bg-yellow-600 font-bold";
             default:
-                return "bg-primary-color font-bold"; // Default color
+                return "bg-primary-color font-bold"; 
         }
     };
 

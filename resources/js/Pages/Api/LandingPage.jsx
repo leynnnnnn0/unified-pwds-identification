@@ -388,13 +388,13 @@ const LandingPage = () => {
                                     </p>
                                     <div className="mt-auto">
                                         <span className="text-3xl font-bold text-gray-900">
-                                            ₱600
+                                            ₱250
                                         </span>
                                         <span className="text-gray-600">
                                             /month
                                         </span>
                                         <p className="text-xs text-gray-500 mt-1">
-                                            50 verifications included
+                                            100 verifications included
                                         </p>
                                     </div>
                                 </div>
@@ -411,7 +411,7 @@ const LandingPage = () => {
                                     </p>
                                     <div className="mt-auto">
                                         <span className="text-3xl font-bold">
-                                            ₱900.00
+                                            ₱380.00
                                         </span>
                                         <span className="text-blue-100">
                                             /month
