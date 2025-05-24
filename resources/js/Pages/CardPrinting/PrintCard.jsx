@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Button } from "@/Components/ui/button";
-import { ArrowLeft, PrinterIcon } from "lucide-react";
+import { ArrowLeft, CheckCircle, PrinterIcon } from "lucide-react";
 import { router } from "@inertiajs/react";
 import H1 from "@/Components/text/h1";
 import MainLogo from "../../../images/mainLogo.jpg";
@@ -21,10 +21,13 @@ const PrintCard = ({ cardData }) => {
     return (
         <div className="p-10">
             <div className="flex items-center justify-between mb-6 print:hidden">
-                <div className="space-x-2">
+                <div className="flex items-center gap-2">
                     <Button variant="outline" onClick={handleBack}>
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to List
+                    </Button>
+                    <Button>
+                        <CheckCircle className="mr-2 h-4 w-4" /> Mark as printed
                     </Button>
                     <Button onClick={handlePrint}>
                         <PrinterIcon className="mr-2 h-4 w-4" />
