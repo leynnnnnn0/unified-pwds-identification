@@ -16,7 +16,13 @@ class CheckUserRole
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if (!$request->user() || $request->user()->role !== $role) {
-            return redirect()->back()->with('error', 'Unauthorized access.');
+            if ($role === 'api-user') {
+                return redirect()->route('landing-page')->with('error', 'Unauthorized access.');
+            } elseif ($role === 'admin') {
+                return redirect()->route('admin.dashboard.index')->with('error', 'Unauthorized access.');
+            } else {
+                return redirect()->route('dashboard')->with('error', 'Unauthorized access.');
+            }
         }
         return $next($request);
     }
