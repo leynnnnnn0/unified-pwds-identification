@@ -17,6 +17,7 @@ class CardPrintingController extends Controller
 
         $search = request('search');
         $cards = PWDIdentificationCard::with('application_form')
+            ->where('is_printed', false)
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('pwd_card_number', 'like', "%$search%")
@@ -161,5 +162,23 @@ class CardPrintingController extends Controller
         return Inertia::render('CardPrinting/BatchPrint', [
             'cards' => $cards
         ]);
+    }
+
+    public function markAsPrinted($id)
+    {
+        $card = PWDIdentificationCard::findOrFail($id);
+        $card->update(['is_printed' => true]);
+
+        return redirect()->route('admin.card-printing.index')->with('success', 'Card marked as printed successfully.');
+    }
+
+
+    public function markAllAsPrinted(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        PWDIdentificationCard::whereIn('id', $ids)->update(['is_printed' => true]);
+
+        return redirect()->route('admin.card-printing.index')->with('success', 'Cards marked as printed successfully.');
     }
 }

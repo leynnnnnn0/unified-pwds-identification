@@ -1,12 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { ArrowLeft, CheckCircle, PrinterIcon } from "lucide-react";
 import { router } from "@inertiajs/react";
 import H1 from "@/Components/text/h1";
 import MainLogo from "../../../images/mainLogo.jpg";
 import Flag from "../../../images/philippines.jpg";
+import toast from "react-hot-toast";
+
 const PrintCard = ({ cardData }) => {
     const printRef = useRef();
+    const [isMarkingPrinted, setIsMarkingPrinted] = useState(false);
 
     // Handle print functionality
     const handlePrint = () => {
@@ -18,6 +21,29 @@ const PrintCard = ({ cardData }) => {
         router.get("/admin/card-printing");
     };
 
+    // Handle mark as printed
+    const handleMarkAsPrinted = () => {
+        setIsMarkingPrinted(true);
+
+        router.put(
+            route("admin.card-printing.mark-as-printed", cardData.id),
+            {},
+            {
+                onSuccess: () => {
+                    toast.success("Marked card as printed successfully!");
+                },
+                onError: (errors) => {
+                    toast.error(
+                        "Error occurred while marking card as printed. Please try again."
+                    );
+                },
+                onFinish: () => {
+                    setIsMarkingPrinted(false);
+                },
+            }
+        );
+    };
+
     return (
         <div className="p-10">
             <div className="flex items-center justify-between mb-6 print:hidden">
@@ -26,8 +52,16 @@ const PrintCard = ({ cardData }) => {
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to List
                     </Button>
-                    <Button>
-                        <CheckCircle className="mr-2 h-4 w-4" /> Mark as printed
+                    <Button
+                        onClick={handleMarkAsPrinted}
+                        disabled={isMarkingPrinted || cardData.is_printed}
+                    >
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        {isMarkingPrinted
+                            ? "Marking as printed..."
+                            : cardData.is_printed
+                            ? "Already Printed"
+                            : "Mark as printed"}
                     </Button>
                     <Button onClick={handlePrint}>
                         <PrinterIcon className="mr-2 h-4 w-4" />
