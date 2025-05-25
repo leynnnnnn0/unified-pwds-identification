@@ -33,6 +33,7 @@ const Index = () => {
                 card_number: identificationNumber,
             })
             .then((res) => {
+                console.log(res);
                 if (res.data.isFound) {
                     setCardDetails({
                         card_holder: res.data.data.card_holder,
@@ -51,6 +52,7 @@ const Index = () => {
                     setErrorMessage(res.response.data.message);
                     setIsErrorOpen(true);
                 }
+                console.log(res);
             });
     };
     return (
