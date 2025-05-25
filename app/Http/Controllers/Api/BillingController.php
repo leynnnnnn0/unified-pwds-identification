@@ -19,13 +19,13 @@ class BillingController extends Controller
                 'name' => 'Silver',
                 'price' => 10,
                 'price_id' => 'price_1RNo2DH0KVHxP8CWfAcg2ohS',
-                'request_limit' => 20,
+                'request_limit' => 100,
                 'product_id' => 'prod_SIOpCxb9QabHGm'
             ],
             'prod_SIOrkY2gJyW45l' => [
                 'name' => 'Gold',
                 'price' => 15,
-                'request_limit' => 50,
+                'request_limit' => 250,
                 'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
                 'product_id' => 'prod_SIOrkY2gJyW45l'
             ],
