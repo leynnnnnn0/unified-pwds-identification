@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Api\DashboardController as ApiDashboardController;
 use App\Http\Controllers\Api\UsageController;
+use App\Http\Controllers\ApiIdVerificationController;
 use App\Http\Controllers\CardPrintingController;
 
 Route::resource('', LandingPageController::class);
@@ -51,6 +52,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/api-keys/store', [ApiKeyController::class, 'store'])->name('api-keys.store');
             Route::delete('/api-keys/delete/{id}', [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
             Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
+
+
+            Route::get('/verification', [ApiIdVerificationController::class, 'index']);
+            Route::get('/verification/verify', [ApiIdVerificationController::class, 'verify']);
         });
     });
 

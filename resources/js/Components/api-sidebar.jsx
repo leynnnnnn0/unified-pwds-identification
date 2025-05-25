@@ -3,24 +3,23 @@ import {
     KeyRound,
     ReceiptText,
     ChartBarDecreasing,
-
+    Verified,
 } from "lucide-react";
 import { router, Link, usePage } from "@inertiajs/react";
 import MainLogo from "../../images/apiLogo.png";
 import React from "react";
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function APISidebar({ onItemClick }) {
     const { auth } = usePage().props;
@@ -38,6 +37,13 @@ export function APISidebar({ onItemClick }) {
             title: "Billing",
             url: "/api/billing",
             icon: ReceiptText,
+            isLocked: false,
+            isVisible: true,
+        },
+        {
+            title: "Verification",
+            url: "/api/verification",
+            icon: Verified,
             isLocked: false,
             isVisible: true,
         },
@@ -134,27 +140,30 @@ export function APISidebar({ onItemClick }) {
             <div className="mt-auto pb-4 pt-2 border-t">
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        <button
-                        className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-                        >
-                        <LogOut className="w-4 h-4 mr-3" />
-                        <span>Logout</span>
+                        <button className="w-full flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+                            <LogOut className="w-4 h-4 mr-3" />
+                            <span>Logout</span>
                         </button>
                     </AlertDialogTrigger>
 
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            Logging out will end your current session. Do you wish to continue?
-                        </AlertDialogDescription>
+                            <AlertDialogTitle>
+                                Are you sure you want to logout?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Logging out will end your current session. Do
+                                you wish to continue?
+                            </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={logout}>Yes, I want to Logout</AlertDialogAction>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={logout}>
+                                Yes, I want to Logout
+                            </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
-                    </AlertDialog>
+                </AlertDialog>
             </div>
         </div>
     );
