@@ -54,8 +54,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/usage', [UsageController::class, 'index'])->name('api.usage');
 
 
-            Route::get('/verification', [ApiIdVerificationController::class, 'index']);
-            Route::get('/verification/verify', [ApiIdVerificationController::class, 'verify']);
+            Route::get('/manual-verification', [ApiIdVerificationController::class, 'index']);
+            Route::get('/manual-verification/verify', [ApiIdVerificationController::class, 'verify']);
         });
     });
 

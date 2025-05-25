@@ -20,6 +20,7 @@ class ApiRequestController extends Controller
         $subscriptions = $this->subscriptions();
         $secret_key = request('secret_key');
         $card_uid = request('card_uid');
+        
 
         // Check if the ip address is existing on the database
         $api_key = ApiKey::where('secret_key', $secret_key)->first();

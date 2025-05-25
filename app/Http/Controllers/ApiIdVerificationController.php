@@ -72,7 +72,7 @@ class ApiIdVerificationController extends Controller
             ApiRequest::create([
                 'user_id' => Auth::id(),
                 'ip_address' =>  request()->ip(),
-                'api_key_id' => Auth::id(),
+                'api_key_id' => null,
             ]);
 
             DB::commit();
@@ -88,7 +88,7 @@ class ApiIdVerificationController extends Controller
         ApiRequest::create([
             'user_id' => Auth::id(),
             'ip_address' =>  request()->ip(),
-            'api_key_id' => Auth::id(),
+            'api_key_id' => null,
         ]);
 
 

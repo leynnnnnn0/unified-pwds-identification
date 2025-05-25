@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('api_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('api_key_id')->constrained();
+            $table->foreignId('api_key_id')->nullable()->constrained();
             $table->string('ip_address');
             $table->boolean('is_successfull')->default(true);
             $table->timestamps();

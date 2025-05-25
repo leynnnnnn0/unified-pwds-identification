@@ -29,7 +29,7 @@ const Index = () => {
         e.preventDefault();
         if (!identificationNumber) return;
         axios
-            .get("/api/verification/verify", {
+            .get("/api/manual-verification/verify", {
                 card_number: identificationNumber,
             })
             .then((res) => {
