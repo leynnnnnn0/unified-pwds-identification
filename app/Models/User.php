@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Cashier\Subscription;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, Billable;
+    use HasFactory, Notifiable, HasApiTokens, Billable, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.

@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Rootscratch\PSGC\PSGC;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PWDApplicationForm extends Model
+class PWDApplicationForm extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\PWDApplicationFormFactory> */
-    use HasFactory;
+    use HasFactory, \OwenIt\Auditing\Auditable;
 
     protected $table = 'pwd_application_forms';
 

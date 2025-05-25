@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PWDIdentificationCard extends Model
+class PWDIdentificationCard extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\PWDIdentificationCardFactory> */
-    use HasFactory;
+    use HasFactory, \OwenIt\Auditing\Auditable;
 
     protected $table = 'pwd_identification_cards';
 
