@@ -15,49 +15,49 @@ class BillingController extends Controller
     public function index()
     {
         $subscriptions = [
-            'prod_SIOpCxb9QabHGm' => [
+            'prod_SNI80ZLixxP3rF' => [
                 'name' => 'Silver',
-                'price' => 10,
-                'price_id' => 'price_1RNo2DH0KVHxP8CWfAcg2ohS',
+                'price' => 250,
+                'price_id' => 'price_1RSXXwH0KVHxP8CWG3wU4tdo',
                 'request_limit' => 100,
-                'product_id' => 'prod_SIOpCxb9QabHGm'
+                'product_id' => 'prod_SNI80ZLixxP3rF'
             ],
-            'prod_SIOrkY2gJyW45l' => [
+            'prod_SNI9VrXaBAq2RS' => [
                 'name' => 'Gold',
-                'price' => 15,
+                'price' => 310,
                 'request_limit' => 250,
-                'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
-                'product_id' => 'prod_SIOrkY2gJyW45l'
+                'price_id' => 'price_1RSXZHH0KVHxP8CWF0uijlO8 ',
+                'product_id' => 'prod_SNI9VrXaBAq2RS'
             ],
-            'prod_SIOt2uy0I2upNo' => [
+            'prod_SNIAVjsfZC3fZ2 ' => [
                 'name' => 'Platinum',
-                'price' => 20,
+                'price' => 380,
                 'request_limit' => 'Unlimited',
-                'price_id' => 'price_1RNo5aH0KVHxP8CWIQvMeBaD',
-                'product_id' => 'prod_SIOt2uy0I2upNo'
+                'price_id' => 'price_1RSXZxH0KVHxP8CWFMNMENE7',
+                'product_id' => 'prod_SNIAVjsfZC3fZ2 '
             ],
         ];
 
         $subscription = null;
 
         $user = Auth::user();
-        if ($user->subscribed('prod_SIOpCxb9QabHGm')) {
-            $subscription = $subscriptions['prod_SIOpCxb9QabHGm'];
+        if ($user->subscribed('prod_SNI80ZLixxP3rF')) {
+            $subscription = $subscriptions['prod_SNI80ZLixxP3rF'];
         }
-        if ($user->subscribed('prod_SIOrkY2gJyW45l')) {
-            $subscription = $subscriptions['prod_SIOrkY2gJyW45l'];
+        if ($user->subscribed('prod_SNI9VrXaBAq2RS')) {
+            $subscription = $subscriptions['prod_SNI9VrXaBAq2RS'];
 
-            // $subscription = $user->subscription('prod_SIOrkY2gJyW45l');
+            // $subscription = $user->subscription('prod_SNI9VrXaBAq2RS');
 
             // // Swap to Platinum price
-            // $subscription->swap('price_1RNo5aH0KVHxP8CWIQvMeBaD');
+            // $subscription->swap('price_1RSXZxH0KVHxP8CWFMNMENE7');
 
             // // Update the subscription name (product ID)
-            // $subscription->type = 'prod_SIOt2uy0I2upNo';
+            // $subscription->type = 'prod_SNIAVjsfZC3fZ2 ';
             // $subscription->save();
         }
-        if ($user->subscribed('prod_SIOt2uy0I2upNo')) {
-            $subscription = $subscriptions['prod_SIOt2uy0I2upNo'];
+        if ($user->subscribed('prod_SNIAVjsfZC3fZ2 ')) {
+            $subscription = $subscriptions['prod_SNIAVjsfZC3fZ2 '];
         }
 
         if ($subscription) {

@@ -128,26 +128,26 @@ class ApiRequestController extends Controller
     public function subscriptions()
     {
         return  [
-            'prod_SIOpCxb9QabHGm' => [
+            'prod_SNI80ZLixxP3rF' => [
                 'name' => 'Silver',
-                'price' => 10,
-                'price_id' => 'price_1RNo2DH0KVHxP8CWfAcg2ohS',
+                'price' => 250,
+                'price_id' => 'price_1RSXXwH0KVHxP8CWG3wU4tdo',
                 'request_limit' => 100,
-                'product_id' => 'prod_SIOpCxb9QabHGm'
+                'product_id' => 'prod_SNI80ZLixxP3rF'
             ],
-            'prod_SIOrkY2gJyW45l' => [
+            'prod_SNI9VrXaBAq2RS' => [
                 'name' => 'Gold',
-                'price' => 15,
+                'price' => 310,
                 'request_limit' => 250,
-                'price_id' => 'price_1RNo47H0KVHxP8CWpWPOA9Zs',
-                'product_id' => 'prod_SIOrkY2gJyW45l'
+                'price_id' => 'price_1RSXZHH0KVHxP8CWF0uijlO8 ',
+                'product_id' => 'prod_SNI9VrXaBAq2RS'
             ],
-            'prod_SIOt2uy0I2upNo' => [
+            'prod_SNIAVjsfZC3fZ2 ' => [
                 'name' => 'Platinum',
-                'price' => 20,
+                'price' => 380,
                 'request_limit' => 'Unlimited',
-                'price_id' => 'price_1RNo5aH0KVHxP8CWIQvMeBaD',
-                'product_id' => 'prod_SIOt2uy0I2upNo'
+                'price_id' => 'price_1RSXZxH0KVHxP8CWFMNMENE7',
+                'product_id' => 'prod_SNIAVjsfZC3fZ2 '
             ],
         ];
     }

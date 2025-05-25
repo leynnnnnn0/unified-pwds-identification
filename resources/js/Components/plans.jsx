@@ -75,8 +75,8 @@ const Plans = () => {
             borderColor: "border-gray-200",
             hoverColor: "hover:border-gray-400",
             buttonColor: "bg-gray-500 hover:bg-gray-600",
-            id: "price_1RNo2DH0KVHxP8CWfAcg2ohS",
-            product_id: "prod_SIOpCxb9QabHGm",
+            id: "price_1RSXXwH0KVHxP8CWG3wU4tdo",
+            product_id: "prod_SNI80ZLixxP3rF",
         },
         {
             name: "Gold",
@@ -92,8 +92,8 @@ const Plans = () => {
             borderColor: "border-yellow-200",
             hoverColor: "hover:border-yellow-400",
             buttonColor: "bg-yellow-500 hover:bg-yellow-600",
-            id: "price_1RNo47H0KVHxP8CWpWPOA9Zs",
-            product_id: "prod_SIOrkY2gJyW45l",
+            id: "price_1RSXZHH0KVHxP8CWF0uijlO8 ",
+            product_id: "prod_SNI9VrXaBAq2RS",
         },
         {
             name: "Platinum",
@@ -111,8 +111,8 @@ const Plans = () => {
             hoverColor: "hover:border-blue-400",
             buttonColor: "bg-blue-500 hover:bg-blue-600",
             recommended: true,
-            id: "price_1RNo5aH0KVHxP8CWIQvMeBaD",
-            product_id: "prod_SIOt2uy0I2upNo",
+            id: "price_1RSXZxH0KVHxP8CWFMNMENE7",
+            product_id: "prod_SNIAVjsfZC3fZ2 ",
         },
     ];
 
