@@ -9,6 +9,19 @@ import { router, Link, usePage } from "@inertiajs/react";
 import MainLogo from "../../images/apiLogo.png";
 import React from "react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
 export function APISidebar({ onItemClick }) {
     const { auth } = usePage().props;
     const { url: currentUrl } = usePage();
