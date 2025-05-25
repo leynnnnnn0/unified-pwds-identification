@@ -63,6 +63,7 @@ class ApiIdVerificationController extends Controller
 
         // If they do, look for the id 
         $result = PWDIdentificationCard::with('application_form')
+            ->where('expiry_date', '>=', Carbon::now())
             ->where('rfid_card_number', $card_uid)
             ->orWhere('pwd_card_number', $card_uid)
             ->first();

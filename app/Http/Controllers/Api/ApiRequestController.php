@@ -20,7 +20,7 @@ class ApiRequestController extends Controller
         $subscriptions = $this->subscriptions();
         $secret_key = request('secret_key');
         $card_uid = request('card_uid');
-        
+
 
         // Check if the ip address is existing on the database
         $api_key = ApiKey::where('secret_key', $secret_key)->first();
@@ -76,6 +76,7 @@ class ApiRequestController extends Controller
 
 
         $result = PWDIdentificationCard::with('application_form')
+            ->where('expiry_date', '>=', Carbon::now())
             ->where('rfid_card_number', $card_uid)
             ->orWhere('pwd_card_number', $card_uid)
             ->first();
@@ -128,7 +129,7 @@ class ApiRequestController extends Controller
 
     public function subscriptions()
     {
-        
+
         return  [
             'prod_SNI80ZLixxP3rF' => [
                 'name' => 'Silver',
