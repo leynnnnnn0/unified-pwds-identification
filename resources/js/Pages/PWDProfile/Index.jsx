@@ -199,7 +199,11 @@ const Index = ({ application, image, qr }) => {
                                     <div className="flex flex-col justify-start">
                                         <p className="text-[7px]">ID Number:</p>
                                         <p className="border-b border-spacing-1 text-[10px] md:text-xs text-start">
-                                            PWD-1213456
+                                            {
+                                                application
+                                                    .pwd_identification_card
+                                                    .pwd_card_number
+                                            }
                                         </p>
                                     </div>
                                     <div className="flex flex-col justify-start">
