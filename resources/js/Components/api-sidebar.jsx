@@ -4,6 +4,7 @@ import {
     ReceiptText,
     ChartBarDecreasing,
     Verified,
+    UserCircle,
 } from "lucide-react";
 import { router, Link, usePage } from "@inertiajs/react";
 import MainLogo from "../../images/apiLogo.png";
@@ -51,6 +52,13 @@ export function APISidebar({ onItemClick }) {
             title: "API Keys",
             url: "/api/api-keys",
             icon: KeyRound,
+            isLocked: false,
+            isVisible: true,
+        },
+          {
+            title: "My Account",
+            url: "/api/my-account",
+            icon: UserCircle,
             isLocked: false,
             isVisible: true,
         },

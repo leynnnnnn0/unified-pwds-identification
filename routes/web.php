@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
 
 
         Route::prefix('api')->group(function () {
+            Route::resource('my-account', PWDAccountController::class);
 
             Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
             Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
