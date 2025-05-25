@@ -90,7 +90,8 @@ const Index = () => {
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             <span className="w-full text-center flex items-center">
-                                {errorMessage}
+                                {errorMessage ||
+                                    "No user found with this card number. Please make sure that the RFID card number or the PWD card number is correct."}
                             </span>
                         </AlertDialogDescription>
                     </AlertDialogHeader>
