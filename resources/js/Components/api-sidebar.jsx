@@ -42,7 +42,7 @@ export function APISidebar({ onItemClick }) {
         },
         {
             title: "Verification",
-            url: "/api/verification",
+            url: "/api/manual-verification",
             icon: Verified,
             isLocked: false,
             isVisible: true,

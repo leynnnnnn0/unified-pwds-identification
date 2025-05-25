@@ -128,6 +128,7 @@ class ApiRequestController extends Controller
 
     public function subscriptions()
     {
+        
         return  [
             'prod_SNI80ZLixxP3rF' => [
                 'name' => 'Silver',
