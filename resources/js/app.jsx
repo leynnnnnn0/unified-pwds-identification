@@ -34,7 +34,9 @@ createInertiaApp({
                 path == "/api/register" ||
                 path == "/api/documentation" ||
                 path.startsWith("/admin/card-printing/print") ||
-                path.startsWith("/admin/card-printing/batch-print")
+                path.startsWith("/admin/card-printing/batch-print") ||
+                path.startsWith("/reset-password") ||
+                path.startsWith("/forgot-password")
             ) {
                 return page;
             }
