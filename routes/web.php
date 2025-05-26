@@ -26,7 +26,7 @@ use App\Http\Controllers\CardPrintingController;
 Route::resource('', LandingPageController::class);
 
 Route::get('api/documentation', [APILandingPage::class, 'show']);
-
+Route::resource('my-account', PWDAccountController::class);
 
 Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
 
@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
 
         Route::prefix('api')->group(function () {
-            Route::resource('my-account', PWDAccountController::class);
+
 
             Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
             Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
