@@ -10,19 +10,19 @@ const Index = ({ counts, chartData }) => {
             <div className="grid md:grid md:grid-cols-4 gap-5">
                 <DashboardContainer
                     title="Pending Applications"
-                    value={counts.pending}
+                    value={counts.pending ?? 0}
                 />
                 <DashboardContainer
                     title="Approved Applications"
-                    value={counts.approved}
+                    value={counts.approved ?? 0}
                 />
                 <DashboardContainer
                     title="Incomplete Applications"
-                    value={counts.incomplete}
+                    value={counts.incomplete ?? 0}
                 />
                 <DashboardContainer
                     title="Rejected Applications"
-                    value={counts.rejected}
+                    value={counts.rejected ?? 0}
                 />
             </div>
 

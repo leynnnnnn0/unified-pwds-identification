@@ -39,7 +39,7 @@ class UsageController extends Controller
             return [
                 'id' => $item->id,
                 'method' => 'Get',
-                'secret_key' => $this->maskApiKey($item->api_key->secret_key),
+                'secret_key' => $item->api_key ?  $this->maskApiKey($item->api_key->secret_key) : null,
                 'is_successfull' => true,
                 'ip_address' => $item->ip_address,
                 'created_at' => $item->created_at->format('F d, Y H:i:a')
