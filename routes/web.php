@@ -26,13 +26,16 @@ use App\Http\Controllers\CardPrintingController;
 Route::resource('', LandingPageController::class);
 
 Route::get('api/documentation', [APILandingPage::class, 'show']);
-Route::resource('my-account', PWDAccountController::class);
+
+Route::get('/my-account', [PWDAccountController::class, 'index'])->name('my-account.index');
+
+Route::put('/my-account/update/{id}', [PWDAccountController::class, 'update'])->name('my-account.update');
+
 
 Route::get('/api', [APILandingPage::class, 'index'])->name('landing-page');
 
 Route::middleware('auth')->group(function () {
 
-    Route::put('/my-account/update/{id}', [PWDAccountController::class, 'update'])->name('my-account.update');
     Route::put('/my-account/{id}/update-password', [PWDAccountController::class, 'updatePassword'])->name('my-account.update-password');
 
 
@@ -46,7 +49,8 @@ Route::middleware('auth')->group(function () {
 
 
         Route::prefix('api')->group(function () {
-            Route::resource('my-account', PWDAccountController::class);
+
+            Route::get('/my-account', [PWDAccountController::class, 'index'])->name('my-account.index');
 
             Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('api.dashboard');
             Route::get('/api-keys', [ApiKeyController::class, 'index'])->name('api-keys');
@@ -62,11 +66,13 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('admin')->middleware('role:admin')->name('admin.')->group(function () {
+        Route::get('/my-account', [PWDAccountController::class, 'index'])->name('my-account.index');
+
         Route::resource('dashboard', AdminDashboardController::class);
         Route::resource('applications', AdminApplicationController::class);
         Route::resource('verification', IDVerification::class);
         Route::resource('users', UserController::class);
-        Route::resource('my-account', PWDAccountController::class);
+
         Route::resource('card-printing', CardPrintingController::class);
 
         Route::controller(CardPrintingController::class)->group(function () {
@@ -90,7 +96,7 @@ Route::middleware('auth')->group(function () {
 
     // How can i add a middleware so only user with role of 'user' can access this pages
     Route::middleware(['role:user'])->group(function () {
-        Route::get('/my-account', [PWDAccountController::class, 'index'])->name('my-account.index');
+
         Route::get('/dashboard', [PWDDashboardController::class, 'index'])->name('dashboard');
         Route::resource('my-profile', PWDProfileController::class);
         Route::post('/registration/update-form/{id}', [PWDRegistrationController::class, 'update'])->name('registration.update-form');
