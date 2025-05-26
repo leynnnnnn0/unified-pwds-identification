@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
 
 
             Route::get('/manual-verification', [ApiIdVerificationController::class, 'index']);
-            Route::get('/manual-verification/verify', [ApiIdVerificationController::class, 'verify']);
+            Route::get('/manual-verification/verify', [ApiIdVerificationController::class, 'verify'])->name('api.manual-verification.verify');
         });
     });
 

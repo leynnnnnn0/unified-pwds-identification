@@ -18,7 +18,7 @@ class ApiIdVerificationController extends Controller
         return Inertia::render('ApiIDVerification/Index');
     }
 
-    public function verify()
+    public function verify(Request $request)
     {
         $subscriptions = $this->subscriptions();
         // Check if the user has an existing plan
@@ -59,9 +59,11 @@ class ApiIdVerificationController extends Controller
             ], 403);
         }
 
-        $card_uid = request('card_uid');
+        $card_uid = $request->input('card_uid');
 
         // If they do, look for the id 
+
+        
         $result = PWDIdentificationCard::with('application_form')
             ->where('expiry_date', '>=', Carbon::now())
             ->where('rfid_card_number', $card_uid)

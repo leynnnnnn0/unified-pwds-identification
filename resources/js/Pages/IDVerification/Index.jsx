@@ -23,8 +23,10 @@ const Index = () => {
     const [identificationNumber, setIdentificationNumber] = useState("");
     const [cardDetails, setCardDetails] = useState({});
     const [cardHolder, setCardHolder] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const submit = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (!identificationNumber) return;
         axios
             .get(
@@ -45,7 +47,8 @@ const Index = () => {
                 }
                 console.log(res);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err))
+            .finally(() => setIsLoading(false));
     };
     return (
         <>
@@ -115,10 +118,11 @@ const Index = () => {
                             }
                         />
                         <Button
+                        disabled={isLoading}
                             onClick={submit}
                             className="w-full bg-primary-color"
                         >
-                            Verify
+                            {isLoading ? "Verifying..." : "Verify ID"}
                         </Button>
                     </div>
                 </div>

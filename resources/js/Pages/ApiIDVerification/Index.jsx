@@ -24,21 +24,25 @@ const Index = () => {
     const [identificationNumber, setIdentificationNumber] = useState("");
     const [cardDetails, setCardDetails] = useState({});
     const [cardHolder, setCardHolder] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const submit = (e) => {
         console.log("submit");
+        setIsLoading(true);
         e.preventDefault();
         if (!identificationNumber) return;
+        console.log(identificationNumber);
         axios
-            .get("/api/manual-verification/verify", {
-                card_number: identificationNumber,
-            })
+            .get(
+                route("api.manual-verification.verify", {
+                    card_uid: identificationNumber,
+                })
+            )
             .then((res) => {
-                console.log(res);
-                if (res.data.isFound) {
+                if (res.data.data.is_found) {
                     setCardDetails({
-                        card_holder: res.data.data.card_holder,
-                        effective_date: res.data.data.effective_date,
-                        expiry_date: res.data.data.expiry_date,
+                        card_holder: res.data.data.card_details.card_holder,
+                        effective_date: res.data.data.card_details.effective_date,
+                        expiry_date: res.data.data.card_details.expiry_date,
                     });
                     setIsOpen(true);
                     console.log("Test");
@@ -53,7 +57,8 @@ const Index = () => {
                     setIsErrorOpen(true);
                 }
                 console.log(res);
-            });
+            })
+            .finally(() => setIsLoading(false));
     };
     return (
         <>
@@ -122,8 +127,12 @@ const Index = () => {
                                 setIdentificationNumber(e.target.value)
                             }
                         />
-                        <Button onClick={submit} className="w-full bg-black">
-                            Verify
+                        <Button
+                            disabled={isLoading}
+                            onClick={submit}
+                            className="w-full bg-black"
+                        >
+                            {isLoading ? "Verifying..." : "Verify ID"}
                         </Button>
                     </div>
                 </div>
