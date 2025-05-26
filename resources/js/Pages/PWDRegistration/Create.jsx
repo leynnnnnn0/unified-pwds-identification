@@ -50,12 +50,11 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import Infolist from "@/Components/infolist";
+import toast from "react-hot-toast";
 
 const Create = () => {
-    const { toast } = useToast();
     const [previewImage, setPreviewImage] = useState(null);
     const fileInputRef = useRef(null);
     const [isPWDNumberInputDisabled, setIsPWDNumberInputDisabled] =
@@ -167,21 +166,11 @@ const Create = () => {
             onSuccess: () => {
                 setPreviewImage(null);
                 form.reset();
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    description: "Application Created Successfully.",
-                });
+                toast.success("Application Created Successfully.");
             },
             onError: (errors) => {
                 console.error(errors);
-                toast({
-                    className:
-                        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-                    variant: "destructive",
-                    title: "Uh oh! Something went wrong.",
-                    description: "There was a problem with your request.",
-                });
+                toast.error("Something went wrong. Please check the form for errors.");
             },
             onFinish: () => {
                 setIsConfirmationModalOpen(false);
